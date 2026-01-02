@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>热门Demo分析详情 - Apple Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Apple Design System Colors */
+            --bg-primary: #f5f5f7;
+            --bg-card: #ffffff;
+            --bg-hover: #fbfbfd;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent-blue: #0071e3;
+            --accent-blue-hover: #0077ed;
+            --accent-green: #34c759;
+            --accent-orange: #ff9500;
+            --accent-red: #ff3b30;
+            --accent-purple: #af52de;
+            --accent-pink: #ff2d55;
+            --border-color: #d2d2d7;
+            --border-light: #e8e8ed;
+            --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 21px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Stats Cards */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 24px;
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            background: var(--bg-primary);
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+
+        .search-box::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2386868b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .filter-select {
+            padding: 12px 36px 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            background: var(--bg-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2386868b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") no-repeat right 12px center;
+            background-size: 16px;
+            cursor: pointer;
+            appearance: none;
+            min-width: 140px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .quick-filters {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quick-filter {
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-filter:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .quick-filter.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        /* Table Container */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        /* Demo Table */
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .demo-table thead th {
+            background: var(--bg-primary);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+        }
+
+        .demo-table tbody tr {
+            border-bottom: 1px solid var(--border-light);
+            transition: background 0.2s ease;
+        }
+
+        .demo-table tbody tr:hover {
+            background: var(--bg-hover);
+        }
+
+        .demo-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .demo-table td {
+            padding: 16px;
+            vertical-align: top;
+        }
+
+        /* Column: Rank */
+        .col-rank {
+            width: 60px;
+            text-align: center;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #ffb800); color: #5a4800; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #4a4a4a; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b56b20); color: #3d2500; }
+        .rank-default { background: var(--bg-primary); color: var(--text-secondary); }
+
+        /* Column: Demo Info */
+        .col-demo-info {
+            min-width: 240px;
+        }
+
+        .demo-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .demo-prompt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Column: Preview */
+        .col-preview {
+            width: 100px;
+        }
+
+        .preview-thumb {
+            width: 80px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-light);
+        }
+
+        .preview-thumb:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .preview-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .video-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid white;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            margin-left: 2px;
+        }
+
+        /* Column: Views */
+        .col-views {
+            width: 90px;
+        }
+
+        .views-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .views-hot {
+            font-size: 10px;
+        }
+
+        /* Column: Scene */
+        .col-scene {
+            width: 130px;
+        }
+
+        .scene-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #e8f4fd, #d4e9fc);
+            border: 1px solid #b8d9f8;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #0066cc;
+            white-space: nowrap;
+        }
+
+        /* Column: Abilities */
+        .col-abilities {
+            width: 160px;
+        }
+
+        .ability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .ability-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .ability-tag.multimodal { background: #fef3e2; color: #b85c00; }
+        .ability-tag.coding { background: #e8f5e9; color: #2e7d32; }
+        .ability-tag.agent { background: #f3e5f5; color: #7b1fa2; }
+        .ability-tag.vision { background: #e3f2fd; color: #1565c0; }
+        .ability-tag.instruction { background: #fff3e0; color: #e65100; }
+        .ability-tag.space { background: #e0f2f1; color: #00695c; }
+        .ability-tag.physics { background: #fce4ec; color: #c2185b; }
+        .ability-tag.context { background: #ede7f6; color: #512da8; }
+        .ability-tag.document { background: #e8eaf6; color: #3949ab; }
+        .ability-tag.video { background: #fff8e1; color: #ff8f00; }
+
+        /* Column: Doubao */
+        .col-doubao {
+            min-width: 220px;
+        }
+
+        .doubao-card {
+            background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+            border: 1px solid #ffe0b2;
+            border-radius: var(--radius-md);
+            padding: 12px;
+        }
+
+        .doubao-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .doubao-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .doubao-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .doubao-tag {
+            padding: 2px 6px;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 4px;
+            font-size: 10px;
+            color: #e65100;
+        }
+
+        /* Column: Score */
+        .col-score {
+            width: 90px;
+            text-align: center;
+        }
+
+        .score-circle {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0071e3, #00a0e3);
+            color: white;
+            margin-bottom: 6px;
+        }
+
+        .score-circle.excellent { background: linear-gradient(135deg, #34c759, #30d158); }
+        .score-circle.good { background: linear-gradient(135deg, #0071e3, #00a0e3); }
+        .score-circle.average { background: linear-gradient(135deg, #ff9500, #ffb340); }
+
+        .score-number {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 9px;
+            opacity: 0.9;
+        }
+
+        .score-detail {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        /* Column: Notes */
+        .col-notes {
+            width: 140px;
+        }
+
+        .note-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            min-height: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .note-display:hover {
+            border-color: var(--accent-blue);
+            background: white;
+        }
+
+        .note-display.empty {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .note-display.empty::before {
+            content: '+ ';
+        }
+
+        .note-edit {
+            display: none;
+        }
+
+        .note-edit textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .note-btn {
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .note-btn.save {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .note-btn.cancel {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .lightbox-content img,
+        .lightbox-content video {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .lightbox-title {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .col-doubao {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                min-width: 100%;
+            }
+            .demo-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1d1d1f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1100;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1 class="header-title">热门Demo分析详情</h1>
+                <p class="header-subtitle">2025年12月 · 共23个Demo · Apple风格展示</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number">23</div>
+                <div class="stat-label">分析Demo数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">优秀(>=80)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">18</div>
+                <div class="stat-label">良好(60-79)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1000W+</div>
+                <div class="stat-label">累计观看</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">72.5</div>
+                <div class="stat-label">平均评分</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索Demo名称或Prompt关键词...">
+                </div>
+                <select class="filter-select" id="sceneFilter">
+                    <option value="">全部场景</option>
+                    <option value="一句话生成App">一句话生成App</option>
+                    <option value="一句话做网站">一句话做网站</option>
+                    <option value="一句话造游戏">一句话造游戏</option>
+                    <option value="一句话出3D">一句话出3D</option>
+                    <option value="视频秒懂">视频秒懂</option>
+                    <option value="AI替你干活">AI替你干活</option>
+                    <option value="对话不忘事">对话不忘事</option>
+                    <option value="巨量文档吞">巨量文档吞</option>
+                    <option value="看图知一切">看图知一切</option>
+                    <option value="屏幕自动点">屏幕自动点</option>
+                    <option value="复杂指令拆解">复杂指令拆解</option>
+                    <option value="多模态联动">多模态联动</option>
+                    <option value="自动标注师">自动标注师</option>
+                    <option value="无接口穿透">无接口穿透</option>
+                    <option value="创意工具通">创意工具通</option>
+                    <option value="跨平台数据搬">跨平台数据搬</option>
+                    <option value="实时流处理">实时流处理</option>
+                    <option value="任务规划神">任务规划神</option>
+                </select>
+                <select class="filter-select" id="abilityFilter">
+                    <option value="">全部能力</option>
+                    <option value="多模态输入">多模态输入</option>
+                    <option value="代码狂魔">代码狂魔</option>
+                    <option value="3D空间感">3D空间感</option>
+                    <option value="物理引擎脑">物理引擎脑</option>
+                    <option value="Agent自动化">Agent自动化</option>
+                    <option value="指令遵循王">指令遵循王</option>
+                    <option value="视觉推理师">视觉推理师</option>
+                    <option value="视频读秒器">视频读秒器</option>
+                    <option value="长文不遗忘">长文不遗忘</option>
+                    <option value="文档结构化">文档结构化</option>
+                </select>
+                <select class="filter-select" id="scoreFilter">
+                    <option value="">全部分数</option>
+                    <option value="excellent">优秀(>=80)</option>
+                    <option value="good">良好(60-79)</option>
+                    <option value="average">一般(<60)</option>
+                </select>
+                <select class="filter-select" id="sortFilter">
+                    <option value="score-desc">按评分降序</option>
+                    <option value="score-asc">按评分升序</option>
+                    <option value="views-desc">按热度降序</option>
+                    <option value="name-asc">按名称排序</option>
+                </select>
+            </div>
+            <div class="quick-filters">
+                <button class="quick-filter active" data-scene="">全部</button>
+                <button class="quick-filter" data-scene="一句话生成App">一句话生成App</button>
+                <button class="quick-filter" data-scene="一句话做网站">一句话做网站</button>
+                <button class="quick-filter" data-scene="一句话造游戏">一句话造游戏</button>
+                <button class="quick-filter" data-scene="一句话出3D">一句话出3D</button>
+                <button class="quick-filter" data-scene="视频秒懂">视频秒懂</button>
+                <button class="quick-filter" data-scene="AI替你干活">AI替你干活</button>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <table class="demo-table">
+                <thead>
+                    <tr>
+                        <th class="col-rank">排名</th>
+                        <th class="col-demo-info">Demo名称 + Prompt</th>
+                        <th class="col-preview">预览</th>
+                        <th class="col-views">热度</th>
+                        <th class="col-scene">所属场景</th>
+                        <th class="col-abilities">模型能力</th>
+                        <th class="col-doubao">豆包创意</th>
+                        <th class="col-score">评分</th>
+                        <th class="col-notes">备注</th>
+                    </tr>
+                </thead>
+                <tbody id="demoTableBody">
+                    <!-- Data will be rendered by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content" id="lightboxContent"></div>
+        <div class="lightbox-title" id="lightboxTitle"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Demo Data
+        const demoData = [
+            {
+                id: 1,
+                name: "虚拟主播",
+                prompt: "读取VRM启动摄像机，面部捕捉+遮罩+遮挡剔除",
+                thumb: "assets/demos/a-virtual-vtuber.mp4",
+                isVideo: true,
+                views: "284W+",
+                viewsNum: 2840000,
+                scene: "一句话生成App",
+                abilities: ["多模态输入", "代码狂魔"],
+                doubaoTitle: "智能视频录制Sparks",
+                doubaoDesc: "利用原生摄像头集成+实时视频流理解能力，录制视频时AI实时分析内容...",
+                doubaoTags: ["1280帧", "实时分析", "Agent"],
+                scoreInteresting: 75,
+                scoreUseful: 17,
+                note: ""
+            },
+            {
+                id: 2,
+                name: "3D乐高编辑器",
+                prompt: "一次性实现UI、代码构建和各项功能",
+                thumb: "assets/demos/a-lego-editor.mp4",
+                isVideo: true,
+                views: "165W+",
+                viewsNum: 1650000,
+                scene: "一句话生成App",
+                abilities: ["代码狂魔", "3D空间感"],
+                doubaoTitle: "建筑户型3D漫游",
+                doubaoDesc: "上传户型图，AI自动理解空间布局，生成可交互3D户型模型...",
+                doubaoTags: ["空间理解", "2D转3D", "可视化"],
+                scoreInteresting: 70,
+                scoreUseful: 18,
+                note: ""
+            },
+            {
+                id: 3,
+                name: "核电站模拟器",
+                prompt: "核电厂工作原理交互式3D模拟器",
+                thumb: "assets/demos/a-nuclear-simulator.mp4",
+                isVideo: true,
+                views: "45W+",
+                viewsNum: 450000,
+                scene: "一句话出3D",
+                abilities: ["3D空间感", "物理引擎脑"],
+                doubaoTitle: "自动驾驶场景理解",
+                doubaoDesc: "分析行车记录仪视频，识别车辆方向和驾驶意图，标注危险场景...",
+                doubaoTags: ["3D空间理解", "视频理解"],
+                scoreInteresting: 65,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 4,
+                name: "智能视频录制Sparks",
+                prompt: "AI实时分析内容提供提示，原生摄像头集成",
+                thumb: "assets/demos/a-sparks-recorder.mp4",
+                isVideo: true,
+                views: "新热",
+                viewsNum: 100000,
+                scene: "AI替你干活",
+                abilities: ["Agent自动化", "多模态输入"],
+                doubaoTitle: "视频录制助手",
+                doubaoDesc: "录制时AI实时分析内容，智能提供下一步提示和思路...",
+                doubaoTags: ["实时分析", "Agent能力"],
+                scoreInteresting: 62,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 5,
+                name: "硅谷Dating App",
+                prompt: "完整交友应用，含AI分身聊天、契合度测评",
+                thumb: "assets/demos/a-dating-app.mp4",
+                isVideo: true,
+                views: "新热",
+                viewsNum: 100000,
+                scene: "一句话生成App",
+                abilities: ["指令遵循王", "代码狂魔"],
+                doubaoTitle: "社交应用生成器",
+                doubaoDesc: "一句话生成完整社交应用，支持AI聊天、匹配算法...",
+                doubaoTags: ["复杂指令", "完整应用"],
+                scoreInteresting: 65,
+                scoreUseful: 15,
+                note: ""
+            },
+            {
+                id: 6,
+                name: "抖音网页版复刻",
+                prompt: "给网址直接复刻整个网页",
+                thumb: "assets/demos/b-tiktok-clone.jpg",
+                isVideo: false,
+                views: "40W+",
+                viewsNum: 400000,
+                scene: "一句话做网站",
+                abilities: ["视觉推理师", "代码狂魔"],
+                doubaoTitle: "跨平台智能比价",
+                doubaoDesc: "一句话对比多个电商平台价格，AI自动打开浏览器比价...",
+                doubaoTags: ["GUI Agent", "浏览器操作"],
+                scoreInteresting: 60,
+                scoreUseful: 18,
+                note: ""
+            },
+            {
+                id: 7,
+                name: "商业级Landing页面",
+                prompt: "完整购票系统、滚动视差、复古特效",
+                thumb: "assets/demos/b-landing-page.mp4",
+                isVideo: true,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "一句话做网站",
+                abilities: ["指令遵循王", "代码狂魔"],
+                doubaoTitle: "数据可视化大屏",
+                doubaoDesc: "上传数据自动生成企业级数据可视化大屏...",
+                doubaoTags: ["文档解析", "可视化"],
+                scoreInteresting: 60,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 8,
+                name: "台球游戏网页",
+                prompt: "黑八十六台球，双人对局+仿真球杆",
+                thumb: "assets/demos/b-pool-game.mp4",
+                isVideo: true,
+                views: "10W+",
+                viewsNum: 100000,
+                scene: "一句话造游戏",
+                abilities: ["物理引擎脑", "代码狂魔"],
+                doubaoTitle: "物理模拟游戏",
+                doubaoDesc: "生成真实物理效果的网页游戏...",
+                doubaoTags: ["物理模拟", "游戏开发"],
+                scoreInteresting: 80,
+                scoreUseful: 12,
+                note: ""
+            },
+            {
+                id: 9,
+                name: "音乐播放器",
+                prompt: "模拟黑胶唱片，频谱可视化",
+                thumb: "assets/demos/b-music-player.mp4",
+                isVideo: true,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "一句话生成App",
+                abilities: ["代码狂魔", "视觉推理师"],
+                doubaoTitle: "多媒体应用生成",
+                doubaoDesc: "生成带视觉特效的音乐播放器...",
+                doubaoTags: ["音频可视化", "交互设计"],
+                scoreInteresting: 75,
+                scoreUseful: 16,
+                note: ""
+            },
+            {
+                id: 10,
+                name: "Web OS系统",
+                prompt: "类Windows系统，含文本编辑器、终端、游戏、画图",
+                thumb: "assets/demos/c-web-os.mp4",
+                isVideo: true,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "一句话生成App",
+                abilities: ["代码狂魔", "指令遵循王"],
+                doubaoTitle: "企业ERP自动化",
+                doubaoDesc: "利用OS Agent能力操作无API的内部系统...",
+                doubaoTags: ["OS Agent", "GUI操作"],
+                scoreInteresting: 80,
+                scoreUseful: 16,
+                note: ""
+            },
+            {
+                id: 11,
+                name: "macOS系统模拟",
+                prompt: "一句话生成macOS操作系统",
+                thumb: "assets/demos/c-macos-sim.gif",
+                isVideo: false,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "一句话生成App",
+                abilities: ["视觉推理师", "代码狂魔"],
+                doubaoTitle: "系统界面生成",
+                doubaoDesc: "理解并复刻复杂系统界面...",
+                doubaoTags: ["界面理解", "UI生成"],
+                scoreInteresting: 80,
+                scoreUseful: 12,
+                note: ""
+            },
+            {
+                id: 12,
+                name: "地图程序",
+                prompt: "搜索+定位功能完整地图",
+                thumb: "assets/demos/c-map-app.jpg",
+                isVideo: false,
+                views: "5分钟",
+                viewsNum: 50000,
+                scene: "一句话生成App",
+                abilities: ["代码狂魔", "Agent自动化"],
+                doubaoTitle: "API集成应用",
+                doubaoDesc: "快速生成调用外部API的完整应用...",
+                doubaoTags: ["API集成", "地图服务"],
+                scoreInteresting: 55,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 13,
+                name: "设计Agent",
+                prompt: "输入提示自动生成视频",
+                thumb: "assets/demos/c-design-agent.jpg",
+                isVideo: false,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "AI替你干活",
+                abilities: ["Agent自动化", "多模态输入"],
+                doubaoTitle: "创意内容Agent",
+                doubaoDesc: "自动化生成各类创意内容...",
+                doubaoTags: ["Agent能力", "多模态生成"],
+                scoreInteresting: 65,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 14,
+                name: "宇宙3D可视化",
+                prompt: "从质子到可观测宇宙的尺度旅程",
+                thumb: "assets/demos/d-universe-3d.mp4",
+                isVideo: true,
+                views: "官方",
+                viewsNum: 500000,
+                scene: "一句话出3D",
+                abilities: ["3D空间感", "视觉推理师"],
+                doubaoTitle: "科学可视化",
+                doubaoDesc: "复杂科学概念的3D可视化展示...",
+                doubaoTags: ["空间理解", "科学教育"],
+                scoreInteresting: 85,
+                scoreUseful: 16,
+                note: ""
+            },
+            {
+                id: 15,
+                name: "离子体流动可视化",
+                prompt: "托卡马克等离子体流动+诗歌",
+                thumb: "assets/demos/d-plasma-flow.mp4",
+                isVideo: true,
+                views: "官方",
+                viewsNum: 500000,
+                scene: "一句话出3D",
+                abilities: ["3D空间感", "物理引擎脑"],
+                doubaoTitle: "科学仿真",
+                doubaoDesc: "复杂物理现象的可视化仿真...",
+                doubaoTags: ["物理仿真", "可视化"],
+                scoreInteresting: 65,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 16,
+                name: "奶龙体素场景",
+                prompt: "樱花园中的奶龙，多层次细节",
+                thumb: "assets/demos/d-dragon-voxel.gif",
+                isVideo: false,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "一句话出3D",
+                abilities: ["3D空间感", "代码狂魔"],
+                doubaoTitle: "3D场景生成",
+                doubaoDesc: "根据描述生成精细3D体素场景...",
+                doubaoTags: ["3D建模", "体素艺术"],
+                scoreInteresting: 80,
+                scoreUseful: 12,
+                note: ""
+            },
+            {
+                id: 17,
+                name: "3D隧道躲避游戏",
+                prompt: "完整碰撞检测、速度计数器",
+                thumb: "assets/demos/d-tunnel-game.mp4",
+                isVideo: true,
+                views: "热门",
+                viewsNum: 300000,
+                scene: "一句话造游戏",
+                abilities: ["代码狂魔", "物理引擎脑"],
+                doubaoTitle: "3D游戏生成",
+                doubaoDesc: "生成完整的3D游戏机制...",
+                doubaoTags: ["游戏开发", "碰撞检测"],
+                scoreInteresting: 80,
+                scoreUseful: 12,
+                note: ""
+            },
+            {
+                id: 18,
+                name: "龙虾漫画",
+                prompt: "图像转线稿制作漫画开头",
+                thumb: "assets/demos/e-lobster-comic.mp4",
+                isVideo: true,
+                views: "200W+",
+                viewsNum: 2000000,
+                scene: "看图知一切",
+                abilities: ["视觉推理师", "多模态输入"],
+                doubaoTitle: "漫画风格转换",
+                doubaoDesc: "将真实图像转换为漫画风格...",
+                doubaoTags: ["风格转换", "图像理解"],
+                scoreInteresting: 80,
+                scoreUseful: 16,
+                note: ""
+            },
+            {
+                id: 19,
+                name: "辣椒牛肉面",
+                prompt: "生成带豆芽的辣椒牛肉面图像",
+                thumb: "assets/demos/e-beef-noodle.png",
+                isVideo: false,
+                views: "173W+",
+                viewsNum: 1730000,
+                scene: "看图知一切",
+                abilities: ["多模态输入", "视觉推理师"],
+                doubaoTitle: "美食图像生成",
+                doubaoDesc: "根据描述生成逼真美食图像...",
+                doubaoTags: ["图像生成", "细节理解"],
+                scoreInteresting: 65,
+                scoreUseful: 12,
+                note: ""
+            },
+            {
+                id: 20,
+                name: "手写食谱解读",
+                prompt: "翻译不同语言手写食谱",
+                thumb: "assets/demos/e-recipe-ocr.mp4",
+                isVideo: true,
+                views: "官方",
+                viewsNum: 500000,
+                scene: "看图知一切",
+                abilities: ["文档结构化", "多模态输入"],
+                doubaoTitle: "文档OCR解析",
+                doubaoDesc: "识别并结构化各类手写文档...",
+                doubaoTags: ["OCR", "多语言"],
+                scoreInteresting: 55,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 21,
+                name: "比赛分析",
+                prompt: "分析匹克球视频生成训练计划",
+                thumb: "assets/demos/e-match-analysis.mp4",
+                isVideo: true,
+                views: "官方",
+                viewsNum: 500000,
+                scene: "视频秒懂",
+                abilities: ["视频读秒器", "Agent自动化"],
+                doubaoTitle: "运动视频分析",
+                doubaoDesc: "分析运动视频生成训练建议...",
+                doubaoTags: ["视频理解", "运动分析"],
+                scoreInteresting: 65,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 22,
+                name: "飞行追踪应用",
+                prompt: "自主规划→编码→浏览器验证",
+                thumb: "assets/demos/f-flight-tracker.mp4",
+                isVideo: true,
+                views: "官方",
+                viewsNum: 500000,
+                scene: "AI替你干活",
+                abilities: ["Agent自动化", "代码狂魔"],
+                doubaoTitle: "端到端开发Agent",
+                doubaoDesc: "从规划到验证的完整开发流程...",
+                doubaoTags: ["端到端", "Agent"],
+                scoreInteresting: 65,
+                scoreUseful: 20,
+                note: ""
+            },
+            {
+                id: 23,
+                name: "收件箱整理",
+                prompt: "预约本地服务或整理收件箱",
+                thumb: "assets/demos/f-inbox-org.mp4",
+                isVideo: true,
+                views: "官方",
+                viewsNum: 500000,
+                scene: "AI替你干活",
+                abilities: ["Agent自动化", "指令遵循王"],
+                doubaoTitle: "邮件自动化",
+                doubaoDesc: "智能整理和处理邮件...",
+                doubaoTags: ["邮件处理", "自动化"],
+                scoreInteresting: 55,
+                scoreUseful: 20,
+                note: ""
+            }
+        ];
+
+        // Ability color mapping
+        const abilityColors = {
+            "多模态输入": "multimodal",
+            "代码狂魔": "coding",
+            "3D空间感": "space",
+            "物理引擎脑": "physics",
+            "Agent自动化": "agent",
+            "指令遵循王": "instruction",
+            "视觉推理师": "vision",
+            "视频读秒器": "video",
+            "长文不遗忘": "context",
+            "文档结构化": "document"
+        };
+
+        // Load notes from localStorage
+        function loadNotes() {
+            const saved = localStorage.getItem('demoNotes');
+            if (saved) {
+                const notes = JSON.parse(saved);
+                demoData.forEach(demo => {
+                    if (notes[demo.id]) {
+                        demo.note = notes[demo.id];
+                    }
+                });
+            }
+        }
+
+        // Save notes to localStorage
+        function saveNote(id, note) {
+            const saved = localStorage.getItem('demoNotes') || '{}';
+            const notes = JSON.parse(saved);
+            notes[id] = note;
+            localStorage.setItem('demoNotes', JSON.stringify(notes));
+            showToast('备注已保存');
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Get score class
+        function getScoreClass(total) {
+            if (total >= 80) return 'excellent';
+            if (total >= 60) return 'good';
+            return 'average';
+        }
+
+        // Render table
+        function renderTable(data) {
+            const tbody = document.getElementById('demoTableBody');
+            tbody.innerHTML = data.map((demo, index) => {
+                const total = demo.scoreInteresting + demo.scoreUseful;
+                const scoreClass = getScoreClass(total);
+                const rankClass = index < 3 ? `rank-${index + 1}` : 'rank-default';
+
+                return `
+                    <tr data-id="${demo.id}">
+                        <td class="col-rank">
+                            <span class="rank-badge ${rankClass}">#${index + 1}</span>
+                        </td>
+                        <td class="col-demo-info">
+                            <div class="demo-name">${demo.name}</div>
+                            <div class="demo-prompt">${demo.prompt}</div>
+                        </td>
+                        <td class="col-preview">
+                            <div class="preview-wrapper" onclick="openLightbox('${demo.thumb}', '${demo.name}', ${demo.isVideo})">
+                                ${demo.isVideo ? `
+                                    <video src="${demo.thumb}" class="preview-thumb" muted preload="metadata"></video>
+                                    <span class="video-icon"></span>
+                                ` : `
+                                    <img src="${demo.thumb}" class="preview-thumb" alt="${demo.name}" onerror="this.style.display='none'">
+                                `}
+                            </div>
+                        </td>
+                        <td class="col-views">
+                            <span class="views-badge">
+                                <span class="views-hot">🔥</span>
+                                ${demo.views}
+                            </span>
+                        </td>
+                        <td class="col-scene">
+                            <span class="scene-tag">${demo.scene}</span>
+                        </td>
+                        <td class="col-abilities">
+                            <div class="ability-tags">
+                                ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td class="col-doubao">
+                            <div class="doubao-card">
+                                <div class="doubao-title">💡 ${demo.doubaoTitle}</div>
+                                <div class="doubao-desc">${demo.doubaoDesc}</div>
+                                <div class="doubao-tags">
+                                    ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-score">
+                            <div class="score-circle ${scoreClass}">
+                                <span class="score-number">${total}</span>
+                                <span class="score-label">分</span>
+                            </div>
+                            <div class="score-detail">
+                                <div class="score-item"><span>趣${demo.scoreInteresting}</span><span>用${demo.scoreUseful}</span></div>
+                            </div>
+                        </td>
+                        <td class="col-notes">
+                            <div class="note-display ${demo.note ? '' : 'empty'}" onclick="startEditNote(${demo.id})" id="noteDisplay${demo.id}">
+                                ${demo.note || '添加备注'}
+                            </div>
+                            <div class="note-edit" id="noteEdit${demo.id}">
+                                <textarea id="noteTextarea${demo.id}">${demo.note || ''}</textarea>
+                                <div class="note-actions">
+                                    <button class="note-btn save" onclick="saveNoteClick(${demo.id})">保存</button>
+                                    <button class="note-btn cancel" onclick="cancelEditNote(${demo.id})">取消</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Filter and sort data
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sceneFilter = document.getElementById('sceneFilter').value;
+            const abilityFilter = document.getElementById('abilityFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            let filtered = demoData.filter(demo => {
+                // Search filter
+                if (searchTerm && !demo.name.toLowerCase().includes(searchTerm) && !demo.prompt.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                // Scene filter
+                if (sceneFilter && demo.scene !== sceneFilter) {
+                    return false;
+                }
+                // Ability filter
+                if (abilityFilter && !demo.abilities.includes(abilityFilter)) {
+                    return false;
+                }
+                // Score filter
+                const total = demo.scoreInteresting + demo.scoreUseful;
+                if (scoreFilter === 'excellent' && total < 80) return false;
+                if (scoreFilter === 'good' && (total < 60 || total >= 80)) return false;
+                if (scoreFilter === 'average' && total >= 60) return false;
+
+                return true;
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                const totalA = a.scoreInteresting + a.scoreUseful;
+                const totalB = b.scoreInteresting + b.scoreUseful;
+
+                switch (sortFilter) {
+                    case 'score-desc': return totalB - totalA;
+                    case 'score-asc': return totalA - totalB;
+                    case 'views-desc': return b.viewsNum - a.viewsNum;
+                    case 'name-asc': return a.name.localeCompare(b.name, 'zh-CN');
+                    default: return totalB - totalA;
+                }
+            });
+
+            renderTable(filtered);
+        }
+
+        // Lightbox functions
+        function openLightbox(src, title, isVideo) {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightboxContent');
+            const titleEl = document.getElementById('lightboxTitle');
+
+            if (isVideo) {
+                content.innerHTML = `<video src="${src}" controls autoplay></video>`;
+            } else {
+                content.innerHTML = `<img src="${src}" alt="${title}">`;
+            }
+            titleEl.textContent = title;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const video = lightbox.querySelector('video');
+            if (video) video.pause();
+            lightbox.classList.remove('active');
+        }
+
+        // Note editing functions
+        function startEditNote(id) {
+            document.getElementById(`noteDisplay${id}`).style.display = 'none';
+            document.getElementById(`noteEdit${id}`).style.display = 'block';
+            document.getElementById(`noteTextarea${id}`).focus();
+        }
+
+        function cancelEditNote(id) {
+            document.getElementById(`noteDisplay${id}`).style.display = 'block';
+            document.getElementById(`noteEdit${id}`).style.display = 'none';
+        }
+
+        function saveNoteClick(id) {
+            const note = document.getElementById(`noteTextarea${id}`).value.trim();
+            const demo = demoData.find(d => d.id === id);
+            demo.note = note;
+            saveNote(id, note);
+
+            const display = document.getElementById(`noteDisplay${id}`);
+            display.textContent = note || '添加备注';
+            display.className = `note-display ${note ? '' : 'empty'}`;
+
+            cancelEditNote(id);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('sceneFilter').addEventListener('change', filterData);
+        document.getElementById('abilityFilter').addEventListener('change', filterData);
+        document.getElementById('scoreFilter').addEventListener('change', filterData);
+        document.getElementById('sortFilter').addEventListener('change', filterData);
+
+        // Quick filters
+        document.querySelectorAll('.quick-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.quick-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('sceneFilter').value = btn.dataset.scene;
+                filterData();
+            });
+        });
+
+        // Lightbox close on click outside
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Initialize
+        loadNotes();
+        filterData();
+    </script>
+</body>
+</html>
