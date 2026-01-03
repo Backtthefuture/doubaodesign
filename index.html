@@ -695,6 +695,20 @@
             throw new Error('Failed to fetch records: ' + (data.error || data.msg));
         }
 
+        // 回退方案：单独获取媒体 URL（当服务端批量获取失败时使用）
+        async function getMediaUrl(fileToken) {
+            try {
+                const response = await fetch(`${API_BASE}/media?token=${fileToken}`);
+                const data = await response.json();
+                if (data.code === 0 && data.data.tmp_download_urls && data.data.tmp_download_urls.length > 0) {
+                    return data.data.tmp_download_urls[0].tmp_download_url;
+                }
+            } catch (e) {
+                console.error('Failed to get media URL:', e);
+            }
+            return null;
+        }
+
         // ========== 数据转换 ==========
         function transformRecord(record) {
             const fields = record.fields;
@@ -784,93 +798,127 @@
             });
         }
 
-        // 渲染表格（优化版：使用预加载的媒体 URL，不再需要异步请求）
-        function renderTable(data) {
+        // 渲染表格（支持预加载的媒体 URL，如果没有则显示占位符后异步加载）
+        async function renderTable(data) {
             const tbody = document.getElementById('demoTableBody');
 
-            const rows = data.map((demo, index) => {
-                const total = demo.scoreInteresting + demo.scoreUseful;
-                const scoreClass = getScoreClass(total);
-                const rankClass = index < 3 ? `rank-${index + 1}` : 'rank-default';
+            // 检查是否有预加载的媒体 URL
+            const hasPreloadedMedia = data.some(d => d.mediaUrl);
+            console.log('预加载媒体 URL 数量:', data.filter(d => d.mediaUrl).length, '/', data.length);
 
-                // 直接使用服务端预加载的媒体 URL
-                let previewHtml = '<div class="preview-placeholder">无预览</div>';
-                const url = demo.mediaUrl;
+            // 如果没有预加载的媒体 URL，需要回退到单独请求
+            if (!hasPreloadedMedia) {
+                console.log('服务端未返回预加载媒体 URL，回退到单独请求模式...');
+                // 先渲染表格（无预览），然后异步加载媒体
+                const rows = data.map((demo, index) => renderRow(demo, index, null));
+                tbody.innerHTML = rows.join('');
 
-                if (url) {
-                    if (demo.isVideo || (demo.previewFile && demo.previewFile.type?.includes('video'))) {
-                        previewHtml = `
-                            <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', true)">
-                                <video src="${url}" class="preview-thumb" muted preload="metadata"></video>
-                                <span class="video-icon"></span>
-                            </div>`;
-                    } else {
-                        previewHtml = `
-                            <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', false)">
-                                <img src="${url}" class="preview-thumb" alt="${demo.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=preview-placeholder>加载失败</div>'">
-                            </div>`;
+                // 异步加载媒体 URL
+                for (const demo of data) {
+                    if (demo.previewFile && demo.previewFile.file_token) {
+                        const url = await getMediaUrl(demo.previewFile.file_token);
+                        if (url) {
+                            demo.mediaUrl = url;
+                            // 更新对应行的预览
+                            const row = tbody.querySelector(`tr[data-id="${demo.id}"]`);
+                            if (row) {
+                                const previewCell = row.querySelector('.col-preview');
+                                if (previewCell) {
+                                    previewCell.innerHTML = getPreviewHtml(demo, url);
+                                }
+                            }
+                        }
                     }
                 }
+            } else {
+                // 使用预加载的媒体 URL 直接渲染
+                const rows = data.map((demo, index) => renderRow(demo, index, demo.mediaUrl));
+                tbody.innerHTML = rows.join('');
+            }
+        }
 
+        // 获取预览 HTML
+        function getPreviewHtml(demo, url) {
+            if (!url) {
+                return '<div class="preview-placeholder">无预览</div>';
+            }
+            if (demo.isVideo || (demo.previewFile && demo.previewFile.type?.includes('video'))) {
                 return `
-                    <tr data-id="${demo.id}">
-                        <td class="col-rank">
-                            <span class="rank-badge ${rankClass}">#${index + 1}</span>
-                        </td>
-                        <td class="col-demo-info">
-                            <div class="demo-name">${demo.name}</div>
-                            <div class="demo-prompt">${demo.prompt}</div>
-                        </td>
-                        <td class="col-preview">${previewHtml}</td>
-                        <td class="col-views">
-                            <span class="views-badge">
-                                <span class="views-hot">🔥</span>
-                                ${demo.views}
-                            </span>
-                        </td>
-                        <td class="col-scene">
-                            <span class="scene-tag">${demo.scene}</span>
-                        </td>
-                        <td class="col-abilities">
-                            <div class="ability-tags">
-                                ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
-                            </div>
-                        </td>
-                        <td class="col-doubao">
-                            <div class="doubao-card">
-                                <div class="doubao-title">💡 ${demo.doubaoTitle}</div>
-                                <div class="doubao-desc">${demo.doubaoDesc}</div>
-                                <div class="doubao-tags">
-                                    ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-score">
-                            <div class="score-circle ${scoreClass}">
-                                <span class="score-number">${total}</span>
-                                <span class="score-label">分</span>
-                            </div>
-                            <div class="score-detail">
-                                <div class="score-item"><span>趣${demo.scoreInteresting}</span><span>用${demo.scoreUseful}</span></div>
-                            </div>
-                        </td>
-                        <td class="col-notes">
-                            <div class="note-display ${demo.note ? '' : 'empty'}" onclick="startEditNote('${demo.id}')" id="noteDisplay${demo.id}">
-                                ${demo.note || '添加备注'}
-                            </div>
-                            <div class="note-edit" id="noteEdit${demo.id}">
-                                <textarea id="noteTextarea${demo.id}">${demo.note || ''}</textarea>
-                                <div class="note-actions">
-                                    <button class="note-btn save" onclick="saveNoteClick('${demo.id}')">保存</button>
-                                    <button class="note-btn cancel" onclick="cancelEditNote('${demo.id}')">取消</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
+                    <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', true)">
+                        <video src="${url}" class="preview-thumb" muted preload="metadata"></video>
+                        <span class="video-icon"></span>
+                    </div>`;
+            } else {
+                return `
+                    <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', false)">
+                        <img src="${url}" class="preview-thumb" alt="${demo.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=preview-placeholder>加载失败</div>'">
+                    </div>`;
+            }
+        }
 
-            tbody.innerHTML = rows.join('');
+        // 渲染单行
+        function renderRow(demo, index, url) {
+            const total = demo.scoreInteresting + demo.scoreUseful;
+            const scoreClass = getScoreClass(total);
+            const rankClass = index < 3 ? `rank-${index + 1}` : 'rank-default';
+            const previewHtml = getPreviewHtml(demo, url);
+
+            return `
+                <tr data-id="${demo.id}">
+                    <td class="col-rank">
+                        <span class="rank-badge ${rankClass}">#${index + 1}</span>
+                    </td>
+                    <td class="col-demo-info">
+                        <div class="demo-name">${demo.name}</div>
+                        <div class="demo-prompt">${demo.prompt}</div>
+                    </td>
+                    <td class="col-preview">${previewHtml}</td>
+                    <td class="col-views">
+                        <span class="views-badge">
+                            <span class="views-hot">🔥</span>
+                            ${demo.views}
+                        </span>
+                    </td>
+                    <td class="col-scene">
+                        <span class="scene-tag">${demo.scene}</span>
+                    </td>
+                    <td class="col-abilities">
+                        <div class="ability-tags">
+                            ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
+                        </div>
+                    </td>
+                    <td class="col-doubao">
+                        <div class="doubao-card">
+                            <div class="doubao-title">💡 ${demo.doubaoTitle}</div>
+                            <div class="doubao-desc">${demo.doubaoDesc}</div>
+                            <div class="doubao-tags">
+                                ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-score">
+                        <div class="score-circle ${scoreClass}">
+                            <span class="score-number">${total}</span>
+                            <span class="score-label">分</span>
+                        </div>
+                        <div class="score-detail">
+                            <div class="score-item"><span>趣${demo.scoreInteresting}</span><span>用${demo.scoreUseful}</span></div>
+                        </div>
+                    </td>
+                    <td class="col-notes">
+                        <div class="note-display ${demo.note ? '' : 'empty'}" onclick="startEditNote('${demo.id}')" id="noteDisplay${demo.id}">
+                            ${demo.note || '添加备注'}
+                        </div>
+                        <div class="note-edit" id="noteEdit${demo.id}">
+                            <textarea id="noteTextarea${demo.id}">${demo.note || ''}</textarea>
+                            <div class="note-actions">
+                                <button class="note-btn save" onclick="saveNoteClick('${demo.id}')">保存</button>
+                                <button class="note-btn cancel" onclick="cancelEditNote('${demo.id}')">取消</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
         }
 
         function filterData() {
@@ -1009,7 +1057,7 @@
                 // Update UI
                 updateStats();
                 populateFilters();
-                renderTable(demoData);
+                await renderTable(demoData);
 
                 // Success
                 badge.className = 'header-badge';

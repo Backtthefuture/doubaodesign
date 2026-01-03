@@ -95,8 +95,9 @@ async function batchGetMediaUrls(token, fileTokens) {
   // 并行请求所有批次
   const results = await Promise.all(
     batches.map(async (batch) => {
-      const tokenParams = batch.join(',');
-      const url = `https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=${tokenParams}`;
+      // 飞书 API 要求多个 file_token 用 & 分隔的多个参数传递
+      const tokenParams = batch.map(t => `file_tokens=${t}`).join('&');
+      const url = `https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?${tokenParams}`;
 
       try {
         const response = await fetch(url, {
@@ -104,11 +105,15 @@ async function batchGetMediaUrls(token, fileTokens) {
         });
         const data = await response.json();
 
+        console.log('批量获取媒体 URL 响应:', JSON.stringify(data).slice(0, 500));
+
         if (data.code === 0 && data.data?.tmp_download_urls) {
           return data.data.tmp_download_urls;
+        } else {
+          console.error('批量获取媒体 URL 失败, code:', data.code, 'msg:', data.msg);
         }
       } catch (e) {
-        console.error('批量获取媒体 URL 失败:', e);
+        console.error('批量获取媒体 URL 异常:', e);
       }
       return [];
     })
@@ -120,6 +125,8 @@ async function batchGetMediaUrls(token, fileTokens) {
       mediaUrlMap[item.file_token] = item.tmp_download_url;
     }
   });
+
+  console.log('成功获取媒体 URL 数量:', Object.keys(mediaUrlMap).length, '/', fileTokens.length);
 
   return mediaUrlMap;
 }
