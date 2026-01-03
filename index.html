@@ -449,6 +449,31 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Skeleton Loading */
+        .skeleton-row { display: flex; align-items: center; padding: 16px; border-bottom: 1px solid var(--border-light); }
+        .skeleton-cell { margin-right: 16px; }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+        }
+        .skeleton-rank { width: 32px; height: 32px; border-radius: 50%; }
+        .skeleton-info { flex: 1; }
+        .skeleton-title { width: 180px; height: 18px; margin-bottom: 8px; }
+        .skeleton-text { width: 280px; height: 14px; }
+        .skeleton-thumb { width: 80px; height: 50px; }
+        .skeleton-badge { width: 60px; height: 24px; border-radius: 12px; }
+        .skeleton-tag { width: 80px; height: 28px; border-radius: 14px; }
+        .skeleton-tags { display: flex; gap: 6px; }
+        .skeleton-card { width: 200px; height: 80px; border-radius: var(--radius-md); }
+        .skeleton-score { width: 56px; height: 56px; border-radius: 50%; }
+        .skeleton-note { width: 120px; height: 60px; }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
         /* Toast */
         .toast {
             position: fixed;
@@ -566,13 +591,61 @@
                     </tr>
                 </thead>
                 <tbody id="demoTableBody">
-                    <tr>
-                        <td colspan="9">
-                            <div class="loading-state">
-                                <div class="loading-spinner"></div>
-                                <div>正在从飞书加载数据...</div>
-                            </div>
-                        </td>
+                    <!-- 骨架屏加载效果 -->
+                    <tr class="skeleton-row">
+                        <td><div class="skeleton skeleton-rank"></div></td>
+                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                        <td><div class="skeleton skeleton-thumb"></div></td>
+                        <td><div class="skeleton skeleton-badge"></div></td>
+                        <td><div class="skeleton skeleton-tag"></div></td>
+                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
+                        <td><div class="skeleton skeleton-card"></div></td>
+                        <td><div class="skeleton skeleton-score"></div></td>
+                        <td><div class="skeleton skeleton-note"></div></td>
+                    </tr>
+                    <tr class="skeleton-row">
+                        <td><div class="skeleton skeleton-rank"></div></td>
+                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                        <td><div class="skeleton skeleton-thumb"></div></td>
+                        <td><div class="skeleton skeleton-badge"></div></td>
+                        <td><div class="skeleton skeleton-tag"></div></td>
+                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
+                        <td><div class="skeleton skeleton-card"></div></td>
+                        <td><div class="skeleton skeleton-score"></div></td>
+                        <td><div class="skeleton skeleton-note"></div></td>
+                    </tr>
+                    <tr class="skeleton-row">
+                        <td><div class="skeleton skeleton-rank"></div></td>
+                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                        <td><div class="skeleton skeleton-thumb"></div></td>
+                        <td><div class="skeleton skeleton-badge"></div></td>
+                        <td><div class="skeleton skeleton-tag"></div></td>
+                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
+                        <td><div class="skeleton skeleton-card"></div></td>
+                        <td><div class="skeleton skeleton-score"></div></td>
+                        <td><div class="skeleton skeleton-note"></div></td>
+                    </tr>
+                    <tr class="skeleton-row">
+                        <td><div class="skeleton skeleton-rank"></div></td>
+                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                        <td><div class="skeleton skeleton-thumb"></div></td>
+                        <td><div class="skeleton skeleton-badge"></div></td>
+                        <td><div class="skeleton skeleton-tag"></div></td>
+                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
+                        <td><div class="skeleton skeleton-card"></div></td>
+                        <td><div class="skeleton skeleton-score"></div></td>
+                        <td><div class="skeleton skeleton-note"></div></td>
+                    </tr>
+                    <tr class="skeleton-row">
+                        <td><div class="skeleton skeleton-rank"></div></td>
+                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                        <td><div class="skeleton skeleton-thumb"></div></td>
+                        <td><div class="skeleton skeleton-badge"></div></td>
+                        <td><div class="skeleton skeleton-tag"></div></td>
+                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
+                        <td><div class="skeleton skeleton-card"></div></td>
+                        <td><div class="skeleton skeleton-score"></div></td>
+                        <td><div class="skeleton skeleton-note"></div></td>
                     </tr>
                 </tbody>
             </table>
@@ -596,7 +669,6 @@
 
         // 全局数据
         let demoData = [];
-        let mediaUrls = {}; // 缓存媒体URL
 
         // Ability color mapping
         const abilityColors = {
@@ -612,9 +684,8 @@
             "文档结构化": "document"
         };
 
-        // ========== EdgeOne API 函数 ==========
-        // 通过 EdgeOne 边缘函数代理调用飞书 API，无需在前端暴露密钥
-
+        // ========== API 函数 ==========
+        // 获取飞书多维表格记录（服务端已预加载所有媒体 URL）
         async function fetchRecords() {
             const response = await fetch(`${API_BASE}/records`);
             const data = await response.json();
@@ -624,28 +695,10 @@
             throw new Error('Failed to fetch records: ' + (data.error || data.msg));
         }
 
-        async function getMediaUrl(fileToken) {
-            if (mediaUrls[fileToken]) {
-                return mediaUrls[fileToken];
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/media?token=${fileToken}`);
-                const data = await response.json();
-                if (data.code === 0 && data.data.tmp_download_urls && data.data.tmp_download_urls.length > 0) {
-                    const url = data.data.tmp_download_urls[0].tmp_download_url;
-                    mediaUrls[fileToken] = url;
-                    return url;
-                }
-            } catch (e) {
-                console.error('Failed to get media URL:', e);
-            }
-            return null;
-        }
-
         // ========== 数据转换 ==========
         function transformRecord(record) {
             const fields = record.fields;
+            const previewFile = fields['预览文件'] && fields['预览文件'][0] ? fields['预览文件'][0] : null;
             return {
                 id: record.record_id,
                 name: fields['Demo名称'] || '',
@@ -661,7 +714,9 @@
                 scoreInteresting: parseInt(fields['趣味分']) || 0,
                 scoreUseful: parseInt(fields['实用分']) || 0,
                 note: fields['备注'] || '',
-                previewFile: fields['预览文件'] && fields['预览文件'][0] ? fields['预览文件'][0] : null
+                previewFile: previewFile,
+                // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
+                mediaUrl: fields['_mediaUrl'] || null
             };
         }
 
@@ -729,31 +784,31 @@
             });
         }
 
-        async function renderTable(data) {
+        // 渲染表格（优化版：使用预加载的媒体 URL，不再需要异步请求）
+        function renderTable(data) {
             const tbody = document.getElementById('demoTableBody');
 
-            const rows = await Promise.all(data.map(async (demo, index) => {
+            const rows = data.map((demo, index) => {
                 const total = demo.scoreInteresting + demo.scoreUseful;
                 const scoreClass = getScoreClass(total);
                 const rankClass = index < 3 ? `rank-${index + 1}` : 'rank-default';
 
-                // Get media URL if available
+                // 直接使用服务端预加载的媒体 URL
                 let previewHtml = '<div class="preview-placeholder">无预览</div>';
-                if (demo.previewFile) {
-                    const url = await getMediaUrl(demo.previewFile.file_token);
-                    if (url) {
-                        if (demo.isVideo || demo.previewFile.type?.includes('video')) {
-                            previewHtml = `
-                                <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', true)">
-                                    <video src="${url}" class="preview-thumb" muted preload="metadata"></video>
-                                    <span class="video-icon"></span>
-                                </div>`;
-                        } else {
-                            previewHtml = `
-                                <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', false)">
-                                    <img src="${url}" class="preview-thumb" alt="${demo.name}" onerror="this.parentElement.innerHTML='<div class=preview-placeholder>加载失败</div>'">
-                                </div>`;
-                        }
+                const url = demo.mediaUrl;
+
+                if (url) {
+                    if (demo.isVideo || (demo.previewFile && demo.previewFile.type?.includes('video'))) {
+                        previewHtml = `
+                            <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', true)">
+                                <video src="${url}" class="preview-thumb" muted preload="metadata"></video>
+                                <span class="video-icon"></span>
+                            </div>`;
+                    } else {
+                        previewHtml = `
+                            <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', false)">
+                                <img src="${url}" class="preview-thumb" alt="${demo.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=preview-placeholder>加载失败</div>'">
+                            </div>`;
                     }
                 }
 
@@ -813,7 +868,7 @@
                         </td>
                     </tr>
                 `;
-            }));
+            });
 
             tbody.innerHTML = rows.join('');
         }
@@ -954,7 +1009,7 @@
                 // Update UI
                 updateStats();
                 populateFilters();
-                await renderTable(demoData);
+                renderTable(demoData);
 
                 // Success
                 badge.className = 'header-badge';
