@@ -709,6 +709,30 @@
             return null;
         }
 
+        // 更新飞书多维表格记录
+        async function updateRecord(recordId, fields) {
+            try {
+                const response = await fetch(`${API_BASE}/update-record`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        record_id: recordId,
+                        fields: fields
+                    })
+                });
+                const data = await response.json();
+                if (data.code === 0) {
+                    return true;
+                } else {
+                    console.error('Update failed:', data.error);
+                    return false;
+                }
+            } catch (e) {
+                console.error('Update record error:', e);
+                return false;
+            }
+        }
+
         // ========== 数据转换 ==========
         function transformRecord(record) {
             const fields = record.fields;
