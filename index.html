@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>热门Demo分析详情 - 飞书数据源</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Apple Design System Colors */
+            --bg-primary: #f5f5f7;
+            --bg-card: #ffffff;
+            --bg-hover: #fbfbfd;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent-blue: #0071e3;
+            --accent-blue-hover: #0077ed;
+            --accent-green: #34c759;
+            --accent-orange: #ff9500;
+            --accent-red: #ff3b30;
+            --accent-purple: #af52de;
+            --accent-pink: #ff2d55;
+            --border-color: #d2d2d7;
+            --border-light: #e8e8ed;
+            --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title { font-size: 21px; font-weight: 600; color: var(--text-primary); }
+        .header-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #34c759, #30d158);
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .header-badge.loading { background: linear-gradient(135deg, #ff9500, #ffb340); }
+        .header-badge.error { background: linear-gradient(135deg, #ff3b30, #ff453a); }
+
+        /* Main Container */
+        .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+
+        /* Stats Cards */
+        .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .stat-number { font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px; }
+        .stat-label { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 24px;
+        }
+        .filter-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .search-box { flex: 1; min-width: 280px; position: relative; }
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            background: var(--bg-primary);
+            transition: all 0.2s ease;
+        }
+        .search-box input:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
+        .search-box::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2386868b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E") no-repeat center;
+        }
+        .filter-select {
+            padding: 12px 36px 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            background: var(--bg-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2386868b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") no-repeat right 12px center;
+            background-size: 16px;
+            cursor: pointer;
+            appearance: none;
+            min-width: 140px;
+        }
+        .filter-select:focus { outline: none; border-color: var(--accent-blue); }
+        .quick-filters { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+        .quick-filter {
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .quick-filter:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .quick-filter.active { background: var(--accent-blue); border-color: var(--accent-blue); color: white; }
+
+        /* Table Container */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        /* Demo Table */
+        .demo-table { width: 100%; border-collapse: collapse; }
+        .demo-table thead th {
+            background: var(--bg-primary);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+        }
+        .demo-table tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.2s ease; }
+        .demo-table tbody tr:hover { background: var(--bg-hover); }
+        .demo-table tbody tr:last-child { border-bottom: none; }
+        .demo-table td { padding: 16px; vertical-align: top; }
+
+        /* Column Styles */
+        .col-rank { width: 60px; text-align: center; }
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #ffb800); color: #5a4800; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #4a4a4a; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b56b20); color: #3d2500; }
+        .rank-default { background: var(--bg-primary); color: var(--text-secondary); }
+
+        .col-demo-info { min-width: 240px; }
+        .demo-name { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+        .demo-prompt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .col-preview { width: 100px; }
+        .preview-thumb {
+            width: 80px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+        }
+        .preview-thumb:hover { transform: scale(1.05); box-shadow: var(--shadow-hover); }
+        .preview-wrapper { position: relative; display: inline-block; }
+        .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .video-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid white;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            margin-left: 2px;
+        }
+        .preview-placeholder {
+            width: 80px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            border: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 11px;
+        }
+
+        .col-views { width: 90px; }
+        .views-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        .views-hot { font-size: 10px; }
+
+        .col-scene { width: 130px; }
+        .scene-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #e8f4fd, #d4e9fc);
+            border: 1px solid #b8d9f8;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #0066cc;
+            white-space: nowrap;
+        }
+
+        .col-abilities { width: 160px; }
+        .ability-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .ability-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .ability-tag.multimodal { background: #fef3e2; color: #b85c00; }
+        .ability-tag.coding { background: #e8f5e9; color: #2e7d32; }
+        .ability-tag.agent { background: #f3e5f5; color: #7b1fa2; }
+        .ability-tag.vision { background: #e3f2fd; color: #1565c0; }
+        .ability-tag.instruction { background: #fff3e0; color: #e65100; }
+        .ability-tag.space { background: #e0f2f1; color: #00695c; }
+        .ability-tag.physics { background: #fce4ec; color: #c2185b; }
+        .ability-tag.context { background: #ede7f6; color: #512da8; }
+        .ability-tag.document { background: #e8eaf6; color: #3949ab; }
+        .ability-tag.video { background: #fff8e1; color: #ff8f00; }
+
+        .col-doubao { min-width: 220px; }
+        .doubao-card {
+            background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+            border: 1px solid #ffe0b2;
+            border-radius: var(--radius-md);
+            padding: 12px;
+        }
+        .doubao-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .doubao-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .doubao-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+        .doubao-tag {
+            padding: 2px 6px;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 4px;
+            font-size: 10px;
+            color: #e65100;
+        }
+
+        .col-score { width: 90px; text-align: center; }
+        .score-circle {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0071e3, #00a0e3);
+            color: white;
+            margin-bottom: 6px;
+        }
+        .score-circle.excellent { background: linear-gradient(135deg, #34c759, #30d158); }
+        .score-circle.good { background: linear-gradient(135deg, #0071e3, #00a0e3); }
+        .score-circle.average { background: linear-gradient(135deg, #ff9500, #ffb340); }
+        .score-number { font-size: 18px; font-weight: 700; }
+        .score-label { font-size: 9px; opacity: 0.9; }
+        .score-detail { font-size: 11px; color: var(--text-secondary); }
+        .score-item { display: flex; justify-content: space-between; gap: 8px; }
+
+        .col-notes { width: 140px; }
+        .note-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            min-height: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .note-display:hover { border-color: var(--accent-blue); background: white; }
+        .note-display.empty { color: var(--text-tertiary); font-style: italic; }
+        .note-display.empty::before { content: '+ '; }
+        .note-edit { display: none; }
+        .note-edit textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        .note-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .note-btn { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; border: none; }
+        .note-btn.save { background: var(--accent-blue); color: white; }
+        .note-btn.cancel { background: var(--bg-primary); color: var(--text-secondary); }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox-content { max-width: 90vw; max-height: 85vh; border-radius: var(--radius-lg); overflow: hidden; }
+        .lightbox-content img, .lightbox-content video { max-width: 90vw; max-height: 85vh; object-fit: contain; }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.25); }
+        .lightbox-title {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Loading State */
+        .loading-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-light);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1d1d1f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1100;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .col-doubao { display: none; }
+        }
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .filter-row { flex-direction: column; align-items: stretch; }
+            .search-box { min-width: 100%; }
+            .demo-table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1 class="header-title">热门Demo分析详情</h1>
+                <p class="header-subtitle">2025年12月 · <span id="demoCount">加载中...</span> · 飞书数据源</p>
+            </div>
+            <div class="header-badge loading" id="dataBadge">
+                <span>数据加载中...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number" id="statTotal">--</div>
+                <div class="stat-label">分析Demo数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statExcellent">--</div>
+                <div class="stat-label">优秀(>=80)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statGood">--</div>
+                <div class="stat-label">良好(60-79)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statViews">--</div>
+                <div class="stat-label">累计观看</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statAvg">--</div>
+                <div class="stat-label">平均评分</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索Demo名称或Prompt关键词...">
+                </div>
+                <select class="filter-select" id="sceneFilter">
+                    <option value="">全部场景</option>
+                </select>
+                <select class="filter-select" id="abilityFilter">
+                    <option value="">全部能力</option>
+                </select>
+                <select class="filter-select" id="scoreFilter">
+                    <option value="">全部分数</option>
+                    <option value="excellent">优秀(>=80)</option>
+                    <option value="good">良好(60-79)</option>
+                    <option value="average">一般(<60)</option>
+                </select>
+                <select class="filter-select" id="sortFilter">
+                    <option value="score-desc">按评分降序</option>
+                    <option value="score-asc">按评分升序</option>
+                    <option value="views-desc">按热度降序</option>
+                    <option value="name-asc">按名称排序</option>
+                </select>
+            </div>
+            <div class="quick-filters" id="quickFilters">
+                <button class="quick-filter active" data-scene="">全部</button>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <table class="demo-table">
+                <thead>
+                    <tr>
+                        <th class="col-rank">排名</th>
+                        <th class="col-demo-info">Demo名称 + Prompt</th>
+                        <th class="col-preview">预览</th>
+                        <th class="col-views">热度</th>
+                        <th class="col-scene">所属场景</th>
+                        <th class="col-abilities">模型能力</th>
+                        <th class="col-doubao">豆包创意</th>
+                        <th class="col-score">评分</th>
+                        <th class="col-notes">备注</th>
+                    </tr>
+                </thead>
+                <tbody id="demoTableBody">
+                    <tr>
+                        <td colspan="9">
+                            <div class="loading-state">
+                                <div class="loading-spinner"></div>
+                                <div>正在从飞书加载数据...</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <div class="lightbox-content" id="lightboxContent"></div>
+        <div class="lightbox-title" id="lightboxTitle"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ========== Vercel API 配置 ==========
+        // Vercel 部署后，API 路由在同域下，使用相对路径
+        const API_BASE = '/api';
+
+        // 全局数据
+        let demoData = [];
+        let mediaUrls = {}; // 缓存媒体URL
+
+        // Ability color mapping
+        const abilityColors = {
+            "多模态输入": "multimodal",
+            "代码狂魔": "coding",
+            "3D空间感": "space",
+            "物理引擎脑": "physics",
+            "Agent自动化": "agent",
+            "指令遵循王": "instruction",
+            "视觉推理师": "vision",
+            "视频读秒器": "video",
+            "长文不遗忘": "context",
+            "文档结构化": "document"
+        };
+
+        // ========== EdgeOne API 函数 ==========
+        // 通过 EdgeOne 边缘函数代理调用飞书 API，无需在前端暴露密钥
+
+        async function fetchRecords() {
+            const response = await fetch(`${API_BASE}/records`);
+            const data = await response.json();
+            if (data.code === 0) {
+                return data.data.items;
+            }
+            throw new Error('Failed to fetch records: ' + (data.error || data.msg));
+        }
+
+        async function getMediaUrl(fileToken) {
+            if (mediaUrls[fileToken]) {
+                return mediaUrls[fileToken];
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/media?token=${fileToken}`);
+                const data = await response.json();
+                if (data.code === 0 && data.data.tmp_download_urls && data.data.tmp_download_urls.length > 0) {
+                    const url = data.data.tmp_download_urls[0].tmp_download_url;
+                    mediaUrls[fileToken] = url;
+                    return url;
+                }
+            } catch (e) {
+                console.error('Failed to get media URL:', e);
+            }
+            return null;
+        }
+
+        // ========== 数据转换 ==========
+        function transformRecord(record) {
+            const fields = record.fields;
+            return {
+                id: record.record_id,
+                name: fields['Demo名称'] || '',
+                prompt: fields['Prompt描述'] || '',
+                isVideo: fields['是否视频'] || false,
+                views: fields['热度'] || '',
+                viewsNum: parseInt(fields['热度数值']) || 0,
+                scene: fields['所属场景'] || '',
+                abilities: fields['模型能力'] || [],
+                doubaoTitle: fields['豆包创意标题'] || '',
+                doubaoDesc: fields['豆包创意描述'] || '',
+                doubaoTags: (fields['豆包标签'] || '').split(',').map(t => t.trim()).filter(t => t),
+                scoreInteresting: parseInt(fields['趣味分']) || 0,
+                scoreUseful: parseInt(fields['实用分']) || 0,
+                note: fields['备注'] || '',
+                previewFile: fields['预览文件'] && fields['预览文件'][0] ? fields['预览文件'][0] : null
+            };
+        }
+
+        // ========== UI函数 ==========
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function getScoreClass(total) {
+            if (total >= 80) return 'excellent';
+            if (total >= 60) return 'good';
+            return 'average';
+        }
+
+        function updateStats() {
+            const total = demoData.length;
+            const excellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
+            const good = demoData.filter(d => {
+                const t = d.scoreInteresting + d.scoreUseful;
+                return t >= 60 && t < 80;
+            }).length;
+            const totalViews = demoData.reduce((sum, d) => sum + d.viewsNum, 0);
+            const avgScore = total > 0 ? (demoData.reduce((sum, d) => sum + d.scoreInteresting + d.scoreUseful, 0) / total).toFixed(1) : 0;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statExcellent').textContent = excellent;
+            document.getElementById('statGood').textContent = good;
+            document.getElementById('statViews').textContent = totalViews >= 10000000 ? (totalViews / 10000000).toFixed(0) + '千万+' : (totalViews / 10000).toFixed(0) + 'W+';
+            document.getElementById('statAvg').textContent = avgScore;
+            document.getElementById('demoCount').textContent = `共${total}个Demo`;
+        }
+
+        function populateFilters() {
+            const scenes = [...new Set(demoData.map(d => d.scene).filter(s => s))];
+            const abilities = [...new Set(demoData.flatMap(d => d.abilities))];
+
+            const sceneSelect = document.getElementById('sceneFilter');
+            scenes.forEach(scene => {
+                const option = document.createElement('option');
+                option.value = scene;
+                option.textContent = scene;
+                sceneSelect.appendChild(option);
+            });
+
+            const abilitySelect = document.getElementById('abilityFilter');
+            abilities.forEach(ability => {
+                const option = document.createElement('option');
+                option.value = ability;
+                option.textContent = ability;
+                abilitySelect.appendChild(option);
+            });
+
+            // Quick filters
+            const quickFilters = document.getElementById('quickFilters');
+            const topScenes = scenes.slice(0, 6);
+            topScenes.forEach(scene => {
+                const btn = document.createElement('button');
+                btn.className = 'quick-filter';
+                btn.dataset.scene = scene;
+                btn.textContent = scene;
+                quickFilters.appendChild(btn);
+            });
+        }
+
+        async function renderTable(data) {
+            const tbody = document.getElementById('demoTableBody');
+
+            const rows = await Promise.all(data.map(async (demo, index) => {
+                const total = demo.scoreInteresting + demo.scoreUseful;
+                const scoreClass = getScoreClass(total);
+                const rankClass = index < 3 ? `rank-${index + 1}` : 'rank-default';
+
+                // Get media URL if available
+                let previewHtml = '<div class="preview-placeholder">无预览</div>';
+                if (demo.previewFile) {
+                    const url = await getMediaUrl(demo.previewFile.file_token);
+                    if (url) {
+                        if (demo.isVideo || demo.previewFile.type?.includes('video')) {
+                            previewHtml = `
+                                <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', true)">
+                                    <video src="${url}" class="preview-thumb" muted preload="metadata"></video>
+                                    <span class="video-icon"></span>
+                                </div>`;
+                        } else {
+                            previewHtml = `
+                                <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', false)">
+                                    <img src="${url}" class="preview-thumb" alt="${demo.name}" onerror="this.parentElement.innerHTML='<div class=preview-placeholder>加载失败</div>'">
+                                </div>`;
+                        }
+                    }
+                }
+
+                return `
+                    <tr data-id="${demo.id}">
+                        <td class="col-rank">
+                            <span class="rank-badge ${rankClass}">#${index + 1}</span>
+                        </td>
+                        <td class="col-demo-info">
+                            <div class="demo-name">${demo.name}</div>
+                            <div class="demo-prompt">${demo.prompt}</div>
+                        </td>
+                        <td class="col-preview">${previewHtml}</td>
+                        <td class="col-views">
+                            <span class="views-badge">
+                                <span class="views-hot">🔥</span>
+                                ${demo.views}
+                            </span>
+                        </td>
+                        <td class="col-scene">
+                            <span class="scene-tag">${demo.scene}</span>
+                        </td>
+                        <td class="col-abilities">
+                            <div class="ability-tags">
+                                ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td class="col-doubao">
+                            <div class="doubao-card">
+                                <div class="doubao-title">💡 ${demo.doubaoTitle}</div>
+                                <div class="doubao-desc">${demo.doubaoDesc}</div>
+                                <div class="doubao-tags">
+                                    ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-score">
+                            <div class="score-circle ${scoreClass}">
+                                <span class="score-number">${total}</span>
+                                <span class="score-label">分</span>
+                            </div>
+                            <div class="score-detail">
+                                <div class="score-item"><span>趣${demo.scoreInteresting}</span><span>用${demo.scoreUseful}</span></div>
+                            </div>
+                        </td>
+                        <td class="col-notes">
+                            <div class="note-display ${demo.note ? '' : 'empty'}" onclick="startEditNote('${demo.id}')" id="noteDisplay${demo.id}">
+                                ${demo.note || '添加备注'}
+                            </div>
+                            <div class="note-edit" id="noteEdit${demo.id}">
+                                <textarea id="noteTextarea${demo.id}">${demo.note || ''}</textarea>
+                                <div class="note-actions">
+                                    <button class="note-btn save" onclick="saveNoteClick('${demo.id}')">保存</button>
+                                    <button class="note-btn cancel" onclick="cancelEditNote('${demo.id}')">取消</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }));
+
+            tbody.innerHTML = rows.join('');
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sceneFilter = document.getElementById('sceneFilter').value;
+            const abilityFilter = document.getElementById('abilityFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            let filtered = demoData.filter(demo => {
+                if (searchTerm && !demo.name.toLowerCase().includes(searchTerm) && !demo.prompt.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                if (sceneFilter && demo.scene !== sceneFilter) {
+                    return false;
+                }
+                if (abilityFilter && !demo.abilities.includes(abilityFilter)) {
+                    return false;
+                }
+                const total = demo.scoreInteresting + demo.scoreUseful;
+                if (scoreFilter === 'excellent' && total < 80) return false;
+                if (scoreFilter === 'good' && (total < 60 || total >= 80)) return false;
+                if (scoreFilter === 'average' && total >= 60) return false;
+                return true;
+            });
+
+            filtered.sort((a, b) => {
+                const totalA = a.scoreInteresting + a.scoreUseful;
+                const totalB = b.scoreInteresting + b.scoreUseful;
+                switch (sortFilter) {
+                    case 'score-desc': return totalB - totalA;
+                    case 'score-asc': return totalA - totalB;
+                    case 'views-desc': return b.viewsNum - a.viewsNum;
+                    case 'name-asc': return a.name.localeCompare(b.name, 'zh-CN');
+                    default: return totalB - totalA;
+                }
+            });
+
+            renderTable(filtered);
+        }
+
+        // ========== Lightbox ==========
+        function openLightbox(src, title, isVideo) {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightboxContent');
+            const titleEl = document.getElementById('lightboxTitle');
+
+            if (isVideo) {
+                content.innerHTML = `<video src="${src}" controls autoplay></video>`;
+            } else {
+                content.innerHTML = `<img src="${src}" alt="${title}">`;
+            }
+            titleEl.textContent = title;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const video = lightbox.querySelector('video');
+            if (video) video.pause();
+            lightbox.classList.remove('active');
+        }
+
+        // ========== Note Editing ==========
+        function startEditNote(id) {
+            document.getElementById(`noteDisplay${id}`).style.display = 'none';
+            document.getElementById(`noteEdit${id}`).style.display = 'block';
+            document.getElementById(`noteTextarea${id}`).focus();
+        }
+
+        function cancelEditNote(id) {
+            document.getElementById(`noteDisplay${id}`).style.display = 'block';
+            document.getElementById(`noteEdit${id}`).style.display = 'none';
+        }
+
+        async function saveNoteClick(id) {
+            const note = document.getElementById(`noteTextarea${id}`).value.trim();
+            const demo = demoData.find(d => d.id === id);
+            if (demo) {
+                demo.note = note;
+
+                // Update in Feishu
+                const success = await updateRecord(id, { '备注': note });
+                if (success) {
+                    showToast('备注已保存到飞书');
+                } else {
+                    showToast('保存失败，请重试');
+                }
+
+                const display = document.getElementById(`noteDisplay${id}`);
+                display.textContent = note || '添加备注';
+                display.className = `note-display ${note ? '' : 'empty'}`;
+            }
+            cancelEditNote(id);
+        }
+
+        // ========== Event Listeners ==========
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('sceneFilter').addEventListener('change', filterData);
+        document.getElementById('abilityFilter').addEventListener('change', filterData);
+        document.getElementById('scoreFilter').addEventListener('change', filterData);
+        document.getElementById('sortFilter').addEventListener('change', filterData);
+
+        document.getElementById('quickFilters').addEventListener('click', (e) => {
+            if (e.target.classList.contains('quick-filter')) {
+                document.querySelectorAll('.quick-filter').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                document.getElementById('sceneFilter').value = e.target.dataset.scene;
+                filterData();
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // ========== Initialize ==========
+        async function init() {
+            const badge = document.getElementById('dataBadge');
+            badge.className = 'header-badge loading';
+            badge.innerHTML = `<span>正在加载数据...</span>`;
+
+            try {
+                // Fetch records from API
+                console.log('正在获取飞书数据...');
+                badge.innerHTML = `<span>正在获取数据...</span>`;
+
+                const records = await fetchRecords();
+                demoData = records.map(transformRecord);
+                console.log(`成功获取 ${demoData.length} 条记录`);
+
+                // Update UI
+                updateStats();
+                populateFilters();
+                await renderTable(demoData);
+
+                // Success
+                badge.className = 'header-badge';
+                badge.innerHTML = `<span>✓ 已加载 ${demoData.length} 条</span>`;
+
+            } catch (error) {
+                console.error('Init error:', error);
+                badge.className = 'header-badge error';
+                badge.innerHTML = '<span>✕ 加载失败</span>';
+
+                document.getElementById('demoTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="9">
+                            <div class="loading-state">
+                                <div style="color: var(--accent-red);">加载失败: ${error.message}</div>
+                                <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">
+                                    可能原因：<br>
+                                    1. API 服务未部署或配置错误<br>
+                                    2. 网络连接问题<br>
+                                    3. 飞书 API 访问限制
+                                </div>
+                                <button onclick="init()" style="margin-top: 16px; padding: 8px 16px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; cursor: pointer;">重试</button>
+                                <a href="https://superhuang.feishu.cn/base/PTZxbnALPai6Zys0RNYcp9sznWe?table=tbl3fl3SZd9YxzJ6" target="_blank" style="display: inline-block; margin-top: 8px; margin-left: 8px; padding: 8px 16px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">直接访问飞书</a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
