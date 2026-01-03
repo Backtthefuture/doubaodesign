@@ -4,7 +4,7 @@
 # 飞书密钥配置文件 - 包含敏感信息
 .feishu.config.json
 
-# 本地资源文件（已上传到CDN，部署时不需要）
+# 本地资源文件
 assets/demos/
 
 # macOS
