@@ -307,8 +307,12 @@
             font-weight: 500;
             white-space: nowrap;
             display: inline-block;
+            background: #f0f0f5;
+            color: #666;
         }
         .ability-tag.multimodal { background: #fef3e2; color: #b85c00; }
+        .ability-tag.image { background: #e3f2fd; color: #1976d2; }
+        .ability-tag.tool { background: #f3e5f5; color: #8e24aa; }
         .ability-tag.coding { background: #e8f5e9; color: #2e7d32; }
         .ability-tag.agent { background: #f3e5f5; color: #7b1fa2; }
         .ability-tag.vision { background: #e3f2fd; color: #1565c0; }
@@ -863,6 +867,8 @@
         // Ability color mapping
         const abilityColors = {
             "多模态输入": "multimodal",
+            "图像生成": "image",
+            "工具达人": "tool",
             "代码狂魔": "coding",
             "3D空间感": "space",
             "物理引擎脑": "physics",
