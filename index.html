@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini3 热门Demo分析详情 - 飞书数据源</title>
+    <title>竞品Demo分析与豆包Demo创意 - 飞书数据源</title>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -81,7 +81,7 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
 
         /* Stats Cards */
-        .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
         .stat-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
@@ -491,6 +491,82 @@
         }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+        /* Category Section Styles */
+        .category-sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .category-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px 28px 20px;
+            position: relative;
+        }
+        .category-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 28px;
+            right: 28px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
+            border-radius: 2px;
+        }
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: var(--radius-md);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .category-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex: 1;
+        }
+        .category-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .category-table thead th {
+            background: var(--bg-primary);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .category-table tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.2s ease; }
+        .category-table tbody tr:hover { background: var(--bg-hover); }
+        .category-table tbody tr:last-child { border-bottom: none; }
+        .category-table td { padding: 16px; vertical-align: top; }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .stats-row { grid-template-columns: repeat(3, 1fr); }
@@ -501,6 +577,7 @@
             .filter-row { flex-direction: column; align-items: stretch; }
             .search-box { min-width: 100%; }
             .demo-table { display: block; overflow-x: auto; }
+            .category-table { display: block; overflow-x: auto; }
         }
     </style>
 </head>
@@ -509,7 +586,7 @@
     <header class="header">
         <div class="header-content">
             <div>
-                <h1 class="header-title">Gemini3 热门Demo分析详情</h1>
+                <h1 class="header-title">竞品Demo分析与豆包Demo创意</h1>
                 <p class="header-subtitle">2025年12月 · <span id="demoCount">加载中...</span> · 飞书数据源</p>
             </div>
             <div class="header-badge loading" id="dataBadge">
@@ -531,16 +608,8 @@
                 <div class="stat-label">优秀(>=80)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="statGood">--</div>
-                <div class="stat-label">良好(60-79)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="statViews">--</div>
-                <div class="stat-label">累计观看</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="statAvg">--</div>
-                <div class="stat-label">平均评分</div>
+                <div class="stat-number" id="statCategories">--</div>
+                <div class="stat-label">Demo分类数量</div>
             </div>
         </div>
 
@@ -574,81 +643,55 @@
             </div>
         </div>
 
-        <!-- Table Container -->
-        <div class="table-container">
-            <table class="demo-table">
-                <thead>
-                    <tr>
-                        <th class="col-rank">排名</th>
-                        <th class="col-demo-info">Demo名称 + Prompt</th>
-                        <th class="col-preview">预览</th>
-                        <th class="col-views">热度</th>
-                        <th class="col-scene">所属场景</th>
-                        <th class="col-abilities">模型能力</th>
-                        <th class="col-doubao">豆包创意</th>
-                        <th class="col-score">评分</th>
-                        <th class="col-notes">备注</th>
-                    </tr>
-                </thead>
-                <tbody id="demoTableBody">
-                    <!-- 骨架屏加载效果 -->
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton skeleton-rank"></div></td>
-                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
-                        <td><div class="skeleton skeleton-thumb"></div></td>
-                        <td><div class="skeleton skeleton-badge"></div></td>
-                        <td><div class="skeleton skeleton-tag"></div></td>
-                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
-                        <td><div class="skeleton skeleton-card"></div></td>
-                        <td><div class="skeleton skeleton-score"></div></td>
-                        <td><div class="skeleton skeleton-note"></div></td>
-                    </tr>
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton skeleton-rank"></div></td>
-                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
-                        <td><div class="skeleton skeleton-thumb"></div></td>
-                        <td><div class="skeleton skeleton-badge"></div></td>
-                        <td><div class="skeleton skeleton-tag"></div></td>
-                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
-                        <td><div class="skeleton skeleton-card"></div></td>
-                        <td><div class="skeleton skeleton-score"></div></td>
-                        <td><div class="skeleton skeleton-note"></div></td>
-                    </tr>
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton skeleton-rank"></div></td>
-                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
-                        <td><div class="skeleton skeleton-thumb"></div></td>
-                        <td><div class="skeleton skeleton-badge"></div></td>
-                        <td><div class="skeleton skeleton-tag"></div></td>
-                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
-                        <td><div class="skeleton skeleton-card"></div></td>
-                        <td><div class="skeleton skeleton-score"></div></td>
-                        <td><div class="skeleton skeleton-note"></div></td>
-                    </tr>
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton skeleton-rank"></div></td>
-                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
-                        <td><div class="skeleton skeleton-thumb"></div></td>
-                        <td><div class="skeleton skeleton-badge"></div></td>
-                        <td><div class="skeleton skeleton-tag"></div></td>
-                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
-                        <td><div class="skeleton skeleton-card"></div></td>
-                        <td><div class="skeleton skeleton-score"></div></td>
-                        <td><div class="skeleton skeleton-note"></div></td>
-                    </tr>
-                    <tr class="skeleton-row">
-                        <td><div class="skeleton skeleton-rank"></div></td>
-                        <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
-                        <td><div class="skeleton skeleton-thumb"></div></td>
-                        <td><div class="skeleton skeleton-badge"></div></td>
-                        <td><div class="skeleton skeleton-tag"></div></td>
-                        <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div><div class="skeleton skeleton-badge"></div></div></td>
-                        <td><div class="skeleton skeleton-card"></div></td>
-                        <td><div class="skeleton skeleton-score"></div></td>
-                        <td><div class="skeleton skeleton-note"></div></td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Category Sections Container -->
+        <div class="category-sections-container" id="categorySections">
+            <!-- 骨架屏加载效果 -->
+            <div class="category-section">
+                <div class="category-header">
+                    <div class="skeleton" style="width: 48px; height: 48px; border-radius: 12px;"></div>
+                    <div class="skeleton" style="width: 200px; height: 28px;"></div>
+                    <div class="skeleton" style="width: 80px; height: 28px; border-radius: 20px;"></div>
+                </div>
+                <table class="category-table">
+                    <thead>
+                        <tr>
+                            <th class="col-rank">排名</th>
+                            <th class="col-demo-info">Demo名称 + Prompt</th>
+                            <th class="col-preview">预览</th>
+                            <th class="col-views">热度</th>
+                            <th class="col-scene">所属场景</th>
+                            <th class="col-abilities">模型能力</th>
+                            <th class="col-doubao">豆包创意</th>
+                            <th class="col-score">评分</th>
+                            <th class="col-notes">备注</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="skeleton-row">
+                            <td><div class="skeleton skeleton-rank"></div></td>
+                            <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                            <td><div class="skeleton skeleton-thumb"></div></td>
+                            <td><div class="skeleton skeleton-badge"></div></td>
+                            <td><div class="skeleton skeleton-tag"></div></td>
+                            <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div></div></td>
+                            <td><div class="skeleton skeleton-card"></div></td>
+                            <td><div class="skeleton skeleton-score"></div></td>
+                            <td><div class="skeleton skeleton-note"></div></td>
+                        </tr>
+                        <tr class="skeleton-row">
+                            <td><div class="skeleton skeleton-rank"></div></td>
+                            <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                            <td><div class="skeleton skeleton-thumb"></div></td>
+                            <td><div class="skeleton skeleton-badge"></div></td>
+                            <td><div class="skeleton skeleton-tag"></div></td>
+                            <td><div class="skeleton-tags"><div class="skeleton skeleton-badge"></div></div></td>
+                            <td><div class="skeleton skeleton-card"></div></td>
+                            <td><div class="skeleton skeleton-score"></div></td>
+                            <td><div class="skeleton skeleton-note"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -684,15 +727,123 @@
             "文档结构化": "document"
         };
 
+        // ========== 场景映射和动态配置 ==========
+
+        // 场景名称映射（处理历史数据中的非标准名称）
+        const SCENE_MAPPING = {
+            "看图知一切": "图生万物",
+            "图片理解": "图生万物",
+            "视频理解": "视频秒懂",
+            "文档处理": "文档秒读",
+            "Agent": "AI替你干活",
+            "代码生成": "一句话生成App"
+        };
+
+        // 标准化场景名称（应用映射规则）
+        function normalizeScene(scene) {
+            if (!scene) return "其他";
+            return SCENE_MAPPING[scene] || scene;
+        }
+
+        // 从数据中动态提取所有场景并按拼音排序
+        function extractUniqueScenes(data) {
+            const scenes = new Set();
+            data.forEach(demo => {
+                const normalizedScene = normalizeScene(demo.scene);
+                scenes.add(normalizedScene);
+            });
+
+            // 转换为数组并按拼音排序
+            return Array.from(scenes).sort((a, b) => {
+                return a.localeCompare(b, 'zh-CN');
+            });
+        }
+
+        // 为每个场景动态生成配置（图标、字母编号、排序）
+        function generateSceneConfig(scenes) {
+            const config = {};
+            const iconMap = {
+                '一句话生成App': '📱',
+                '一句话做网站': '🌐',
+                '一句话造游戏': '🎮',
+                '一句话出3D': '🧊',
+                '一句话写系统': '💻',
+                '一句话搞特效': '✨',
+                '图生万物': '🎨',
+                '视频秒懂': '🎬',
+                '文档秒读': '📄',
+                'AI替你干活': '🤖',
+                '一句话出图': '🖼️',
+                '一句话做PPT': '📊',
+                '一句话做表格': '📋',
+                '写作助手': '✍️',
+                'AI当老师': '👨‍🏫',
+                'AI陪聊': '💬',
+                '视觉考AI': '👁️',
+                '奇葩挑战': '🎯',
+                '其他': '📁'
+            };
+
+            scenes.forEach((scene, index) => {
+                config[scene] = {
+                    icon: iconMap[scene] || '📁',
+                    letter: String.fromCharCode(65 + index), // A, B, C...
+                    order: index + 1
+                };
+            });
+
+            return config;
+        }
+
+        // 按分类分组数据
+        function groupByCategory(data) {
+            const grouped = {};
+            data.forEach(demo => {
+                const category = demo.scene || '其他';
+                if (!grouped[category]) {
+                    grouped[category] = [];
+                }
+                grouped[category].push(demo);
+            });
+            return grouped;
+        }
+
         // ========== API 函数 ==========
         // 获取飞书多维表格记录（服务端已预加载所有媒体 URL）
+        // 支持本地开发：如果API不可用，自动回退到本地mock数据
         async function fetchRecords() {
-            const response = await fetch(`${API_BASE}/records`);
-            const data = await response.json();
-            if (data.code === 0) {
-                return data.data.items;
+            try {
+                // 先尝试访问Vercel API
+                const response = await fetch(`${API_BASE}/records`);
+
+                // 检查响应是否为JSON格式
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.log('API返回非JSON响应，可能是本地开发环境，回退到mock数据');
+                    throw new Error('Not JSON response');
+                }
+
+                const data = await response.json();
+                if (data.code === 0) {
+                    console.log('✓ 成功从Vercel API加载数据');
+                    return data.data.items;
+                }
+                throw new Error('Failed to fetch records: ' + (data.error || data.msg));
+            } catch (error) {
+                // API失败，尝试加载本地mock数据
+                console.log('API请求失败，尝试加载本地mock数据...', error.message);
+                try {
+                    const response = await fetch('./mock-data.json');
+                    const data = await response.json();
+                    if (data.code === 0) {
+                        console.log('✓ 成功从本地mock-data.json加载数据（本地开发模式）');
+                        return data.data.items;
+                    }
+                } catch (mockError) {
+                    console.error('加载本地mock数据也失败:', mockError);
+                }
+                throw new Error('无法加载数据：API和本地mock数据都不可用');
             }
-            throw new Error('Failed to fetch records: ' + (data.error || data.msg));
         }
 
         // 回退方案：单独获取媒体 URL（当服务端批量获取失败时使用）
@@ -736,7 +887,9 @@
         // ========== 数据转换 ==========
         function transformRecord(record) {
             const fields = record.fields;
+            const rawScene = fields['所属场景'] || '';
             const previewFile = fields['预览文件'] && fields['预览文件'][0] ? fields['预览文件'][0] : null;
+
             return {
                 id: record.record_id,
                 name: fields['Demo名称'] || '',
@@ -744,7 +897,7 @@
                 isVideo: fields['是否视频'] || false,
                 views: fields['热度'] || '',
                 viewsNum: parseInt(fields['热度数值']) || 0,
-                scene: fields['所属场景'] || '',
+                scene: normalizeScene(rawScene),  // 应用场景映射规则
                 abilities: fields['模型能力'] || [],
                 doubaoTitle: fields['豆包创意标题'] || '',
                 doubaoDesc: fields['豆包创意描述'] || '',
@@ -775,18 +928,14 @@
         function updateStats() {
             const total = demoData.length;
             const excellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
-            const good = demoData.filter(d => {
-                const t = d.scoreInteresting + d.scoreUseful;
-                return t >= 60 && t < 80;
-            }).length;
-            const totalViews = demoData.reduce((sum, d) => sum + d.viewsNum, 0);
-            const avgScore = total > 0 ? (demoData.reduce((sum, d) => sum + d.scoreInteresting + d.scoreUseful, 0) / total).toFixed(1) : 0;
+
+            // 统计不同场景数量（使用动态提取，应用映射后去重）
+            const uniqueScenes = extractUniqueScenes(demoData);
+            const categoryCount = uniqueScenes.length;
 
             document.getElementById('statTotal').textContent = total;
             document.getElementById('statExcellent').textContent = excellent;
-            document.getElementById('statGood').textContent = good;
-            document.getElementById('statViews').textContent = totalViews >= 10000000 ? (totalViews / 10000000).toFixed(0) + '千万+' : (totalViews / 10000).toFixed(0) + 'W+';
-            document.getElementById('statAvg').textContent = avgScore;
+            document.getElementById('statCategories').textContent = categoryCount;
             document.getElementById('demoCount').textContent = `共${total}个Demo`;
         }
 
@@ -822,29 +971,73 @@
             });
         }
 
-        // 渲染表格（支持预加载的媒体 URL，如果没有则显示占位符后异步加载）
+        // 渲染分组表格（按分类聚合展示）
         async function renderTable(data) {
-            const tbody = document.getElementById('demoTableBody');
+            const container = document.getElementById('categorySections');
+
+            // 动态提取场景并生成配置（按拼音排序）
+            const uniqueScenes = extractUniqueScenes(data);
+            const sceneConfig = generateSceneConfig(uniqueScenes);
+
+            // 按场景分组
+            const grouped = groupByCategory(data);
+
+            // 场景已经按拼音排序，过滤掉空分组
+            const sortedCategories = uniqueScenes.filter(scene => grouped[scene] && grouped[scene].length > 0);
 
             // 检查是否有预加载的媒体 URL
             const hasPreloadedMedia = data.some(d => d.mediaUrl);
             console.log('预加载媒体 URL 数量:', data.filter(d => d.mediaUrl).length, '/', data.length);
 
-            // 如果没有预加载的媒体 URL，需要回退到单独请求
+            // 生成分类区块HTML
+            let html = '';
+
+            sortedCategories.forEach(category => {
+                const demos = grouped[category];
+                if (demos.length === 0) return; // 跳过空分类
+
+                const config = sceneConfig[category];
+
+                html += `
+                    <div class="category-section" id="category-${encodeURIComponent(category)}">
+                        <div class="category-header">
+                            <div class="category-icon">${config.icon}</div>
+                            <h2 class="category-title">${config.letter}. ${category}</h2>
+                            <span class="category-count">(${demos.length}个Demo)</span>
+                        </div>
+                        <table class="category-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-rank">排名</th>
+                                    <th class="col-demo-info">Demo名称 + Prompt</th>
+                                    <th class="col-preview">预览</th>
+                                    <th class="col-views">热度</th>
+                                    <th class="col-scene">所属场景</th>
+                                    <th class="col-abilities">模型能力</th>
+                                    <th class="col-doubao">豆包创意</th>
+                                    <th class="col-score">评分</th>
+                                    <th class="col-notes">备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${demos.map((demo, index) => renderRow(demo, index, demo.mediaUrl)).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            // 如果没有预加载的媒体 URL，异步加载
             if (!hasPreloadedMedia) {
                 console.log('服务端未返回预加载媒体 URL，回退到单独请求模式...');
-                // 先渲染表格（无预览），然后异步加载媒体
-                const rows = data.map((demo, index) => renderRow(demo, index, null));
-                tbody.innerHTML = rows.join('');
-
-                // 异步加载媒体 URL
                 for (const demo of data) {
                     if (demo.previewFile && demo.previewFile.file_token) {
                         const url = await getMediaUrl(demo.previewFile.file_token);
                         if (url) {
                             demo.mediaUrl = url;
-                            // 更新对应行的预览
-                            const row = tbody.querySelector(`tr[data-id="${demo.id}"]`);
+                            const row = container.querySelector(`tr[data-id="${demo.id}"]`);
                             if (row) {
                                 const previewCell = row.querySelector('.col-preview');
                                 if (previewCell) {
@@ -854,10 +1047,6 @@
                         }
                     }
                 }
-            } else {
-                // 使用预加载的媒体 URL 直接渲染
-                const rows = data.map((demo, index) => renderRow(demo, index, demo.mediaUrl));
-                tbody.innerHTML = rows.join('');
             }
         }
 
@@ -1046,12 +1235,28 @@
         document.getElementById('scoreFilter').addEventListener('change', filterData);
         document.getElementById('sortFilter').addEventListener('change', filterData);
 
+        // 快速筛选按钮改为跳转逻辑
         document.getElementById('quickFilters').addEventListener('click', (e) => {
             if (e.target.classList.contains('quick-filter')) {
+                const category = e.target.dataset.scene;
+
+                // 更新激活状态
                 document.querySelectorAll('.quick-filter').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-                document.getElementById('sceneFilter').value = e.target.dataset.scene;
-                filterData();
+
+                if (category === '' || category === '全部') {
+                    // 滚动到页面顶部
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    // 滚动到对应分类区块
+                    const section = document.getElementById(`category-${encodeURIComponent(category)}`);
+                    if (section) {
+                        // 考虑顶部固定header的高度
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+                    }
+                }
             }
         });
 
@@ -1071,7 +1276,7 @@
 
             try {
                 // Fetch records from API
-                console.log('正在获取飞书数据...');
+                console.log('正在获取数据...');
                 badge.innerHTML = `<span>正在获取数据...</span>`;
 
                 const records = await fetchRecords();
@@ -1083,31 +1288,35 @@
                 populateFilters();
                 filterData();
 
-                // Success
+                // Success - 检测数据来源
+                const isLocalMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 badge.className = 'header-badge';
-                badge.innerHTML = `<span>✓ 已加载 ${demoData.length} 条</span>`;
+                if (isLocalMode) {
+                    badge.innerHTML = `<span>✓ 已加载 ${demoData.length} 条 (本地Mock)</span>`;
+                } else {
+                    badge.innerHTML = `<span>✓ 已加载 ${demoData.length} 条</span>`;
+                }
 
             } catch (error) {
                 console.error('Init error:', error);
                 badge.className = 'header-badge error';
                 badge.innerHTML = '<span>✕ 加载失败</span>';
 
-                document.getElementById('demoTableBody').innerHTML = `
-                    <tr>
-                        <td colspan="9">
-                            <div class="loading-state">
-                                <div style="color: var(--accent-red);">加载失败: ${error.message}</div>
-                                <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">
-                                    可能原因：<br>
-                                    1. API 服务未部署或配置错误<br>
-                                    2. 网络连接问题<br>
-                                    3. 飞书 API 访问限制
-                                </div>
-                                <button onclick="init()" style="margin-top: 16px; padding: 8px 16px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; cursor: pointer;">重试</button>
-                                <a href="https://superhuang.feishu.cn/base/PTZxbnALPai6Zys0RNYcp9sznWe?table=tbl3fl3SZd9YxzJ6" target="_blank" style="display: inline-block; margin-top: 8px; margin-left: 8px; padding: 8px 16px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">直接访问飞书</a>
+                document.getElementById('categorySections').innerHTML = `
+                    <div class="category-section">
+                        <div class="loading-state">
+                            <div style="color: var(--accent-red);">加载失败: ${error.message}</div>
+                            <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">
+                                可能原因：<br>
+                                1. API 服务未部署或配置错误<br>
+                                2. 网络连接问题<br>
+                                3. 飞书 API 访问限制<br>
+                                4. 本地mock-data.json文件缺失
                             </div>
-                        </td>
-                    </tr>
+                            <button onclick="init()" style="margin-top: 16px; padding: 8px 16px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; cursor: pointer;">重试</button>
+                            <a href="https://superhuang.feishu.cn/base/PTZxbnALPai6Zys0RNYcp9sznWe?table=tbl3fl3SZd9YxzJ6" target="_blank" style="display: inline-block; margin-top: 8px; margin-left: 8px; padding: 8px 16px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">直接访问飞书</a>
+                        </div>
+                    </div>
                 `;
             }
         }
