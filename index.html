@@ -114,7 +114,7 @@
         .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
 
         /* Stats Cards */
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
         .stat-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
@@ -125,6 +125,7 @@
         }
         .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
         .stat-number { font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px; }
+        .stat-number.orange { color: #ff9500; }
         .stat-label { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
         /* Core Abilities Section */
@@ -814,8 +815,11 @@
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .stats-row { grid-template-columns: repeat(4, 1fr); }
             .col-doubao { display: none; }
+        }
+        @media (max-width: 900px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); }
@@ -823,6 +827,9 @@
             .search-box { min-width: 100%; }
             .demo-table { display: block; overflow-x: auto; }
             .category-table { display: block; overflow-x: auto; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
         }
 
         /* ========== Doubao Showcase Section ========== */
@@ -1277,6 +1284,10 @@
         <!-- Stats Row -->
         <div class="stats-row">
             <div class="stat-card">
+                <div class="stat-number orange" id="statCreativeTotal">--</div>
+                <div class="stat-label">创意总数量</div>
+            </div>
+            <div class="stat-card">
                 <div class="stat-number" id="statTotal">--</div>
                 <div class="stat-label">分析Demo数</div>
             </div>
@@ -1622,7 +1633,24 @@
             document.getElementById('statTotal').textContent = total;
             document.getElementById('statExcellent').textContent = excellent;
             document.getElementById('statCategories').textContent = categoryCount;
-            document.getElementById('demoCount').textContent = `共${total}个Demo`;
+
+            // 更新创意总数量
+            updateCreativeTotal();
+        }
+
+        // 更新创意总数量（竞品Demo + 豆包Demo）
+        function updateCreativeTotal() {
+            const demoCount = demoData.length;
+            let doubaoCount = 0;
+
+            if (doubaoData && doubaoData.abilities) {
+                doubaoCount = doubaoData.abilities.reduce((sum, ability) => {
+                    return sum + (ability.demos ? ability.demos.length : 0);
+                }, 0);
+            }
+
+            const total = demoCount + doubaoCount;
+            document.getElementById('statCreativeTotal').textContent = total;
         }
 
         function populateFilters() {
@@ -2157,6 +2185,7 @@
                 // 显示展示区域
                 document.getElementById('doubaoShowcase').style.display = 'block';
                 renderDoubaoShowcase();
+                updateCreativeTotal(); // 更新创意总数量
                 console.log('✓ 成功从飞书API加载豆包Demo数据');
             } catch (error) {
                 // API失败，尝试本地JSON回退
@@ -2172,6 +2201,7 @@
                     // 显示展示区域
                     document.getElementById('doubaoShowcase').style.display = 'block';
                     renderDoubaoShowcase();
+                    updateCreativeTotal(); // 更新创意总数量
                     console.log('✓ 成功从本地JSON加载豆包Demo数据（回退模式，备注不可编辑）');
                 } catch (jsonError) {
                     console.log('豆包Demo数据未加载:', jsonError.message);
