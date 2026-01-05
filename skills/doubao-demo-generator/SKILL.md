@@ -1,6 +1,6 @@
 ---
 name: doubao-demo-generator
-description: "基于豆包大模型的优势能力，生成对标竞品的Demo案例并输出JSON文件。当用户需要生成豆包Demo对标方案、创建豆包能力展示数据时触发。支持 /doubao-demos 命令启动。"
+description: "基于豆包大模型的优势能力，生成对标竞品的Demo案例，同时输出JSON文件并写入飞书多维表格。当用户需要生成豆包Demo对标方案、创建豆包能力展示数据时触发。支持 /doubao-demos 命令启动。"
 license: MIT
 ---
 
@@ -8,12 +8,14 @@ license: MIT
 
 ## 概述
 
-此技能用于基于豆包大模型（如豆包1.8）的优势能力，生成对标竞品（如Gemini 3）的Demo案例方案，并输出为JSON文件供前端展示使用。
+此技能用于基于豆包大模型（如豆包1.8）的优势能力，生成对标竞品（如Gemini 3）的Demo案例方案，**同时**：
+1. 输出为JSON文件供前端展示使用
+2. 直接写入飞书多维表格（豆包Demo创意表）
 
 ## 触发条件
 
 ### 主触发器
-- `/doubao-demos` - 生成豆包Demo案例
+- `/doubao-demos` - 生成豆包Demo案例并写入飞书
 
 ### 语义触发
 - "生成豆包Demo"
@@ -28,7 +30,33 @@ license: MIT
 1. **直接生成完整的18个Demo**，不要询问是否继续
 2. 按照指定的JSON格式输出
 3. 文件命名规则：`{竞品模型}-{对标模型}.json`，如 `gemini3-doubao18.json`
-4. 生成完成后告知用户文件路径
+4. **同时将数据写入飞书多维表格**
+5. 生成完成后告知用户文件路径和飞书写入结果
+
+---
+
+## 飞书配置
+
+### 豆包Demo创意表配置
+| 配置项 | 值 | 说明 |
+|--------|-----|------|
+| APP_ID | `cli_a989e0fcbd7f100c` | 飞书应用ID |
+| APP_TOKEN | `PTZxbnALPai6Zys0RNYcp9sznWe` | 多维表格Token |
+| DOUBAO_TABLE_ID | `tblj14LfBtbNpSNR` | 豆包Demo创意表ID |
+
+**环境变量**: 需要 `FEISHU_APP_SECRET` 环境变量
+
+### 飞书表格字段映射
+| JSON字段 | 飞书字段名 | 类型 |
+|----------|-----------|------|
+| name | Demo名称 | 文本 |
+| subtitle | 副标题 | 文本 |
+| scene | 使用场景 | 文本 |
+| steps | 操作步骤 | 文本 |
+| coreDisplay | 核心展示 | 文本 |
+| expectedEffect | 预期效果 | 文本 |
+| ability.name | 所属能力 | 单选 |
+| ability.icon | 能力图标 | 文本 |
 
 ---
 
@@ -185,10 +213,149 @@ license: MIT
 
 ## 执行步骤
 
+### Phase 1: 生成Demo数据
 1. 基于上述豆包1.8的三大能力优势，设计18个Demo
 2. 按上述JSON格式组织数据
+
+### Phase 2: 输出JSON文件
 3. 输出到项目根目录的 `gemini3-doubao18.json` 文件
-4. 告知用户生成完成，提供文件路径
+
+### Phase 3: 写入飞书多维表格
+4. 获取飞书 Access Token（使用 FEISHU_APP_SECRET 环境变量）
+5. 遍历所有Demo，逐条写入飞书豆包Demo创意表
+6. 记录成功/失败状态
+
+### Phase 4: 结果汇报
+7. 告知用户：
+   - JSON文件路径
+   - 飞书写入结果（成功数/失败数）
+   - 失败记录详情（如有）
+
+---
+
+## 飞书 API 调用模板
+
+### 获取 Access Token
+```javascript
+const tokenResponse = await fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    app_id: 'cli_a989e0fcbd7f100c',
+    app_secret: process.env.FEISHU_APP_SECRET
+  })
+});
+const { tenant_access_token } = await tokenResponse.json();
+```
+
+### 批量创建记录
+```javascript
+// 将Demo数据转换为飞书记录格式
+function convertToFeishuRecord(demo, ability) {
+  return {
+    fields: {
+      "Demo名称": demo.name,
+      "副标题": demo.subtitle,
+      "使用场景": demo.scene,
+      "操作步骤": Array.isArray(demo.steps) ? demo.steps.join('\n') : demo.steps,
+      "核心展示": demo.coreDisplay,
+      "预期效果": demo.expectedEffect,
+      "所属能力": ability.name,
+      "能力图标": ability.icon
+    }
+  };
+}
+
+// 批量创建记录（飞书支持一次最多500条）
+await fetch(
+  `https://open.feishu.cn/open-apis/bitable/v1/apps/PTZxbnALPai6Zys0RNYcp9sznWe/tables/tblj14LfBtbNpSNR/records/batch_create`,
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      records: allRecords
+    })
+  }
+);
+```
+
+### 清空表格（可选，用于重新生成）
+```javascript
+// 先获取所有记录ID
+const records = await fetch(
+  `https://open.feishu.cn/open-apis/bitable/v1/apps/PTZxbnALPai6Zys0RNYcp9sznWe/tables/tblj14LfBtbNpSNR/records?page_size=100`,
+  { headers: { 'Authorization': `Bearer ${token}` } }
+);
+
+// 批量删除
+await fetch(
+  `https://open.feishu.cn/open-apis/bitable/v1/apps/PTZxbnALPai6Zys0RNYcp9sznWe/tables/tblj14LfBtbNpSNR/records/batch_delete`,
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      records: recordIds
+    })
+  }
+);
+```
+
+---
+
+## 示例
+
+### Good Case: 一步到位的完整执行
+
+**用户输入**: `/doubao-demos`
+
+**Claude 执行**:
+```
+正在生成豆包Demo案例...
+
+[生成中] Agent能力Demo 1/6: 全网比价+一键下单
+[生成中] Agent能力Demo 2/6: 企业ERP无API自动化
+...
+[生成中] LLM能力Demo 6/6: 超长对话不断档
+
+✓ JSON文件已生成: gemini3-doubao18.json
+
+正在写入飞书多维表格...
+[写入中] 1/18: 全网比价+一键下单 ✓
+[写入中] 2/18: 企业ERP无API自动化 ✓
+...
+[写入中] 18/18: 超长对话不断档 ✓
+
+=== 豆包Demo生成完成 ===
+
+输出结果：
+- JSON文件：gemini3-doubao18.json（18个Demo）
+- 飞书写入：成功 18 条，失败 0 条
+
+下一步：运行 /score-doubao-demos all 为所有Demo评分
+```
+
+---
+
+## 错误处理
+
+### 飞书写入失败
+| 错误类型 | 处理方式 |
+|----------|----------|
+| Token过期 | 自动刷新Token后重试 |
+| 字段不存在 | 记录警告，跳过该字段 |
+| 网络超时 | 自动重试3次 |
+| 权限不足 | 报错并提示检查飞书应用权限 |
+
+### 原则
+- JSON文件始终生成（即使飞书写入失败）
+- 飞书写入失败不影响其他记录
+- 最后统一汇报成功/失败数量
 
 ---
 
@@ -197,9 +364,11 @@ license: MIT
 ### 本技能适用于
 - 生成豆包大模型对标竞品的Demo案例
 - 输出前端可用的JSON数据文件
+- **直接写入飞书多维表格**
 - 基于豆包能力优势设计展示方案
 
 ### 本技能不适用于
 - 分析飞书多维表格数据（请使用 analyze-demos 技能）
-- 修改现有Demo记录
+- 修改现有Demo记录（会创建新记录）
 - 非豆包模型的Demo生成
+- 为Demo评分（请使用 score-doubao-demos 技能）
