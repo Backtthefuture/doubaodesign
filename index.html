@@ -63,6 +63,11 @@
 
         .header-title { font-size: 21px; font-weight: 600; color: var(--text-primary); }
         .header-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
         .header-badge {
             display: inline-flex;
             align-items: center;
@@ -77,17 +82,11 @@
         .header-badge.loading { background: linear-gradient(135deg, #ff9500, #ffb340); }
         .header-badge.error { background: linear-gradient(135deg, #ff3b30, #ff453a); }
 
-        /* Header Tabs - 顶部标签切换 */
-        .header-tabs {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
+        /* Header Tab - 标题旁标签 */
         .header-tab {
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -1222,11 +1221,11 @@
     <header class="header">
         <div class="header-content">
             <div>
-                <h1 class="header-title">竞品Demo分析与豆包Demo创意</h1>
-                <p class="header-subtitle">2025年12月 · <span id="demoCount">加载中...</span> · 飞书数据源</p>
-                <div class="header-tabs">
+                <div class="header-title-row">
+                    <h1 class="header-title">竞品Demo分析与豆包Demo创意</h1>
                     <button class="header-tab active" data-tab="gemini3">Gemini3</button>
                 </div>
+                <p class="header-subtitle">2025年12月 · <span id="demoCount">加载中...</span> · 飞书数据源</p>
             </div>
             <div class="header-badge loading" id="dataBadge">
                 <span>数据加载中...</span>
