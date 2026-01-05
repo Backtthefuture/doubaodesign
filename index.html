@@ -94,6 +94,61 @@
         .stat-number { font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px; }
         .stat-label { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
 
+        /* Core Abilities Section */
+        .core-abilities {
+            background: linear-gradient(135deg, #fff 0%, #fef7ff 50%, #f0f7ff 100%);
+            border: 1px solid rgba(175, 82, 222, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .core-abilities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .core-abilities-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .core-abilities-title span { color: var(--accent-blue); }
+        .core-abilities-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .abilities-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+        .ability-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .ability-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        .ability-card-icon { font-size: 32px; margin-bottom: 12px; }
+        .ability-card-title { font-size: 14px; font-weight: 600; color: var(--accent-blue); margin-bottom: 8px; }
+        .ability-card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+        @media (max-width: 1200px) {
+            .abilities-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .abilities-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         /* Filter Bar */
         .filter-bar {
             background: var(--bg-card);
@@ -754,6 +809,48 @@
 
     <!-- Main Container -->
     <div class="container">
+        <!-- Core Abilities Section -->
+        <div class="core-abilities">
+            <div class="core-abilities-header">
+                <div>
+                    <div class="core-abilities-title">Gemini 3 <span>核心能力</span></div>
+                    <div class="core-abilities-subtitle">世界上多模态理解能力最强的模型，采用稀疏混合专家架构（MoE），万亿级参数</div>
+                </div>
+            </div>
+            <div class="abilities-grid">
+                <div class="ability-card">
+                    <div class="ability-card-icon">🧠</div>
+                    <div class="ability-card-title">推理能力</div>
+                    <div class="ability-card-desc">1501 Elo领跑LMArena，GPQA Diamond 91.9%，Deep Think模式突破智能边界</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">👁️</div>
+                    <div class="ability-card-title">多模态理解</div>
+                    <div class="ability-card-desc">原生整合文本/图像/视频/音频/代码，100万token上下文窗口</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">💻</div>
+                    <div class="ability-card-title">编码能力</div>
+                    <div class="ability-card-desc">WebDev Arena 1487 Elo，SWE-bench 76.2%，最强氛围编码模型</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">🤖</div>
+                    <div class="ability-card-title">Agent能力</div>
+                    <div class="ability-card-desc">Terminal-Bench 54.2%，Vending-Bench榜首，多步骤任务规划</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">🔧</div>
+                    <div class="ability-card-title">工具调用</div>
+                    <div class="ability-card-desc">Thought Signatures状态保持，浏览器自动化，多Agent协作</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">📚</div>
+                    <div class="ability-card-title">长上下文</div>
+                    <div class="ability-card-desc">100万token窗口，可处理整本书籍、代码库、超长视频</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Stats Row -->
         <div class="stats-row">
             <div class="stat-card">
