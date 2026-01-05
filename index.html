@@ -1131,53 +1131,55 @@
             background: var(--bg-hover);
         }
 
-        /* Doubao Score Styles */
-        .doubao-demo-score {
+        /* Doubao Score Styles - 右上角徽章样式 */
+        .doubao-score-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border-light);
-        }
-
-        .doubao-score-circle {
-            display: inline-flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            color: white;
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            min-width: 56px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .doubao-score-circle.excellent {
+        .doubao-score-badge.excellent {
             background: linear-gradient(135deg, #34c759, #30d158);
         }
-        .doubao-score-circle.good {
+        .doubao-score-badge.good {
             background: linear-gradient(135deg, #0071e3, #00a0e3);
         }
-        .doubao-score-circle.average {
+        .doubao-score-badge.average {
             background: linear-gradient(135deg, #ff9500, #ffb340);
         }
 
-        .doubao-score-number {
-            font-size: 16px;
+        .doubao-score-badge-number {
+            font-size: 20px;
             font-weight: 700;
+            color: white;
+            line-height: 1.2;
         }
 
-        .doubao-score-label {
+        .doubao-score-badge-label {
             font-size: 10px;
-            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 2px;
         }
 
-        .doubao-score-detail {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            font-size: 12px;
-            color: var(--text-secondary);
+        .doubao-score-badge-detail {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+
+        /* 卡片头部需要relative定位 */
+        .doubao-demo-card-header {
+            position: relative;
+            padding-right: 80px; /* 为右上角徽章留出空间 */
         }
     </style>
 </head>
@@ -2199,6 +2201,13 @@
                             <span class="doubao-demo-card-name ${abilityClass}">${demo.name}</span>
                         </div>
                         <div class="doubao-demo-card-subtitle">${demo.subtitle}</div>
+                        ${hasScore ? `
+                        <div class="doubao-score-badge ${scoreClass}">
+                            <span class="doubao-score-badge-number">${total}</span>
+                            <span class="doubao-score-badge-label">分</span>
+                            <span class="doubao-score-badge-detail">趣${demo.scoreInteresting} 实${demo.scoreUseful}</span>
+                        </div>
+                        ` : ''}
                     </div>
                     <div class="doubao-demo-card-body">
                         <div class="doubao-demo-section">
@@ -2218,18 +2227,6 @@
                     <div class="doubao-expected-effect">
                         <span class="doubao-expected-effect-label">预期效果：</span>${demo.expectedEffect}
                     </div>
-                    ${hasScore ? `
-                    <div class="doubao-demo-score">
-                        <div class="doubao-score-circle ${scoreClass}">
-                            <span class="doubao-score-number">${total}</span>
-                            <span class="doubao-score-label">分</span>
-                        </div>
-                        <div class="doubao-score-detail">
-                            <span>趣味 ${demo.scoreInteresting}</span>
-                            <span>实用 ${demo.scoreUseful}</span>
-                        </div>
-                    </div>
-                    ` : ''}
                     ${hasRecordId ? `
                     <div class="doubao-demo-note">
                         <div class="doubao-note-display ${noteClass}" id="doubaoNoteDisplay${demo.id}" onclick="startEditDoubaoNote('${demo.id}')">
