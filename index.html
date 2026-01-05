@@ -1619,33 +1619,50 @@
 
         function updateStats() {
             const total = demoData.length;
-            const excellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
+            const demoExcellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
 
             // 统计不同场景数量（使用动态提取，应用映射后去重）
             const uniqueScenes = extractUniqueScenes(demoData);
             const categoryCount = uniqueScenes.length;
 
             document.getElementById('statTotal').textContent = total;
-            document.getElementById('statExcellent').textContent = excellent;
             document.getElementById('statCategories').textContent = categoryCount;
 
-            // 更新创意总数量
-            updateCreativeTotal();
+            // 更新创意总数量和优秀数量（需要合并两个表格数据）
+            updateCombinedStats();
         }
 
-        // 更新创意总数量（竞品Demo + 豆包Demo）
-        function updateCreativeTotal() {
+        // 更新合并统计数据（创意总数量 + 优秀数量）
+        function updateCombinedStats() {
+            // 竞品Demo统计
             const demoCount = demoData.length;
+            const demoExcellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
+
+            // 豆包Demo统计
             let doubaoCount = 0;
+            let doubaoExcellent = 0;
 
             if (doubaoData && doubaoData.abilities) {
-                doubaoCount = doubaoData.abilities.reduce((sum, ability) => {
-                    return sum + (ability.demos ? ability.demos.length : 0);
-                }, 0);
+                doubaoData.abilities.forEach(ability => {
+                    if (ability.demos) {
+                        ability.demos.forEach(demo => {
+                            doubaoCount++;
+                            const total = (demo.scoreInteresting || 0) + (demo.scoreUseful || 0);
+                            if (total >= 80) {
+                                doubaoExcellent++;
+                            }
+                        });
+                    }
+                });
             }
 
-            const total = demoCount + doubaoCount;
-            document.getElementById('statCreativeTotal').textContent = total;
+            // 更新创意总数量
+            const totalCreative = demoCount + doubaoCount;
+            document.getElementById('statCreativeTotal').textContent = totalCreative;
+
+            // 更新优秀数量（两个表格合计）
+            const totalExcellent = demoExcellent + doubaoExcellent;
+            document.getElementById('statExcellent').textContent = totalExcellent;
         }
 
         function populateFilters() {
@@ -2180,7 +2197,7 @@
                 // 显示展示区域
                 document.getElementById('doubaoShowcase').style.display = 'block';
                 renderDoubaoShowcase();
-                updateCreativeTotal(); // 更新创意总数量
+                updateCombinedStats(); // 更新合并统计数据
                 console.log('✓ 成功从飞书API加载豆包Demo数据');
             } catch (error) {
                 // API失败，尝试本地JSON回退
@@ -2196,7 +2213,7 @@
                     // 显示展示区域
                     document.getElementById('doubaoShowcase').style.display = 'block';
                     renderDoubaoShowcase();
-                    updateCreativeTotal(); // 更新创意总数量
+                    updateCombinedStats(); // 更新合并统计数据
                     console.log('✓ 成功从本地JSON加载豆包Demo数据（回退模式，备注不可编辑）');
                 } catch (jsonError) {
                     console.log('豆包Demo数据未加载:', jsonError.message);
