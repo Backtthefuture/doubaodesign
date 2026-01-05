@@ -791,6 +791,269 @@
             .demo-table { display: block; overflow-x: auto; }
             .category-table { display: block; overflow-x: auto; }
         }
+
+        /* ========== Doubao Showcase Section ========== */
+        .doubao-showcase {
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 3px solid transparent;
+            background-image: linear-gradient(var(--bg-primary), var(--bg-primary)),
+                              linear-gradient(90deg, #6366f1 0%, #06b6d4 50%, #f59e0b 100%);
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .doubao-showcase-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .doubao-showcase-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #06b6d4 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .doubao-showcase-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Ability Section */
+        .doubao-ability-section {
+            margin-bottom: 48px;
+        }
+
+        .doubao-ability-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+        }
+
+        .doubao-ability-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .doubao-ability-number.agent { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .doubao-ability-number.multimodal { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .doubao-ability-number.llm { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .doubao-ability-icon {
+            font-size: 28px;
+        }
+
+        .doubao-ability-title {
+            font-size: 22px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .doubao-ability-title.agent { color: #6366f1; }
+        .doubao-ability-title.multimodal { color: #06b6d4; }
+        .doubao-ability-title.llm { color: #f59e0b; }
+
+        .doubao-ability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .doubao-ability-tag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .doubao-ability-tag.agent {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+
+        .doubao-ability-tag.multimodal {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+        }
+
+        .doubao-ability-tag.llm {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        /* Demo Cards Grid */
+        .doubao-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .doubao-demo-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .doubao-demo-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Demo Card */
+        .doubao-demo-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doubao-demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .doubao-demo-card-header {
+            padding: 20px 20px 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .doubao-demo-card-title {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .doubao-demo-card-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .doubao-demo-card-name {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .doubao-demo-card-name.agent { color: #6366f1; }
+        .doubao-demo-card-name.multimodal { color: #06b6d4; }
+        .doubao-demo-card-name.llm { color: #f59e0b; }
+
+        .doubao-demo-card-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding-left: 30px;
+        }
+
+        .doubao-demo-card-body {
+            padding: 16px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doubao-demo-section {
+            margin-bottom: 16px;
+        }
+
+        .doubao-demo-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .doubao-demo-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .doubao-demo-section-content {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .doubao-demo-steps {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .doubao-demo-steps li {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 6px;
+            padding-left: 4px;
+        }
+
+        .doubao-demo-steps li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Core Display Box */
+        .doubao-core-display {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: auto;
+        }
+
+        .doubao-core-display.agent {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-left: 3px solid #6366f1;
+            color: #4f46e5;
+        }
+
+        .doubao-core-display.multimodal {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.1));
+            border-left: 3px solid #06b6d4;
+            color: #0891b2;
+        }
+
+        .doubao-core-display.llm {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+            border-left: 3px solid #f59e0b;
+            color: #d97706;
+        }
+
+        .doubao-core-display-label {
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        /* Expected Effect */
+        .doubao-expected-effect {
+            padding: 12px 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .doubao-expected-effect-label {
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-right: 4px;
+        }
     </style>
 </head>
 <body>
@@ -939,6 +1202,17 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- Doubao Showcase Section (动态加载，仅当 JSON 文件存在时显示) -->
+        <div class="doubao-showcase" id="doubaoShowcase" style="display: none;">
+            <div class="doubao-showcase-header">
+                <h2 class="doubao-showcase-title">豆包1.8 能力Demo展示</h2>
+                <p class="doubao-showcase-subtitle">基于豆包大模型1.8的三大优势能力，对标Gemini 3的Demo创意方案</p>
+            </div>
+            <div id="doubaoAbilities">
+                <!-- 动态加载 -->
             </div>
         </div>
     </div>
@@ -1631,6 +1905,92 @@
 
         // Start
         init();
+
+        // ========== Doubao Showcase Functions ==========
+        let doubaoData = null;
+
+        async function loadDoubaoData() {
+            try {
+                const response = await fetch('./gemini3-doubao18.json');
+                if (!response.ok) {
+                    console.log('豆包Demo JSON 文件不存在，跳过展示区域');
+                    return;
+                }
+                doubaoData = await response.json();
+
+                // 显示展示区域
+                document.getElementById('doubaoShowcase').style.display = 'block';
+                renderDoubaoShowcase();
+                console.log('✓ 成功加载豆包Demo数据');
+            } catch (error) {
+                // JSON 文件不存在或解析失败，静默跳过（不显示该区域）
+                console.log('豆包Demo数据未加载:', error.message);
+            }
+        }
+
+        function renderDoubaoShowcase() {
+            if (!doubaoData || !doubaoData.abilities) return;
+
+            const container = document.getElementById('doubaoAbilities');
+            let html = '';
+
+            doubaoData.abilities.forEach((ability, index) => {
+                const abilityClass = ability.id; // agent, multimodal, llm
+
+                html += `
+                    <div class="doubao-ability-section">
+                        <div class="doubao-ability-header">
+                            <div class="doubao-ability-number ${abilityClass}">${index + 1}</div>
+                            <div class="doubao-ability-icon">${ability.icon}</div>
+                            <h3 class="doubao-ability-title ${abilityClass}">${ability.name}</h3>
+                            <div class="doubao-ability-tags">
+                                ${ability.tags.map(tag => `<span class="doubao-ability-tag ${abilityClass}">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="doubao-demo-grid">
+                            ${ability.demos.map(demo => renderDoubaoCard(demo, abilityClass, ability.icon)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderDoubaoCard(demo, abilityClass, icon) {
+            return `
+                <div class="doubao-demo-card">
+                    <div class="doubao-demo-card-header">
+                        <div class="doubao-demo-card-title">
+                            <span class="doubao-demo-card-icon">${icon}</span>
+                            <span class="doubao-demo-card-name ${abilityClass}">${demo.name}</span>
+                        </div>
+                        <div class="doubao-demo-card-subtitle">${demo.subtitle}</div>
+                    </div>
+                    <div class="doubao-demo-card-body">
+                        <div class="doubao-demo-section">
+                            <div class="doubao-demo-section-title">使用场景</div>
+                            <div class="doubao-demo-section-content">${demo.scene}</div>
+                        </div>
+                        <div class="doubao-demo-section">
+                            <div class="doubao-demo-section-title">操作步骤</div>
+                            <ul class="doubao-demo-steps">
+                                ${demo.steps.map(step => `<li>${step}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="doubao-core-display ${abilityClass}">
+                            <span class="doubao-core-display-label">核心展示：</span>${demo.coreDisplay}
+                        </div>
+                    </div>
+                    <div class="doubao-expected-effect">
+                        <span class="doubao-expected-effect-label">预期效果：</span>${demo.expectedEffect}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load Doubao data after main init
+        loadDoubaoData();
     </script>
 </body>
 </html>
