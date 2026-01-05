@@ -1130,6 +1130,55 @@
         .doubao-note-btn.cancel:hover {
             background: var(--bg-hover);
         }
+
+        /* Doubao Score Styles */
+        .doubao-demo-score {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .doubao-score-circle {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: white;
+        }
+
+        .doubao-score-circle.excellent {
+            background: linear-gradient(135deg, #34c759, #30d158);
+        }
+        .doubao-score-circle.good {
+            background: linear-gradient(135deg, #0071e3, #00a0e3);
+        }
+        .doubao-score-circle.average {
+            background: linear-gradient(135deg, #ff9500, #ffb340);
+        }
+
+        .doubao-score-number {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .doubao-score-label {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+
+        .doubao-score-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 <body>
@@ -2023,7 +2072,9 @@
                     coreDisplay: fields['核心展示'] || '',
                     expectedEffect: fields['预期效果'] || '',
                     note: fields['备注'] || '',
-                    sortWeight: fields['排序权重'] || 0
+                    sortWeight: fields['排序权重'] || 0,
+                    scoreInteresting: parseInt(fields['趣味分']) || 0,
+                    scoreUseful: parseInt(fields['实用分']) || 0
                 };
 
                 // 存储到映射表
@@ -2122,11 +2173,23 @@
             container.innerHTML = html;
         }
 
+        // 豆包Demo评分分级函数
+        function getDoubaoScoreClass(total) {
+            if (total >= 70) return 'excellent';  // 绿色
+            if (total >= 50) return 'good';       // 蓝色
+            return 'average';                      // 橙色
+        }
+
         function renderDoubaoCard(demo, abilityClass, icon) {
             // 检查是否有record_id（从飞书API加载的数据才有）
             const hasRecordId = demo.id && demo.id.startsWith('rec');
             const noteDisplay = demo.note || (hasRecordId ? '点击添加备注' : '');
             const noteClass = demo.note ? '' : 'empty';
+
+            // 评分相关
+            const total = (demo.scoreInteresting || 0) + (demo.scoreUseful || 0);
+            const scoreClass = getDoubaoScoreClass(total);
+            const hasScore = demo.scoreInteresting > 0 || demo.scoreUseful > 0;
 
             return `
                 <div class="doubao-demo-card">
@@ -2155,6 +2218,18 @@
                     <div class="doubao-expected-effect">
                         <span class="doubao-expected-effect-label">预期效果：</span>${demo.expectedEffect}
                     </div>
+                    ${hasScore ? `
+                    <div class="doubao-demo-score">
+                        <div class="doubao-score-circle ${scoreClass}">
+                            <span class="doubao-score-number">${total}</span>
+                            <span class="doubao-score-label">分</span>
+                        </div>
+                        <div class="doubao-score-detail">
+                            <span>趣味 ${demo.scoreInteresting}</span>
+                            <span>实用 ${demo.scoreUseful}</span>
+                        </div>
+                    </div>
+                    ` : ''}
                     ${hasRecordId ? `
                     <div class="doubao-demo-note">
                         <div class="doubao-note-display ${noteClass}" id="doubaoNoteDisplay${demo.id}" onclick="startEditDoubaoNote('${demo.id}')">
