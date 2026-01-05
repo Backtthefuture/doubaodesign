@@ -1054,6 +1054,82 @@
             color: var(--text-tertiary);
             margin-right: 4px;
         }
+
+        /* Doubao Note Styles */
+        .doubao-demo-note {
+            padding: 12px 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .doubao-note-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: white;
+            border-radius: var(--radius-sm);
+            min-height: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .doubao-note-display:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .doubao-note-display.empty {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .doubao-note-edit textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+
+        .doubao-note-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .doubao-note-btn {
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .doubao-note-btn.save {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .doubao-note-btn.save:hover {
+            background: var(--accent-blue-hover);
+        }
+
+        .doubao-note-btn.cancel {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .doubao-note-btn.cancel:hover {
+            background: var(--bg-hover);
+        }
     </style>
 </head>
 <body>
@@ -1908,23 +1984,112 @@
 
         // ========== Doubao Showcase Functions ==========
         let doubaoData = null;
+        let doubaoRecordsMap = {}; // record_id -> demo对象的映射
+
+        // 能力配置（硬编码）
+        const ABILITY_CONFIG = {
+            agent: {
+                id: 'agent',
+                name: '更强Agent能力',
+                icon: '💡',
+                tags: ['自动任务', '多步骤执行', '工具调用']
+            },
+            multimodal: {
+                id: 'multimodal',
+                name: '更强多模态能力',
+                icon: '👁️',
+                tags: ['图像理解', '视频分析', '跨模态']
+            },
+            llm: {
+                id: 'llm',
+                name: '更强LLM能力',
+                icon: '🧠',
+                tags: ['推理', '创作', '知识']
+            }
+        };
+
+        // 将飞书记录转换为嵌套结构
+        function transformDoubaoRecords(records) {
+            const grouped = { agent: [], multimodal: [], llm: [] };
+
+            records.forEach(record => {
+                const fields = record.fields;
+                const demo = {
+                    id: record.record_id,
+                    name: fields['Demo名称'] || '',
+                    subtitle: fields['副标题'] || '',
+                    scene: fields['使用场景'] || '',
+                    steps: (fields['操作步骤'] || '').split('\n').filter(s => s.trim()),
+                    coreDisplay: fields['核心展示'] || '',
+                    expectedEffect: fields['预期效果'] || '',
+                    note: fields['备注'] || '',
+                    sortWeight: fields['排序权重'] || 0
+                };
+
+                // 存储到映射表
+                doubaoRecordsMap[demo.id] = demo;
+
+                const abilityType = fields['能力分类'];
+                if (grouped[abilityType]) {
+                    grouped[abilityType].push(demo);
+                }
+            });
+
+            // 按权重排序
+            Object.keys(grouped).forEach(key => {
+                grouped[key].sort((a, b) => (b.sortWeight || 0) - (a.sortWeight || 0));
+            });
+
+            return {
+                abilities: ['agent', 'multimodal', 'llm'].map(id => ({
+                    ...ABILITY_CONFIG[id],
+                    demos: grouped[id]
+                }))
+            };
+        }
 
         async function loadDoubaoData() {
             try {
-                const response = await fetch('./gemini3-doubao18.json');
-                if (!response.ok) {
-                    console.log('豆包Demo JSON 文件不存在，跳过展示区域');
-                    return;
+                // 从飞书API获取数据
+                const response = await fetch(`${API_BASE}/doubao-records`);
+
+                // 检查响应是否为JSON格式
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.log('豆包API返回非JSON响应，尝试本地JSON回退');
+                    throw new Error('Not JSON response');
                 }
-                doubaoData = await response.json();
+
+                const data = await response.json();
+                if (data.code !== 0) {
+                    throw new Error(data.error || '获取豆包Demo失败');
+                }
+
+                // 转换数据结构
+                doubaoData = transformDoubaoRecords(data.data.items);
 
                 // 显示展示区域
                 document.getElementById('doubaoShowcase').style.display = 'block';
                 renderDoubaoShowcase();
-                console.log('✓ 成功加载豆包Demo数据');
+                console.log('✓ 成功从飞书API加载豆包Demo数据');
             } catch (error) {
-                // JSON 文件不存在或解析失败，静默跳过（不显示该区域）
-                console.log('豆包Demo数据未加载:', error.message);
+                // API失败，尝试本地JSON回退
+                console.log('飞书API请求失败，尝试本地JSON回退:', error.message);
+                try {
+                    const response = await fetch('./gemini3-doubao18.json');
+                    if (!response.ok) {
+                        console.log('豆包Demo JSON 文件不存在，跳过展示区域');
+                        return;
+                    }
+                    doubaoData = await response.json();
+
+                    // 显示展示区域
+                    document.getElementById('doubaoShowcase').style.display = 'block';
+                    renderDoubaoShowcase();
+                    console.log('✓ 成功从本地JSON加载豆包Demo数据（回退模式，备注不可编辑）');
+                } catch (jsonError) {
+                    console.log('豆包Demo数据未加载:', jsonError.message);
+                }
             }
         }
 
@@ -1958,6 +2123,11 @@
         }
 
         function renderDoubaoCard(demo, abilityClass, icon) {
+            // 检查是否有record_id（从飞书API加载的数据才有）
+            const hasRecordId = demo.id && demo.id.startsWith('rec');
+            const noteDisplay = demo.note || (hasRecordId ? '点击添加备注' : '');
+            const noteClass = demo.note ? '' : 'empty';
+
             return `
                 <div class="doubao-demo-card">
                     <div class="doubao-demo-card-header">
@@ -1985,8 +2155,72 @@
                     <div class="doubao-expected-effect">
                         <span class="doubao-expected-effect-label">预期效果：</span>${demo.expectedEffect}
                     </div>
+                    ${hasRecordId ? `
+                    <div class="doubao-demo-note">
+                        <div class="doubao-note-display ${noteClass}" id="doubaoNoteDisplay${demo.id}" onclick="startEditDoubaoNote('${demo.id}')">
+                            ${noteDisplay}
+                        </div>
+                        <div class="doubao-note-edit" id="doubaoNoteEdit${demo.id}" style="display:none;">
+                            <textarea id="doubaoNoteTextarea${demo.id}">${demo.note || ''}</textarea>
+                            <div class="doubao-note-actions">
+                                <button class="doubao-note-btn save" onclick="saveDoubaoNote('${demo.id}')">保存</button>
+                                <button class="doubao-note-btn cancel" onclick="cancelEditDoubaoNote('${demo.id}')">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
                 </div>
             `;
+        }
+
+        // ========== 豆包备注编辑函数 ==========
+        function startEditDoubaoNote(id) {
+            document.getElementById(`doubaoNoteDisplay${id}`).style.display = 'none';
+            document.getElementById(`doubaoNoteEdit${id}`).style.display = 'block';
+            document.getElementById(`doubaoNoteTextarea${id}`).focus();
+        }
+
+        function cancelEditDoubaoNote(id) {
+            document.getElementById(`doubaoNoteDisplay${id}`).style.display = 'block';
+            document.getElementById(`doubaoNoteEdit${id}`).style.display = 'none';
+        }
+
+        async function saveDoubaoNote(id) {
+            const note = document.getElementById(`doubaoNoteTextarea${id}`).value.trim();
+
+            try {
+                // 调用飞书API更新备注
+                const response = await fetch(`${API_BASE}/update-doubao-record`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        record_id: id,
+                        fields: { '备注': note }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.code === 0) {
+                    // 更新本地数据
+                    if (doubaoRecordsMap[id]) {
+                        doubaoRecordsMap[id].note = note;
+                    }
+
+                    // 更新显示
+                    const display = document.getElementById(`doubaoNoteDisplay${id}`);
+                    display.textContent = note || '点击添加备注';
+                    display.className = `doubao-note-display ${note ? '' : 'empty'}`;
+
+                    showToast('备注已保存到飞书');
+                } else {
+                    throw new Error(data.error || '保存失败');
+                }
+            } catch (error) {
+                console.error('保存豆包备注失败:', error);
+                showToast('保存失败，请重试');
+            }
+
+            cancelEditDoubaoNote(id);
         }
 
         // Load Doubao data after main init
