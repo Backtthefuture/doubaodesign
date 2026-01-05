@@ -77,6 +77,40 @@
         .header-badge.loading { background: linear-gradient(135deg, #ff9500, #ffb340); }
         .header-badge.error { background: linear-gradient(135deg, #ff3b30, #ff453a); }
 
+        /* Header Tabs - 顶部标签切换 */
+        .header-tabs {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .header-tab {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .header-tab:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .header-tab.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .header-tab.active::before {
+            content: '✦ ';
+        }
+
         /* Main Container */
         .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
 
@@ -1190,6 +1224,12 @@
             <div>
                 <h1 class="header-title">竞品Demo分析与豆包Demo创意</h1>
                 <p class="header-subtitle">2025年12月 · <span id="demoCount">加载中...</span> · 飞书数据源</p>
+                <div class="header-tabs">
+                    <button class="header-tab active" data-tab="gemini3">Gemini3</button>
+                    <button class="header-tab" data-tab="sora">Sora</button>
+                    <button class="header-tab" data-tab="gpt5">GPT-5</button>
+                    <button class="header-tab" data-tab="claude">Claude</button>
+                </div>
             </div>
             <div class="header-badge loading" id="dataBadge">
                 <span>数据加载中...</span>
