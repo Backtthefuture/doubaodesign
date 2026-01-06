@@ -666,20 +666,36 @@
 
         .col-notes { width: 120px; }
         .col-assignee { width: 100px; min-width: 100px; }
-        .col-exec-date { width: 110px; min-width: 110px; }
-        .exec-date-input {
+        .col-exec-date { width: 90px; min-width: 90px; }
+        .exec-date-wrapper {
+            position: relative;
             width: 100%;
+        }
+        .exec-date-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 8px 10px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             font-size: 13px;
             background: white;
             cursor: pointer;
-            outline: none;
             transition: border-color 0.2s ease;
         }
-        .exec-date-input:hover { border-color: var(--accent-blue); }
-        .exec-date-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
+        .exec-date-display:hover { border-color: var(--accent-blue); }
+        .exec-date-display .date-text { color: var(--text-primary); }
+        .exec-date-display .date-text.empty { color: var(--text-tertiary); }
+        .exec-date-display .date-icon { color: var(--text-tertiary); font-size: 14px; }
+        .exec-date-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
         .assignee-select {
             width: 100%;
             padding: 8px 10px;
@@ -1754,6 +1770,16 @@
             return `${year}-${month}-${day}`;
         }
 
+        // 将 YYYY-MM-DD 格式转换为 MM-DD 显示格式
+        function formatDateDisplay(dateStr) {
+            if (!dateStr) return '选择';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                return `${parts[1]}-${parts[2]}`;
+            }
+            return dateStr;
+        }
+
         function transformRecord(record) {
             const fields = record.fields;
             const rawScene = fields['所属场景'] || '';
@@ -2058,10 +2084,15 @@
                         </select>
                     </td>
                     <td class="col-exec-date">
-                        <input type="date" class="exec-date-input"
-                            value="${demo.execDate || ''}"
-                            onchange="saveExecDate('${demo.id}', this.value)"
-                            onclick="if(!this.value) this.value = new Date().toISOString().split('T')[0]">
+                        <div class="exec-date-wrapper">
+                            <div class="exec-date-display">
+                                <span class="date-text ${demo.execDate ? '' : 'empty'}">${formatDateDisplay(demo.execDate)}</span>
+                                <span class="date-icon">📅</span>
+                            </div>
+                            <input type="date" class="exec-date-input"
+                                value="${demo.execDate || ''}"
+                                onchange="saveExecDate('${demo.id}', this.value, this)">
+                        </div>
                     </td>
                 </tr>
                 <tr class="doubao-detail-row" id="doubaoDetail${demo.id}" style="display: none;">
@@ -2224,11 +2255,21 @@
             }
         }
 
-        async function saveExecDate(id, dateValue) {
+        async function saveExecDate(id, dateValue, inputEl) {
             const demo = demoData.find(d => d.id === id);
 
             if (demo) {
                 demo.execDate = dateValue;
+
+                // Update display text
+                if (inputEl) {
+                    const wrapper = inputEl.closest('.exec-date-wrapper');
+                    const textEl = wrapper.querySelector('.date-text');
+                    if (textEl) {
+                        textEl.textContent = formatDateDisplay(dateValue);
+                        textEl.classList.toggle('empty', !dateValue);
+                    }
+                }
 
                 // Convert date string to timestamp for Feishu
                 const timestamp = dateValue ? new Date(dateValue).getTime() : null;
