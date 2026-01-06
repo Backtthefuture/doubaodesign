@@ -43,28 +43,68 @@ async function getAccessToken() {
 
 // 上传图片到飞书云文档
 async function uploadImageToFeishu(token, imageBuffer, fileName, mimeType) {
-  // 使用原生 FormData (Node.js 18+)
-  const { FormData, Blob } = await import('node:buffer');
+  // 手动构建 multipart/form-data
+  const boundary = `----WebKitFormBoundary${Math.random().toString(36).substring(2)}`;
+  const CRLF = '\r\n';
 
-  const formData = new FormData();
-  formData.append('file_name', fileName);
-  formData.append('parent_type', 'bitable_image');
-  formData.append('parent_node', FEISHU_APP_TOKEN);
-  formData.append('size', imageBuffer.length.toString());
-  formData.append('file', new Blob([imageBuffer], { type: mimeType }), fileName);
+  // 构建表单数据
+  const parts = [];
+
+  // 添加文本字段
+  parts.push(`--${boundary}${CRLF}`);
+  parts.push(`Content-Disposition: form-data; name="file_name"${CRLF}${CRLF}`);
+  parts.push(`${fileName}${CRLF}`);
+
+  parts.push(`--${boundary}${CRLF}`);
+  parts.push(`Content-Disposition: form-data; name="parent_type"${CRLF}${CRLF}`);
+  parts.push(`bitable_image${CRLF}`);
+
+  parts.push(`--${boundary}${CRLF}`);
+  parts.push(`Content-Disposition: form-data; name="parent_node"${CRLF}${CRLF}`);
+  parts.push(`${FEISHU_APP_TOKEN}${CRLF}`);
+
+  parts.push(`--${boundary}${CRLF}`);
+  parts.push(`Content-Disposition: form-data; name="size"${CRLF}${CRLF}`);
+  parts.push(`${imageBuffer.length}${CRLF}`);
+
+  // 添加文件字段
+  parts.push(`--${boundary}${CRLF}`);
+  parts.push(`Content-Disposition: form-data; name="file"; filename="${fileName}"${CRLF}`);
+  parts.push(`Content-Type: ${mimeType}${CRLF}${CRLF}`);
+
+  // 拼接所有文本部分
+  const textParts = parts.join('');
+  const textBuffer = Buffer.from(textParts, 'utf8');
+
+  // 结束标记
+  const endBoundary = Buffer.from(`${CRLF}--${boundary}--${CRLF}`, 'utf8');
+
+  // 合并所有部分: 文本 + 图片 + 结束标记
+  const body = Buffer.concat([textBuffer, imageBuffer, endBoundary]);
+
+  console.log('Uploading to Feishu:', {
+    fileName,
+    mimeType,
+    size: imageBuffer.length,
+    boundary
+  });
 
   const response = await fetch(
     'https://open.feishu.cn/open-apis/drive/v1/medias/upload_all',
     {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': `multipart/form-data; boundary=${boundary}`,
+        'Content-Length': body.length.toString()
       },
-      body: formData
+      body: body
     }
   );
 
   const data = await response.json();
+
+  console.log('Feishu upload response:', data);
 
   if (data.code === 0) {
     return data.data;
@@ -171,6 +211,8 @@ export default async function handler(req, res) {
       });
     }
 
+    console.log('Parsing multipart form data...');
+
     // 解析上传的文件
     const fileData = await parseMultipartFormData(req);
 
@@ -180,6 +222,12 @@ export default async function handler(req, res) {
         error: 'No image file found in request'
       });
     }
+
+    console.log('File parsed:', {
+      filename: fileData.filename,
+      mimeType: fileData.mimeType,
+      size: fileData.size
+    });
 
     // 验证文件类型
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
@@ -199,13 +247,13 @@ export default async function handler(req, res) {
       });
     }
 
-    console.log('Uploading file:', fileData.filename, 'Size:', fileData.size, 'Type:', fileData.mimeType);
-
     // 获取 token
     const token = await getAccessToken();
 
     // 上传到飞书
     const uploadResult = await uploadImageToFeishu(token, fileData.buffer, fileData.filename, fileData.mimeType);
+
+    console.log('Upload successful:', uploadResult);
 
     return res.status(200).json({
       code: 0,
