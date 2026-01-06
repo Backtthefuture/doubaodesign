@@ -468,6 +468,18 @@
             flex: 1;
         }
 
+        .doubao-prompt-preview {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+            font-style: italic;
+        }
+
         .expand-link {
             font-size: 11px;
             color: #999;
@@ -1837,7 +1849,7 @@
                     <td class="col-doubao">
                         <div class="doubao-card-new" onclick="toggleDoubaoDetail('${demo.id}')">
                             <div class="doubao-title-line">💡 ${demo.doubaoTitle}</div>
-                            <div class="doubao-desc-preview">${demo.doubaoDesc}</div>
+                            <div class="doubao-prompt-preview">${demo.examplePrompt || '暂无示例Prompt'}</div>
                             <span class="expand-link" id="expandLink-${demo.id}">
                                 更多 <span class="expand-icon-small">▼</span>
                             </span>
@@ -1875,6 +1887,10 @@
                                 ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
                             </div>
 
+                            <div class="doubao-section">
+                                <div class="section-title">📝 创意描述：</div>
+                                <div class="section-content">${demo.doubaoDesc || '暂无'}</div>
+                            </div>
                             <div class="doubao-section">
                                 <div class="section-title">💬 示例Prompt：</div>
                                 <div class="section-content example-prompt">"${demo.examplePrompt || '暂无'}"</div>
