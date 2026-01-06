@@ -2123,6 +2123,13 @@
                     }
                 }
             }
+
+            // 渲染所有demo的图片缩略图
+            for (const demo of data) {
+                if (demo.attachments && demo.attachments.length > 0) {
+                    await renderImageThumbnails(demo.id);
+                }
+            }
         }
 
         // 获取预览 HTML
@@ -2448,6 +2455,203 @@
                     showToast('保存失败，请重试');
                 }
             }
+        }
+
+        // ========== Image Upload Functions ==========
+        // 选择图片文件
+        function handleImageSelect(event, demoId) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast('❌ 仅支持 JPG、PNG、GIF、WebP 格式');
+                event.target.value = '';
+                return;
+            }
+
+            const maxSize = 30 * 1024 * 1024;
+            if (file.size > maxSize) {
+                const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                showToast(`❌ 图片过大 (${sizeMB}MB),最大支持 30MB`);
+                event.target.value = '';
+                return;
+            }
+
+            const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+            window.pendingImage = { demoId, file };
+            document.getElementById(`selectedFileInfo${demoId}`).innerHTML = `✓ ${file.name} (${sizeMB}MB)`;
+            document.getElementById(`uploadBtn${demoId}`).disabled = false;
+            showToast(`✓ 已选择图片: ${file.name}`);
+        }
+
+        // 上传图片
+        async function uploadImage(demoId) {
+            const pending = window.pendingImage;
+            if (!pending || pending.demoId !== demoId) {
+                showToast('请先选择图片');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', pending.file);
+
+            try {
+                showToast('上传中...');
+                document.getElementById(`uploadBtn${demoId}`).disabled = true;
+
+                const uploadRes = await fetch(`${API_BASE}/upload-image`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const uploadData = await uploadRes.json();
+
+                if (uploadData.code !== 0) {
+                    throw new Error(uploadData.error);
+                }
+
+                const demo = demoData.find(d => d.id === demoId);
+                const currentAttachments = demo.attachments || [];
+                const newAttachments = [
+                    ...currentAttachments,
+                    { file_token: uploadData.data.file_token, name: uploadData.data.name, size: uploadData.data.size }
+                ];
+
+                const updateRes = await updateRecord(demoId, { '附件': newAttachments });
+
+                if (updateRes) {
+                    demo.attachments = newAttachments;
+                    await renderImageThumbnails(demoId);
+                    showToast('✓ 上传成功');
+                    window.pendingImage = null;
+                    document.getElementById(`fileInput${demoId}`).value = '';
+                    document.getElementById(`selectedFileInfo${demoId}`).innerHTML = '';
+                    document.getElementById(`uploadBtn${demoId}`).disabled = true;
+                } else {
+                    throw new Error('更新记录失败');
+                }
+            } catch (error) {
+                console.error('上传失败:', error);
+                showToast('❌ 上传失败: ' + error.message);
+                document.getElementById(`uploadBtn${demoId}`).disabled = false;
+            }
+        }
+
+        // 批量获取图片URL
+        async function batchGetImageUrls(fileTokens) {
+            if (!fileTokens || fileTokens.length === 0) return {};
+
+            try {
+                const tokenParams = fileTokens.map(t => `file_tokens=${t}`).join('&');
+                const response = await fetch(`${API_BASE}/media?${tokenParams}`);
+                const data = await response.json();
+
+                if (data.code === 0 && data.data.tmp_download_urls) {
+                    const urlMap = {};
+                    data.data.tmp_download_urls.forEach(item => {
+                        if (item.file_token && item.tmp_download_url) {
+                            urlMap[item.file_token] = item.tmp_download_url;
+                        }
+                    });
+                    return urlMap;
+                }
+            } catch (error) {
+                console.error('获取图片URL失败:', error);
+            }
+            return {};
+        }
+
+        // 渲染图片缩略图
+        async function renderImageThumbnails(demoId) {
+            const demo = demoData.find(d => d.id === demoId);
+            const attachments = demo.attachments || [];
+            const container = document.getElementById(`imagePreview${demoId}`);
+
+            if (attachments.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const fileTokens = attachments.map(a => a.file_token);
+            const urls = await batchGetImageUrls(fileTokens);
+
+            const html = `
+                <div class="image-preview-header">📷 已上传图片 (${attachments.length}张)</div>
+                <div class="image-thumbnails">
+                    ${attachments.map((attachment, index) => {
+                        const url = urls[attachment.file_token];
+                        const sizeMB = attachment.size ? (attachment.size / 1024 / 1024).toFixed(2) : '未知';
+                        const fileName = attachment.name || `图片${index + 1}`;
+
+                        if (!url) {
+                            return `<div class="image-thumb-wrapper"><div class="image-thumb" style="background:var(--bg-primary);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);">加载中...</div></div>`;
+                        }
+
+                        return `
+                            <div class="image-thumb-wrapper">
+                                <img src="${url}" class="image-thumb" alt="${fileName}" title="${fileName}" onclick="openImageLightbox('${demoId}', ${index})" loading="lazy">
+                                <button class="image-delete-btn" onclick="deleteImage('${demoId}', ${index}, '${fileName.replace(/'/g, "\\'")}')" title="删除图片">×</button>
+                                <div class="image-thumb-info">${sizeMB}MB</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        // 删除图片
+        async function deleteImage(demoId, imageIndex, imageName) {
+            const confirmMessage = `⚠️ 确定要删除这张图片吗?\n\n文件名: ${imageName}\n\n删除后将无法恢复!`;
+            if (!confirm(confirmMessage)) return;
+
+            showToast('删除中...');
+            try {
+                const demo = demoData.find(d => d.id === demoId);
+                const attachments = [...(demo.attachments || [])];
+                attachments.splice(imageIndex, 1);
+
+                const success = await updateRecord(demoId, { '附件': attachments });
+
+                if (success) {
+                    demo.attachments = attachments;
+                    await renderImageThumbnails(demoId);
+                    showToast('✓ 已删除');
+                } else {
+                    showToast('❌ 删除失败,请重试');
+                }
+            } catch (error) {
+                console.error('删除图片失败:', error);
+                showToast('❌ 删除失败: ' + error.message);
+            }
+        }
+
+        // 打开图片预览
+        function openImageLightbox(demoId, imageIndex) {
+            const demo = demoData.find(d => d.id === demoId);
+            const attachments = demo.attachments || [];
+            if (attachments.length === 0) return;
+
+            window.currentLightboxImages = { demoId, images: attachments, currentIndex: imageIndex };
+            showLightboxImage(imageIndex);
+        }
+
+        // 显示Lightbox图片
+        async function showLightboxImage(index) {
+            const { demoId, images } = window.currentLightboxImages;
+            const attachment = images[index];
+            if (!attachment) return;
+
+            const urls = await batchGetImageUrls([attachment.file_token]);
+            const url = urls[attachment.file_token];
+            if (!url) {
+                showToast('无法加载图片');
+                return;
+            }
+
+            const fileName = attachment.name || `图片${index + 1}`;
+            openLightbox(url, fileName, false);
+            window.currentLightboxImages.currentIndex = index;
         }
 
         // ========== Doubao Detail Expansion ==========
