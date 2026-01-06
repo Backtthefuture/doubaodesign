@@ -1685,10 +1685,9 @@
                 abilitySelect.appendChild(option);
             });
 
-            // Quick filters
+            // Quick filters - 显示所有场景标签
             const quickFilters = document.getElementById('quickFilters');
-            const topScenes = scenes.slice(0, 6);
-            topScenes.forEach(scene => {
+            scenes.forEach(scene => {
                 const btn = document.createElement('button');
                 btn.className = 'quick-filter';
                 btn.dataset.scene = scene;
