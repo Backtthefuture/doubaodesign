@@ -1342,6 +1342,11 @@
                     <option value="good">良好(60-79)</option>
                     <option value="average">一般(<60)</option>
                 </select>
+                <select class="filter-select" id="noteFilter">
+                    <option value="">全部备注</option>
+                    <option value="has-note">有备注</option>
+                    <option value="no-note">无备注</option>
+                </select>
                 <select class="filter-select" id="sortFilter">
                     <option value="score-desc">按评分降序</option>
                     <option value="score-asc">按评分升序</option>
@@ -1912,6 +1917,7 @@
             const sceneFilter = document.getElementById('sceneFilter').value;
             const abilityFilter = document.getElementById('abilityFilter').value;
             const scoreFilter = document.getElementById('scoreFilter').value;
+            const noteFilter = document.getElementById('noteFilter').value;
             const sortFilter = document.getElementById('sortFilter').value;
 
             let filtered = demoData.filter(demo => {
@@ -1928,6 +1934,15 @@
                 if (scoreFilter === 'excellent' && total < 80) return false;
                 if (scoreFilter === 'good' && (total < 60 || total >= 80)) return false;
                 if (scoreFilter === 'average' && total >= 60) return false;
+
+                // 备注筛选
+                if (noteFilter === 'has-note' && (!demo.note || demo.note.trim() === '')) {
+                    return false;
+                }
+                if (noteFilter === 'no-note' && demo.note && demo.note.trim() !== '') {
+                    return false;
+                }
+
                 return true;
             });
 
@@ -2046,6 +2061,7 @@
         document.getElementById('sceneFilter').addEventListener('change', filterData);
         document.getElementById('abilityFilter').addEventListener('change', filterData);
         document.getElementById('scoreFilter').addEventListener('change', filterData);
+        document.getElementById('noteFilter').addEventListener('change', filterData);
         document.getElementById('sortFilter').addEventListener('change', filterData);
 
         // 快速筛选按钮改为跳转逻辑
