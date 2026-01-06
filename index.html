@@ -399,9 +399,15 @@
         .col-abilities { width: 160px; }
         .ability-tags {
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
             gap: 6px;
             margin-top: 8px;
+        }
+        .ability-tags-left {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
         }
         .ability-tag {
             padding: 3px 8px;
@@ -442,6 +448,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border: none;
+            margin-left: auto;
+            flex-shrink: 0;
         }
         .link-btn:hover {
             background: #e5e5ea;
@@ -1656,6 +1664,7 @@
                 scoreInteresting: parseInt(fields['趣味分']) || 0,
                 scoreUseful: parseInt(fields['实用分']) || 0,
                 note: fields['备注'] || '',
+                link: fields['链接'] || '',
                 previewFile: previewFile,
                 // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
                 mediaUrl: fields['_mediaUrl'] || null
@@ -1867,15 +1876,17 @@
                         <div class="demo-name">${demo.name}</div>
                         <div class="demo-prompt">${demo.prompt}</div>
                         <div class="ability-tags">
-                            ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
-                            <a href="https://superhuang.feishu.cn/base/PTZxbnALPai6Zys0RNYcp9sznWe?table=tbl3fl3SZd9YxzJ6&record=${demo.id}" target="_blank" rel="noopener noreferrer" class="link-btn" title="在飞书中打开">
+                            <div class="ability-tags-left">
+                                ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
+                            </div>
+                            ${demo.link ? `<a href="${demo.link}" target="_blank" rel="noopener noreferrer" class="link-btn" title="打开原链接">
                                 原链接
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                                     <polyline points="15 3 21 3 21 9"/>
                                     <line x1="10" y1="14" x2="21" y2="3"/>
                                 </svg>
-                            </a>
+                            </a>` : ''}
                         </div>
                     </td>
                     <td class="col-preview">${previewHtml}</td>
