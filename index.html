@@ -666,6 +666,20 @@
 
         .col-notes { width: 120px; }
         .col-assignee { width: 100px; min-width: 100px; }
+        .col-exec-date { width: 110px; min-width: 110px; }
+        .exec-date-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .exec-date-input:hover { border-color: var(--accent-blue); }
+        .exec-date-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
         .assignee-select {
             width: 100%;
             padding: 8px 10px;
@@ -1485,6 +1499,7 @@
                             <th class="col-score">评分</th>
                             <th class="col-notes">备注</th>
                             <th class="col-assignee">执行人</th>
+                            <th class="col-exec-date">执行日期</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1730,6 +1745,15 @@
         }
 
         // ========== 数据转换 ==========
+        function formatTimestampToDate(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
         function transformRecord(record) {
             const fields = record.fields;
             const rawScene = fields['所属场景'] || '';
@@ -1754,6 +1778,7 @@
                 note: fields['备注'] || '',
                 link: (fields['链接'] && fields['链接'].link) ? fields['链接'].link : (typeof fields['链接'] === 'string' ? fields['链接'] : ''),
                 assignee: fields['执行人'] || '',
+                execDate: formatTimestampToDate(fields['执行日期']),
                 previewFile: previewFile,
                 // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
                 mediaUrl: fields['_mediaUrl'] || null
@@ -1907,6 +1932,7 @@
                                     <th class="col-score">评分</th>
                                     <th class="col-notes">备注</th>
                                     <th class="col-assignee">执行人</th>
+                                    <th class="col-exec-date">执行日期</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -2031,9 +2057,15 @@
                             ${ASSIGNEE_OPTIONS.map(a => `<option value="${a}" ${demo.assignee === a ? 'selected' : ''}>${a}</option>`).join('')}
                         </select>
                     </td>
+                    <td class="col-exec-date">
+                        <input type="date" class="exec-date-input"
+                            value="${demo.execDate || ''}"
+                            onchange="saveExecDate('${demo.id}', this.value)"
+                            onclick="if(!this.value) this.value = new Date().toISOString().split('T')[0]">
+                    </td>
                 </tr>
                 <tr class="doubao-detail-row" id="doubaoDetail${demo.id}" style="display: none;">
-                    <td colspan="8">
+                    <td colspan="9">
                         <div class="doubao-detail-content">
                             <div class="doubao-detail-header">💡 ${demo.doubaoTitle}</div>
 
@@ -2186,6 +2218,25 @@
                 const success = await updateRecord(id, { '执行人': assignee });
                 if (success) {
                     showToast('执行人已保存');
+                } else {
+                    showToast('保存失败，请重试');
+                }
+            }
+        }
+
+        async function saveExecDate(id, dateValue) {
+            const demo = demoData.find(d => d.id === id);
+
+            if (demo) {
+                demo.execDate = dateValue;
+
+                // Convert date string to timestamp for Feishu
+                const timestamp = dateValue ? new Date(dateValue).getTime() : null;
+
+                // Update in Feishu
+                const success = await updateRecord(id, { '执行日期': timestamp });
+                if (success) {
+                    showToast('执行日期已保存');
                 } else {
                     showToast('保存失败，请重试');
                 }
