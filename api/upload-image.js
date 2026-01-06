@@ -42,16 +42,16 @@ async function getAccessToken() {
 }
 
 // 上传图片到飞书云文档
-async function uploadImageToFeishu(token, imageBuffer, fileName, fileSize) {
-  const FormData = (await import('formdata-node')).FormData;
-  const { Blob } = await import('buffer');
+async function uploadImageToFeishu(token, imageBuffer, fileName, mimeType) {
+  // 使用原生 FormData (Node.js 18+)
+  const { FormData, Blob } = await import('node:buffer');
 
   const formData = new FormData();
   formData.append('file_name', fileName);
   formData.append('parent_type', 'bitable_image');
   formData.append('parent_node', FEISHU_APP_TOKEN);
-  formData.append('size', fileSize.toString());
-  formData.append('file', new Blob([imageBuffer]), fileName);
+  formData.append('size', imageBuffer.length.toString());
+  formData.append('file', new Blob([imageBuffer], { type: mimeType }), fileName);
 
   const response = await fetch(
     'https://open.feishu.cn/open-apis/drive/v1/medias/upload_all',
@@ -71,6 +71,79 @@ async function uploadImageToFeishu(token, imageBuffer, fileName, fileSize) {
   }
 
   throw new Error('上传图片失败: ' + (data.msg || JSON.stringify(data)));
+}
+
+// 解析 multipart/form-data (简化版,不依赖外部库)
+async function parseMultipartFormData(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+
+    req.on('data', chunk => {
+      chunks.push(chunk);
+    });
+
+    req.on('end', () => {
+      try {
+        const buffer = Buffer.concat(chunks);
+        const contentType = req.headers['content-type'] || '';
+        const boundary = contentType.split('boundary=')[1];
+
+        if (!boundary) {
+          return reject(new Error('No boundary found in Content-Type'));
+        }
+
+        // 简单解析 multipart (只处理单个文件)
+        const boundaryBuffer = Buffer.from(`--${boundary}`);
+        const parts = [];
+        let start = 0;
+
+        while (true) {
+          const boundaryIndex = buffer.indexOf(boundaryBuffer, start);
+          if (boundaryIndex === -1) break;
+
+          const nextBoundaryIndex = buffer.indexOf(boundaryBuffer, boundaryIndex + boundaryBuffer.length);
+          if (nextBoundaryIndex === -1) break;
+
+          parts.push(buffer.slice(boundaryIndex + boundaryBuffer.length, nextBoundaryIndex));
+          start = nextBoundaryIndex;
+        }
+
+        // 查找文件部分
+        for (const part of parts) {
+          const partStr = part.toString('utf8', 0, 500); // 只读取前500字节查找header
+
+          if (partStr.includes('Content-Type:') && partStr.includes('filename=')) {
+            // 提取文件名
+            const filenameMatch = partStr.match(/filename="([^"]+)"/);
+            const filename = filenameMatch ? filenameMatch[1] : 'unknown.jpg';
+
+            // 提取Content-Type
+            const contentTypeMatch = partStr.match(/Content-Type:\s*([^\r\n]+)/i);
+            const mimeType = contentTypeMatch ? contentTypeMatch[1].trim() : 'application/octet-stream';
+
+            // 找到文件数据起始位置 (两个\r\n\r\n之后)
+            const headerEnd = part.indexOf(Buffer.from('\r\n\r\n'));
+            if (headerEnd === -1) continue;
+
+            const fileData = part.slice(headerEnd + 4, part.length - 2); // 去掉末尾的\r\n
+
+            return resolve({
+              filename,
+              mimeType,
+              buffer: fileData,
+              size: fileData.length
+            });
+          }
+        }
+
+        reject(new Error('No file found in request'));
+      } catch (error) {
+        reject(error);
+      }
+    });
+
+    req.on('error', reject);
+  });
 }
 
 export default async function handler(req, res) {
@@ -98,37 +171,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // 使用 busboy 解析表单数据
-    const busboy = require('busboy');
-    const bb = busboy({ headers: req.headers });
+    // 解析上传的文件
+    const fileData = await parseMultipartFormData(req);
 
-    let imageBuffer = null;
-    let fileName = '';
-    let fileSize = 0;
-    let mimeType = '';
-
-    bb.on('file', (fieldname, file, info) => {
-      const { filename, encoding, mimeType: mime } = info;
-      fileName = filename;
-      mimeType = mime;
-
-      const chunks = [];
-      file.on('data', (data) => {
-        chunks.push(data);
-      });
-      file.on('end', () => {
-        imageBuffer = Buffer.concat(chunks);
-        fileSize = imageBuffer.length;
-      });
-    });
-
-    await new Promise((resolve, reject) => {
-      bb.on('finish', resolve);
-      bb.on('error', reject);
-      req.pipe(bb);
-    });
-
-    if (!imageBuffer) {
+    if (!fileData || !fileData.buffer) {
       return res.status(400).json({
         code: -1,
         error: 'No image file found in request'
@@ -136,36 +182,38 @@ export default async function handler(req, res) {
     }
 
     // 验证文件类型
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    if (!allowedTypes.includes(mimeType)) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
+    if (!allowedTypes.includes(fileData.mimeType)) {
       return res.status(400).json({
         code: -1,
-        error: 'Invalid file type. Only JPG, PNG, GIF, WebP are allowed'
+        error: `Invalid file type: ${fileData.mimeType}. Only JPG, PNG, GIF, WebP are allowed`
       });
     }
 
     // 验证文件大小 (30MB)
     const maxSize = 30 * 1024 * 1024;
-    if (fileSize > maxSize) {
+    if (fileData.size > maxSize) {
       return res.status(400).json({
         code: -1,
-        error: `File too large. Maximum size is 30MB, got ${(fileSize / 1024 / 1024).toFixed(2)}MB`
+        error: `File too large. Maximum size is 30MB, got ${(fileData.size / 1024 / 1024).toFixed(2)}MB`
       });
     }
+
+    console.log('Uploading file:', fileData.filename, 'Size:', fileData.size, 'Type:', fileData.mimeType);
 
     // 获取 token
     const token = await getAccessToken();
 
     // 上传到飞书
-    const uploadResult = await uploadImageToFeishu(token, imageBuffer, fileName, fileSize);
+    const uploadResult = await uploadImageToFeishu(token, fileData.buffer, fileData.filename, fileData.mimeType);
 
     return res.status(200).json({
       code: 0,
       data: {
         file_token: uploadResult.file_token,
-        name: fileName,
-        size: fileSize,
-        type: mimeType
+        name: fileData.filename,
+        size: fileData.size,
+        type: fileData.mimeType
       }
     });
 
@@ -177,3 +225,10 @@ export default async function handler(req, res) {
     });
   }
 }
+
+// 禁用body parser,让我们手动处理
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
