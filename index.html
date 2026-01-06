@@ -248,7 +248,7 @@
         }
 
         /* Demo Table */
-        .demo-table { width: 100%; border-collapse: collapse; }
+        .demo-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         .demo-table thead th {
             background: var(--bg-primary);
             padding: 14px 16px;
@@ -285,8 +285,9 @@
         .rank-default { background: var(--bg-primary); color: var(--text-secondary); }
 
         .col-demo-info {
-            min-width: 300px;
-            max-width: 40%;
+            width: 400px;
+            min-width: 400px;
+            max-width: 400px;
             padding: 12px 16px;
         }
         .demo-name {
@@ -302,9 +303,22 @@
             line-height: 1.5;
             margin-bottom: 8px;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .demo-prompt:hover {
+            -webkit-line-clamp: unset;
+            background: white;
+            padding: 8px;
+            margin: -8px;
+            margin-bottom: 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 10;
         }
 
         .col-preview { width: 100px; }
@@ -356,7 +370,7 @@
             font-size: 11px;
         }
 
-        .col-views { width: 90px; }
+        .col-views { width: 80px; }
         .views-badge {
             display: inline-flex;
             align-items: center;
@@ -413,8 +427,9 @@
         .ability-tag.video { background: #fff8e1; color: #ff8f00; }
 
         .col-doubao {
-            min-width: 200px;
-            max-width: 25%;
+            width: 280px;
+            min-width: 280px;
+            max-width: 280px;
         }
 
         .doubao-card-new {
@@ -603,7 +618,7 @@
         .score-detail { font-size: 11px; color: var(--text-secondary); }
         .score-item { display: flex; justify-content: space-between; gap: 8px; }
 
-        .col-notes { width: 140px; }
+        .col-notes { width: 120px; }
         .note-display {
             font-size: 13px;
             color: var(--text-secondary);
@@ -796,6 +811,7 @@
         .category-table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
         .category-table thead th {
             background: var(--bg-primary);
