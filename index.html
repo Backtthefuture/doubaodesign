@@ -1664,7 +1664,7 @@
                 scoreInteresting: parseInt(fields['趣味分']) || 0,
                 scoreUseful: parseInt(fields['实用分']) || 0,
                 note: fields['备注'] || '',
-                link: fields['链接'] || '',
+                link: (fields['链接'] && fields['链接'].link) ? fields['链接'].link : (typeof fields['链接'] === 'string' ? fields['链接'] : ''),
                 previewFile: previewFile,
                 // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
                 mediaUrl: fields['_mediaUrl'] || null
