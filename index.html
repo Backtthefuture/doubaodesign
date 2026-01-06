@@ -741,6 +741,138 @@
         .note-btn.save { background: var(--accent-blue); color: white; }
         .note-btn.cancel { background: var(--bg-primary); color: var(--text-secondary); }
 
+        /* Image Upload Section */
+        .image-upload-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+        }
+        .upload-file-input {
+            display: none;
+        }
+        .upload-btn-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .upload-btn {
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .upload-btn:hover {
+            border-color: var(--accent-blue);
+            background: white;
+        }
+        .upload-submit-btn {
+            padding: 6px 14px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .upload-submit-btn:hover {
+            background: var(--accent-blue-hover);
+        }
+        .upload-submit-btn:disabled {
+            background: var(--bg-primary);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+        .selected-file-info {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        /* Image Preview Section */
+        .image-preview-section {
+            margin-top: 8px;
+        }
+        .image-preview-header {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .image-thumbnails {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .image-thumb-wrapper {
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+        .image-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .image-thumb:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+        .image-delete-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-red);
+            color: white;
+            border: 2px solid white;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: none;
+            transition: all 0.2s ease;
+        }
+        .image-thumb-wrapper:hover .image-delete-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-delete-btn:hover {
+            background: #ff1a1a;
+            transform: scale(1.1);
+        }
+        .image-thumb-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 9px;
+            padding: 2px 4px;
+            text-align: center;
+            border-bottom-left-radius: var(--radius-sm);
+            border-bottom-right-radius: var(--radius-sm);
+        }
+        .no-images {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
         /* Lightbox */
         .lightbox {
             position: fixed;
@@ -1806,6 +1938,7 @@
                 assignee: fields['执行人'] || '',
                 execDate: formatTimestampToDate(fields['执行日期']),
                 previewFile: previewFile,
+                attachments: fields['附件'] || [],
                 // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
                 mediaUrl: fields['_mediaUrl'] || null
             };
@@ -2076,6 +2209,30 @@
                                 <button class="note-btn cancel" onclick="cancelEditNote('${demo.id}')">取消</button>
                             </div>
                         </div>
+
+                        <!-- 图片上传区域 -->
+                        <div class="image-upload-section">
+                            <div class="upload-btn-wrapper">
+                                <label class="upload-btn" for="fileInput${demo.id}">
+                                    📎 选择图片
+                                </label>
+                                <input type="file"
+                                    id="fileInput${demo.id}"
+                                    class="upload-file-input"
+                                    accept="image/*"
+                                    onchange="handleImageSelect(event, '${demo.id}')">
+                                <button class="upload-submit-btn"
+                                    id="uploadBtn${demo.id}"
+                                    onclick="uploadImage('${demo.id}')"
+                                    disabled>上传</button>
+                                <span class="selected-file-info" id="selectedFileInfo${demo.id}"></span>
+                            </div>
+                        </div>
+
+                        <!-- 图片预览区域 -->
+                        <div class="image-preview-section" id="imagePreview${demo.id}">
+                            <!-- 动态渲染 -->
+                        </div>
                     </td>
                     <td class="col-assignee">
                         <select class="assignee-select" onchange="saveAssignee('${demo.id}', this.value)">
@@ -2085,7 +2242,7 @@
                     </td>
                     <td class="col-exec-date">
                         <div class="exec-date-wrapper">
-                            <div class="exec-date-display">
+                            <div class="exec-date-display" onclick="triggerDatePicker(this)">
                                 <span class="date-text ${demo.execDate ? '' : 'empty'}">${formatDateDisplay(demo.execDate)}</span>
                                 <span class="date-icon">📅</span>
                             </div>
@@ -2252,6 +2409,15 @@
                 } else {
                     showToast('保存失败，请重试');
                 }
+            }
+        }
+
+        function triggerDatePicker(displayEl) {
+            const input = displayEl.nextElementSibling;
+            if (input && input.showPicker) {
+                input.showPicker();
+            } else if (input) {
+                input.click();
             }
         }
 
