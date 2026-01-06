@@ -2136,6 +2136,13 @@
         function transformDoubaoRecords(records) {
             const grouped = { agent: [], multimodal: [], llm: [] };
 
+            // 能力名称到ID的映射（飞书字段值 -> 代码中的key）
+            const abilityNameToId = {
+                '更强Agent能力': 'agent',
+                '更强多模态能力': 'multimodal',
+                '更强LLM能力': 'llm'
+            };
+
             records.forEach(record => {
                 const fields = record.fields;
                 const demo = {
@@ -2155,8 +2162,10 @@
                 // 存储到映射表
                 doubaoRecordsMap[demo.id] = demo;
 
-                const abilityType = fields['能力分类'];
-                if (grouped[abilityType]) {
+                // 将飞书的能力名称转换为代码中的ID
+                const abilityName = fields['能力分类'];
+                const abilityType = abilityNameToId[abilityName];
+                if (abilityType && grouped[abilityType]) {
                     grouped[abilityType].push(demo);
                 }
             });
