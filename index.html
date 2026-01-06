@@ -1274,6 +1274,34 @@
         .doubao-assignee-select:hover { border-color: var(--accent-blue); }
         .doubao-assignee-select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
 
+        /* 豆包筛选结果计数 */
+        .doubao-filter-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-left: auto;
+        }
+
+        /* 无结果提示 */
+        .doubao-no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            margin-top: 20px;
+        }
+
+        /* 豆包展示区标题筛选提示 */
+        .doubao-showcase-filter-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
         /* Doubao Score Styles - 右上角徽章样式 */
         .doubao-score-badge {
             position: absolute;
@@ -1668,6 +1696,7 @@
         // 更新飞书多维表格记录
         async function updateRecord(recordId, fields) {
             try {
+                console.log('正在更新记录:', recordId, '字段:', fields);
                 const response = await fetch(`${API_BASE}/update-record`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1676,7 +1705,18 @@
                         fields: fields
                     })
                 });
+
+                // 检查响应类型
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.error('API返回非JSON响应，可能是本地开发环境，API不可用');
+                    console.error('响应状态:', response.status, '内容类型:', contentType);
+                    return false;
+                }
+
                 const data = await response.json();
+                console.log('API响应:', data);
+
                 if (data.code === 0) {
                     return true;
                 } else {
@@ -2075,6 +2115,9 @@
             });
 
             renderTable(filtered);
+
+            // 联动筛选豆包Demo
+            filterDoubaoData();
         }
 
         // ========== Lightbox ==========
@@ -2439,6 +2482,124 @@
             });
 
             container.innerHTML = html;
+        }
+
+        // ========== 豆包Demo筛选联动 ==========
+        // 竞品能力 → 豆包能力类型 映射
+        const abilityToDoubaoType = {
+            '多模态输入': 'multimodal',
+            '图像生成': 'multimodal',
+            '视觉推理师': 'multimodal',
+            '视频读秒器': 'multimodal',
+            '工具达人': 'agent',
+            'Agent自动化': 'agent',
+            '代码狂魔': 'llm',
+            '指令遵循王': 'llm',
+            '长文不遗忘': 'llm',
+            '文档结构化': 'llm',
+            '3D空间感': 'multimodal',
+            '物理引擎脑': 'llm'
+        };
+
+        // 筛选豆包Demo数据
+        function filterDoubaoData() {
+            if (!doubaoData || !doubaoData.abilities) return;
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const abilityFilter = document.getElementById('abilityFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            const noteFilter = document.getElementById('noteFilter').value;
+            const assigneeFilter = document.getElementById('assigneeFilter').value;
+
+            renderDoubaoShowcaseFiltered(searchTerm, abilityFilter, scoreFilter, noteFilter, assigneeFilter);
+        }
+
+        // 带筛选的豆包展示渲染
+        function renderDoubaoShowcaseFiltered(searchTerm, abilityFilter, scoreFilter, noteFilter, assigneeFilter) {
+            if (!doubaoData || !doubaoData.abilities) return;
+
+            const container = document.getElementById('doubaoAbilities');
+            let html = '';
+            let totalFiltered = 0;
+            let totalAll = 0;
+
+            doubaoData.abilities.forEach((ability, index) => {
+                const abilityClass = ability.id;
+
+                // 筛选当前能力下的demos
+                const filteredDemos = ability.demos.filter(demo => {
+                    totalAll++;
+
+                    // 1. 关键词搜索
+                    if (searchTerm) {
+                        const matchText = [demo.name, demo.subtitle, demo.scene, demo.coreDisplay]
+                            .join(' ').toLowerCase();
+                        if (!matchText.includes(searchTerm)) return false;
+                    }
+
+                    // 2. 能力筛选（通过映射关系）
+                    if (abilityFilter) {
+                        const targetType = abilityToDoubaoType[abilityFilter];
+                        if (targetType && ability.id !== targetType) return false;
+                    }
+
+                    // 3. 分数筛选
+                    const total = (demo.scoreInteresting || 0) + (demo.scoreUseful || 0);
+                    if (scoreFilter === 'excellent' && total < 80) return false;
+                    if (scoreFilter === 'good' && (total < 60 || total >= 80)) return false;
+                    if (scoreFilter === 'average' && total >= 60) return false;
+
+                    // 4. 备注筛选
+                    if (noteFilter === 'has-note' && (!demo.note || !demo.note.trim())) return false;
+                    if (noteFilter === 'no-note' && demo.note && demo.note.trim()) return false;
+
+                    // 5. 执行人筛选
+                    if (assigneeFilter && demo.assignee !== assigneeFilter) return false;
+
+                    return true;
+                });
+
+                totalFiltered += filteredDemos.length;
+
+                // 如果该能力分类下没有匹配的Demo，隐藏整个分类
+                if (filteredDemos.length === 0) return;
+
+                html += `
+                    <div class="doubao-ability-section">
+                        <div class="doubao-ability-header">
+                            <div class="doubao-ability-number ${abilityClass}">${index + 1}</div>
+                            <div class="doubao-ability-icon">${ability.icon}</div>
+                            <h3 class="doubao-ability-title ${abilityClass}">${ability.name}</h3>
+                            <div class="doubao-ability-tags">
+                                ${ability.tags.map(tag => `<span class="doubao-ability-tag ${abilityClass}">${tag}</span>`).join('')}
+                            </div>
+                            <span class="doubao-filter-count">${filteredDemos.length}/${ability.demos.length}</span>
+                        </div>
+                        <div class="doubao-demo-grid">
+                            ${filteredDemos.map(demo => renderDoubaoCard(demo, abilityClass, ability.icon)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 更新标题显示筛选结果数量
+            updateDoubaoShowcaseTitle(totalFiltered, totalAll);
+
+            container.innerHTML = html || '<div class="doubao-no-results">当前筛选条件下没有匹配的豆包Demo<br><span style="font-size: 13px; margin-top: 8px; display: inline-block;">尝试调整筛选条件或清除筛选</span></div>';
+        }
+
+        // 更新豆包展示区标题
+        function updateDoubaoShowcaseTitle(filtered, total) {
+            const titleEl = document.querySelector('.doubao-showcase-title');
+            const subtitleEl = document.querySelector('.doubao-showcase-subtitle');
+
+            if (titleEl) {
+                if (filtered < total) {
+                    titleEl.innerHTML = `豆包1.8 能力Demo展示 <span style="font-size: 18px; font-weight: normal;">(${filtered}/${total})</span>`;
+                } else {
+                    titleEl.textContent = '豆包1.8 能力Demo展示';
+                }
+            }
         }
 
         // 豆包Demo评分分级函数
