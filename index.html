@@ -665,6 +665,31 @@
         .score-item { display: flex; justify-content: space-between; gap: 8px; }
 
         .col-notes { width: 120px; }
+        .col-assignee { width: 100px; min-width: 100px; }
+        .assignee-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            text-align: center;
+        }
+        .assignee-display:hover { border-color: var(--accent-blue); background: white; }
+        .assignee-display.empty { color: var(--text-tertiary); font-style: italic; }
+        .assignee-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
         .note-display {
             font-size: 13px;
             color: var(--text-secondary);
@@ -1233,6 +1258,42 @@
             background: var(--bg-hover);
         }
 
+        /* 豆包执行人样式 */
+        .doubao-assignee-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #e0e0e0;
+        }
+        .doubao-assignee-label {
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+        }
+        .doubao-assignee-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            background: white;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .doubao-assignee-display:hover { border-color: var(--accent-blue); }
+        .doubao-assignee-display.empty { color: var(--text-tertiary); font-style: italic; }
+        .doubao-assignee-select {
+            padding: 4px 10px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+        }
+
         /* Doubao Score Styles - 右上角徽章样式 */
         .doubao-score-badge {
             position: absolute;
@@ -1381,6 +1442,9 @@
                     <option value="has-note">有备注</option>
                     <option value="no-note">无备注</option>
                 </select>
+                <select class="filter-select" id="assigneeFilter">
+                    <option value="">全部执行人</option>
+                </select>
                 <select class="filter-select" id="sortFilter">
                     <option value="score-desc">按评分降序</option>
                     <option value="score-asc">按评分升序</option>
@@ -1412,6 +1476,7 @@
                             <th class="col-doubao">豆包创意</th>
                             <th class="col-score">评分</th>
                             <th class="col-notes">备注</th>
+                            <th class="col-assignee">执行人</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1467,6 +1532,9 @@
 
         // 全局数据
         let demoData = [];
+
+        // 执行人选项列表
+        const ASSIGNEE_OPTIONS = ['苍何', '梦飞', '徐阳'];
 
         // Ability color mapping
         const abilityColors = {
@@ -1665,6 +1733,7 @@
                 scoreUseful: parseInt(fields['实用分']) || 0,
                 note: fields['备注'] || '',
                 link: (fields['链接'] && fields['链接'].link) ? fields['链接'].link : (typeof fields['链接'] === 'string' ? fields['链接'] : ''),
+                assignee: fields['执行人'] || '',
                 previewFile: previewFile,
                 // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
                 mediaUrl: fields['_mediaUrl'] || null
@@ -1753,6 +1822,15 @@
                 abilitySelect.appendChild(option);
             });
 
+            // 填充执行人筛选器
+            const assigneeSelect = document.getElementById('assigneeFilter');
+            ASSIGNEE_OPTIONS.forEach(assignee => {
+                const option = document.createElement('option');
+                option.value = assignee;
+                option.textContent = assignee;
+                assigneeSelect.appendChild(option);
+            });
+
             // Quick filters - 显示所有场景标签
             const quickFilters = document.getElementById('quickFilters');
             scenes.forEach(scene => {
@@ -1808,6 +1886,7 @@
                                     <th class="col-doubao">豆包创意</th>
                                     <th class="col-score">评分</th>
                                     <th class="col-notes">备注</th>
+                                    <th class="col-assignee">执行人</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1926,9 +2005,18 @@
                             </div>
                         </div>
                     </td>
+                    <td class="col-assignee">
+                        <div class="assignee-display ${demo.assignee ? '' : 'empty'}" onclick="startEditAssignee('${demo.id}')" id="assigneeDisplay${demo.id}">
+                            ${demo.assignee || '选择'}
+                        </div>
+                        <select class="assignee-select" id="assigneeSelect${demo.id}" style="display: none;" onchange="saveAssignee('${demo.id}')" onblur="cancelEditAssignee('${demo.id}')">
+                            <option value="">选择执行人</option>
+                            ${ASSIGNEE_OPTIONS.map(a => `<option value="${a}" ${demo.assignee === a ? 'selected' : ''}>${a}</option>`).join('')}
+                        </select>
+                    </td>
                 </tr>
                 <tr class="doubao-detail-row" id="doubaoDetail${demo.id}" style="display: none;">
-                    <td colspan="7">
+                    <td colspan="8">
                         <div class="doubao-detail-content">
                             <div class="doubao-detail-header">💡 ${demo.doubaoTitle}</div>
 
@@ -1963,6 +2051,7 @@
             const abilityFilter = document.getElementById('abilityFilter').value;
             const scoreFilter = document.getElementById('scoreFilter').value;
             const noteFilter = document.getElementById('noteFilter').value;
+            const assigneeFilter = document.getElementById('assigneeFilter').value;
             const sortFilter = document.getElementById('sortFilter').value;
 
             let filtered = demoData.filter(demo => {
@@ -1985,6 +2074,11 @@
                     return false;
                 }
                 if (noteFilter === 'no-note' && demo.note && demo.note.trim() !== '') {
+                    return false;
+                }
+
+                // 执行人筛选
+                if (assigneeFilter && demo.assignee !== assigneeFilter) {
                     return false;
                 }
 
@@ -2061,6 +2155,42 @@
             cancelEditNote(id);
         }
 
+        // ========== Assignee Editing ==========
+        function startEditAssignee(id) {
+            document.getElementById(`assigneeDisplay${id}`).style.display = 'none';
+            const select = document.getElementById(`assigneeSelect${id}`);
+            select.style.display = 'block';
+            select.focus();
+        }
+
+        function cancelEditAssignee(id) {
+            document.getElementById(`assigneeDisplay${id}`).style.display = 'block';
+            document.getElementById(`assigneeSelect${id}`).style.display = 'none';
+        }
+
+        async function saveAssignee(id) {
+            const select = document.getElementById(`assigneeSelect${id}`);
+            const assignee = select.value;
+            const demo = demoData.find(d => d.id === id);
+
+            if (demo) {
+                demo.assignee = assignee;
+
+                // Update in Feishu
+                const success = await updateRecord(id, { '执行人': assignee });
+                if (success) {
+                    showToast('执行人已保存');
+                } else {
+                    showToast('保存失败，请重试');
+                }
+
+                const display = document.getElementById(`assigneeDisplay${id}`);
+                display.textContent = assignee || '选择';
+                display.className = `assignee-display ${assignee ? '' : 'empty'}`;
+            }
+            cancelEditAssignee(id);
+        }
+
         // ========== Doubao Detail Expansion ==========
         function toggleDoubaoDetail(demoId) {
             const detailRow = document.getElementById(`doubaoDetail${demoId}`);
@@ -2107,6 +2237,7 @@
         document.getElementById('abilityFilter').addEventListener('change', filterData);
         document.getElementById('scoreFilter').addEventListener('change', filterData);
         document.getElementById('noteFilter').addEventListener('change', filterData);
+        document.getElementById('assigneeFilter').addEventListener('change', filterData);
         document.getElementById('sortFilter').addEventListener('change', filterData);
 
         // 快速筛选按钮改为跳转逻辑
@@ -2246,6 +2377,7 @@
                     coreDisplay: fields['核心展示'] || '',
                     expectedEffect: fields['预期效果'] || '',
                     note: fields['备注'] || '',
+                    assignee: fields['执行人'] || '',
                     sortWeight: fields['排序权重'] || 0,
                     scoreInteresting: parseInt(fields['趣味分']) || 0,
                     scoreUseful: parseInt(fields['实用分']) || 0
@@ -2415,6 +2547,16 @@
                                 <button class="doubao-note-btn cancel" onclick="cancelEditDoubaoNote('${demo.id}')">取消</button>
                             </div>
                         </div>
+                        <div class="doubao-assignee-row">
+                            <span class="doubao-assignee-label">执行人:</span>
+                            <div class="doubao-assignee-display ${demo.assignee ? '' : 'empty'}" onclick="startEditDoubaoAssignee('${demo.id}')" id="doubaoAssigneeDisplay${demo.id}">
+                                ${demo.assignee || '选择'}
+                            </div>
+                            <select class="doubao-assignee-select" id="doubaoAssigneeSelect${demo.id}" style="display: none;" onchange="saveDoubaoAssignee('${demo.id}')" onblur="cancelEditDoubaoAssignee('${demo.id}')">
+                                <option value="">选择执行人</option>
+                                ${ASSIGNEE_OPTIONS.map(a => `<option value="${a}" ${demo.assignee === a ? 'selected' : ''}>${a}</option>`).join('')}
+                            </select>
+                        </div>
                     </div>
                     ` : ''}
                 </div>
@@ -2469,6 +2611,57 @@
             }
 
             cancelEditDoubaoNote(id);
+        }
+
+        // ========== 豆包执行人编辑函数 ==========
+        function startEditDoubaoAssignee(id) {
+            document.getElementById(`doubaoAssigneeDisplay${id}`).style.display = 'none';
+            const select = document.getElementById(`doubaoAssigneeSelect${id}`);
+            select.style.display = 'inline-block';
+            select.focus();
+        }
+
+        function cancelEditDoubaoAssignee(id) {
+            document.getElementById(`doubaoAssigneeDisplay${id}`).style.display = 'inline-block';
+            document.getElementById(`doubaoAssigneeSelect${id}`).style.display = 'none';
+        }
+
+        async function saveDoubaoAssignee(id) {
+            const select = document.getElementById(`doubaoAssigneeSelect${id}`);
+            const assignee = select.value;
+
+            try {
+                const response = await fetch(`${API_BASE}/update-doubao-record`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        record_id: id,
+                        fields: { '执行人': assignee }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.code === 0) {
+                    // 更新本地数据
+                    if (doubaoRecordsMap[id]) {
+                        doubaoRecordsMap[id].assignee = assignee;
+                    }
+
+                    // 更新显示
+                    const display = document.getElementById(`doubaoAssigneeDisplay${id}`);
+                    display.textContent = assignee || '选择';
+                    display.className = `doubao-assignee-display ${assignee ? '' : 'empty'}`;
+
+                    showToast('执行人已保存');
+                } else {
+                    throw new Error(data.error || '保存失败');
+                }
+            } catch (error) {
+                console.error('保存豆包执行人失败:', error);
+                showToast('保存失败，请重试');
+            }
+
+            cancelEditDoubaoAssignee(id);
         }
 
         // Load Doubao data after main init
