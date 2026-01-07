@@ -1621,6 +1621,9 @@
                     <option value="views-desc">按热度降序</option>
                     <option value="name-asc">按名称排序</option>
                 </select>
+                <select class="filter-select" id="dateFilter">
+                    <option value="">执行日期</option>
+                </select>
             </div>
             <div class="quick-filters" id="quickFilters">
                 <button class="quick-filter active" data-scene="">全部</button>
@@ -2035,6 +2038,9 @@
                 assigneeSelect.appendChild(option);
             });
 
+            // 填充执行日期筛选器
+            updateDateFilterOptions();
+
             // Quick filters - 显示所有场景标签
             const quickFilters = document.getElementById('quickFilters');
             scenes.forEach(scene => {
@@ -2044,6 +2050,52 @@
                 btn.textContent = scene;
                 quickFilters.appendChild(btn);
             });
+        }
+
+        // 更新执行日期筛选选项
+        function updateDateFilterOptions() {
+            const dateSelect = document.getElementById('dateFilter');
+
+            // 清空现有选项（保留第一个默认选项）
+            dateSelect.innerHTML = '<option value="">执行日期</option>';
+
+            // 提取所有非空的执行日期
+            const uniqueDates = [...new Set(
+                demoData
+                    .filter(demo => demo.execDate && demo.execDate.trim() !== '')
+                    .map(demo => demo.execDate)
+            )];
+
+            // 按日期降序排序（最新的在前）
+            uniqueDates.sort((a, b) => new Date(b) - new Date(a));
+
+            // 如果有日期数据，添加"已设日期"选项
+            if (uniqueDates.length > 0) {
+                const allDatesOption = document.createElement('option');
+                allDatesOption.value = '__ALL_WITH_DATE__';
+                allDatesOption.textContent = '⚡ 已设日期';
+                dateSelect.appendChild(allDatesOption);
+            }
+
+            // 添加每个具体日期
+            uniqueDates.forEach(date => {
+                const option = document.createElement('option');
+                option.value = date;
+                option.textContent = formatDateForDisplay(date);
+                dateSelect.appendChild(option);
+            });
+        }
+
+        // 格式化日期显示（YYYY-MM-DD -> M月D日）
+        function formatDateForDisplay(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                const month = parseInt(parts[1]);
+                const day = parseInt(parts[2]);
+                return `${month}月${day}日`;
+            }
+            return dateStr;
         }
 
         // 渲染分组表格（按分类聚合展示）
@@ -2296,6 +2348,7 @@
             const scoreFilter = document.getElementById('scoreFilter').value;
             const noteFilter = document.getElementById('noteFilter').value;
             const assigneeFilter = document.getElementById('assigneeFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
             const sortFilter = document.getElementById('sortFilter').value;
 
             let filtered = demoData.filter(demo => {
@@ -2325,6 +2378,20 @@
                 if (assigneeFilter && demo.assignee !== assigneeFilter) {
                     return false;
                 }
+
+                // 执行日期筛选
+                if (dateFilter === '__ALL_WITH_DATE__') {
+                    // 选中"已设日期"：只显示有日期的数据
+                    if (!demo.execDate || demo.execDate.trim() === '') {
+                        return false;
+                    }
+                } else if (dateFilter) {
+                    // 选中具体日期：只显示该日期的数据
+                    if (demo.execDate !== dateFilter) {
+                        return false;
+                    }
+                }
+                // dateFilter 为空字符串：显示所有数据（默认状态）
 
                 return true;
             });
@@ -2451,6 +2518,8 @@
                 const success = await updateRecord(id, { '执行日期': timestamp });
                 if (success) {
                     showToast('执行日期已保存');
+                    // 更新日期筛选选项
+                    updateDateFilterOptions();
                 } else {
                     showToast('保存失败，请重试');
                 }
@@ -2701,6 +2770,7 @@
         document.getElementById('scoreFilter').addEventListener('change', filterData);
         document.getElementById('noteFilter').addEventListener('change', filterData);
         document.getElementById('assigneeFilter').addEventListener('change', filterData);
+        document.getElementById('dateFilter').addEventListener('change', filterData);
         document.getElementById('sortFilter').addEventListener('change', filterData);
 
         // 快速筛选按钮改为跳转逻辑
