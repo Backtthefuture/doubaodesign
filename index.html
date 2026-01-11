@@ -2191,10 +2191,6 @@
             // 场景已经按拼音排序，过滤掉空分组
             const sortedCategories = uniqueScenes.filter(scene => grouped[scene] && grouped[scene].length > 0);
 
-            // 检查是否有预加载的媒体 URL
-            const hasPreloadedMedia = data.some(d => d.mediaUrl);
-            console.log('预加载媒体 URL 数量:', data.filter(d => d.mediaUrl).length, '/', data.length);
-
             // 生成分类区块HTML
             let html = '';
 
@@ -2235,20 +2231,19 @@
 
             container.innerHTML = html;
 
-            // 如果没有预加载的媒体 URL，异步加载
-            if (!hasPreloadedMedia) {
-                console.log('服务端未返回预加载媒体 URL，回退到单独请求模式...');
-                for (const demo of data) {
-                    if (demo.previewFile && demo.previewFile.file_token) {
-                        const url = await getMediaUrl(demo.previewFile.file_token);
-                        if (url) {
-                            demo.mediaUrl = url;
-                            const row = container.querySelector(`tr[data-id="${demo.id}"]`);
-                            if (row) {
-                                const previewCell = row.querySelector('.col-preview');
-                                if (previewCell) {
-                                    previewCell.innerHTML = getPreviewHtml(demo, url);
-                                }
+            // 对于没有预加载媒体URL的记录，逐个异步加载
+            const demosWithoutMedia = data.filter(d => !d.mediaUrl && d.previewFile && d.previewFile.file_token);
+            if (demosWithoutMedia.length > 0) {
+                console.log(`需要单独获取媒体URL: ${demosWithoutMedia.length} 个（预加载成功: ${data.length - demosWithoutMedia.length} 个）`);
+                for (const demo of demosWithoutMedia) {
+                    const url = await getMediaUrl(demo.previewFile.file_token);
+                    if (url) {
+                        demo.mediaUrl = url;
+                        const row = container.querySelector(`tr[data-id="${demo.id}"]`);
+                        if (row) {
+                            const previewCell = row.querySelector('.col-preview');
+                            if (previewCell) {
+                                previewCell.innerHTML = getPreviewHtml(demo, url);
                             }
                         }
                     }
