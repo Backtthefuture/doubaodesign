@@ -579,6 +579,24 @@
             border: 1px solid #ffe0b2;
         }
 
+        /* 用户痛点区域样式 */
+        .pain-point-section {
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFF4E6 0%, #FFEBCC 100%);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid #FFB84D;
+        }
+
+        /* 能力跃迁区域样式 */
+        .capability-leap-section {
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #F0F4FF 0%, #E6EFFF 100%);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid #5B8FF9;
+        }
+
         .section-title {
             font-size: 14px;
             font-weight: 600;
@@ -1996,7 +2014,10 @@
                 previewFile: previewFile,
                 attachments: fields['附件'] || [],
                 // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
-                mediaUrl: fields['_mediaUrl'] || null
+                mediaUrl: fields['_mediaUrl'] || null,
+                // 新增字段
+                userPainPoint: fields['用户痛点'] || '',
+                capabilityLeap: fields['能力跃迁'] || ''
             };
         }
 
@@ -2373,6 +2394,22 @@
                             <div class="doubao-tags-standalone">
                                 ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
                             </div>
+
+                            <!-- 用户痛点 -->
+                            ${demo.userPainPoint ? `
+                            <div class="pain-point-section">
+                                <div class="section-title">🎯 用户痛点：</div>
+                                <div class="section-content">${demo.userPainPoint}</div>
+                            </div>
+                            ` : ''}
+
+                            <!-- 能力跃迁 -->
+                            ${demo.capabilityLeap ? `
+                            <div class="capability-leap-section">
+                                <div class="section-title">🚀 能力跃迁：</div>
+                                <div class="section-content">${demo.capabilityLeap}</div>
+                            </div>
+                            ` : ''}
 
                             <div class="doubao-section">
                                 <div class="section-title">📝 创意描述：</div>
