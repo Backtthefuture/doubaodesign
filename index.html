@@ -2092,7 +2092,9 @@
             const scenes = [...new Set(demoData.map(d => d.scene).filter(s => s))];
             const abilities = [...new Set(demoData.flatMap(d => d.abilities))];
 
+            // 清空并重新填充场景筛选器
             const sceneSelect = document.getElementById('sceneFilter');
+            sceneSelect.innerHTML = '<option value="">全部场景</option>';
             scenes.forEach(scene => {
                 const option = document.createElement('option');
                 option.value = scene;
@@ -2100,7 +2102,9 @@
                 sceneSelect.appendChild(option);
             });
 
+            // 清空并重新填充能力筛选器
             const abilitySelect = document.getElementById('abilityFilter');
+            abilitySelect.innerHTML = '<option value="">全部能力</option>';
             abilities.forEach(ability => {
                 const option = document.createElement('option');
                 option.value = ability;
@@ -2108,8 +2112,9 @@
                 abilitySelect.appendChild(option);
             });
 
-            // 填充执行人筛选器
+            // 清空并重新填充执行人筛选器
             const assigneeSelect = document.getElementById('assigneeFilter');
+            assigneeSelect.innerHTML = '<option value="">全部执行人</option>';
             ASSIGNEE_OPTIONS.forEach(assignee => {
                 const option = document.createElement('option');
                 option.value = assignee;
@@ -2120,8 +2125,9 @@
             // 填充执行日期筛选器
             updateDateFilterOptions();
 
-            // Quick filters - 显示所有场景标签
+            // 清空并重新填充快速筛选按钮
             const quickFilters = document.getElementById('quickFilters');
+            quickFilters.innerHTML = '<button class="quick-filter active" data-scene="">全部</button>';
             scenes.forEach(scene => {
                 const btn = document.createElement('button');
                 btn.className = 'quick-filter';
