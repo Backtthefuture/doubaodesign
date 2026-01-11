@@ -6,5 +6,5 @@
   "max_retries": 3,
   "retry_delay_ms": 2000,
   "timeout_ms": 60000,
-  "note": "此文件包含敏感密钥，请勿上传到公开仓库！使用 gemini-2.0-flash 模型（gemini-3-pro-preview 是推理模型，响应太慢）"
+  "note": "此文件包含敏感密钥，请勿上传到公开仓库！"
 }

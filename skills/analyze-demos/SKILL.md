@@ -1,6 +1,6 @@
 ---
 name: analyze-demos
-description: "自动分析飞书多维表格中的 Gemini Demo 记录，生成场景分类、模型能力、豆包创意内容和评分。当用户使用 /analyze-demos 命令或要求分析 Demo 表格、填充缺失字段、批量生成 Demo 元数据时触发。"
+description: "自动分析飞书多维表格中的 Gemini Demo 记录，生成场景分类、模型能力、豆包创意内容（标题/描述/标签/示例Prompt/实现步骤）、评分、用户痛点和能力跃迁分析。当用户使用 /analyze-demos 命令或要求分析 Demo 表格、填充缺失字段、批量生成 Demo 元数据时触发。"
 license: MIT
 ---
 
@@ -28,11 +28,15 @@ license: MIT
 |------|------|------|
 | 所属场景 | 单选 | 18个预设场景之一 |
 | 模型能力 | 多选 | 1-3个能力标签 |
-| 豆包创意标题 | 文本 | 4-10字标题 |
-| 豆包创意描述 | 文本 | 1-2句话描述 |
+| 豆包创意标题 | 文本 | 6-12字标题 |
+| 豆包创意描述 | 文本 | 40-80字描述 |
 | 豆包标签 | 文本 | 2-3个标签，逗号分隔 |
-| 趣味分 | 数字 | 1-100 |
-| 实用分 | 数字 | 1-100 |
+| 示例Prompt | 文本 | 20-50字用户示例输入 |
+| 实现步骤 | 文本 | 7-8步实现流程 |
+| 趣味分 | 数字 | 1-50 |
+| 实用分 | 数字 | 1-50 |
+| **用户痛点** | 文本 | 40-80字，没有AI时用户面临的核心痛点 |
+| **能力跃迁** | 文本 | 60-120字，1.6局限→1.8突破的对比分析 |
 
 ---
 
@@ -56,10 +60,10 @@ license: MIT
 读取项目根目录的 `.feishu.config.json`：
 ```json
 {
-  "app_id": "xxx",
+  "app_id": "cli_a989e0fcbd7f100c",
   "app_secret": "xxx",
-  "app_token": "xxx",
-  "table_id": "xxx"
+  "app_token": "PTZxbnALPai6Zys0RNYcp9sznWe",
+  "table_id": "tblGpra2WmGUFXM0"
 }
 ```
 
@@ -70,7 +74,7 @@ license: MIT
   "api_key": "xxx",
   "base_url": "https://yunwu.ai",
   "model_id": "gemini-3-pro-preview",
-  "endpoint": "/v1beta/models/gemini-3-pro-preview:generateContent"
+  "endpoint": "/v1/chat/completions"
 }
 ```
 
@@ -81,7 +85,7 @@ license: MIT
 ### Phase 1: 初始化
 1. 读取飞书配置文件 `.feishu.config.json`
 2. 读取 Gemini 配置文件 `config/.gemini.config.json`
-3. 验证配置完整性（如缺失则报错并停止）
+3. 读取提示词文件
 4. 获取飞书 Access Token
 
 ### Phase 2: 数据获取
@@ -91,54 +95,63 @@ license: MIT
 4. 如果没有未完成记录，直接报告"所有记录已完成"
 
 ### Phase 3: 批量处理
-对每条未完成记录执行以下步骤：
+对每条未完成记录执行以下步骤（共6次API调用）：
 
-#### Step 3.1: 获取输入数据
-```
-输入数据 = {
-  demo_name: record.Demo名称,
-  prompt_desc: record.Prompt描述,
-  preview_file: record.预览文件 (可选),
-  is_video: record.是否视频
+#### 调用 1 - 场景分类
+- 读取 `prompts/场景分类.md` 获取提示词模板
+- 输入：Prompt描述
+- 输出：所属场景（18选1）
+
+#### 调用 2 - 能力识别
+- 读取 `prompts/能力识别.md` 获取提示词模板
+- 输入：Prompt描述
+- 输出：模型能力（JSON数组，1-3个）
+
+#### 调用 3 - 创意生成（完整版，一次返回5个字段）
+- 读取 `prompts/创意生成_完整版.md` 获取提示词模板
+- 输入：Prompt描述
+- 输出：JSON对象，包含：
+  - `title` → 豆包创意标题
+  - `description` → 豆包创意描述
+  - `tags` → 豆包标签
+  - `example_prompt` → 示例Prompt
+  - `steps` → 实现步骤（数组）
+
+#### 调用 4 - 评分
+- 读取 `prompts/评分标准.md` 获取提示词模板
+- 输入：豆包创意标题 + 豆包创意描述（来自调用3的结果）
+- 输出：JSON对象 `{interesting_score, useful_score}`
+
+#### 调用 5 - 痛点分析 ⭐ 新增
+- 读取 `prompts/痛点分析.md` 获取提示词模板
+- 输入：Prompt描述 + 所属场景（来自调用1的结果）
+- 输出：用户痛点（40-80字文本）
+
+#### 调用 6 - 能力跃迁 ⭐ 新增
+- 读取 `prompts/能力跃迁.md` 获取提示词模板
+- 参考 `prompts/豆包能力参考.md` 知识库
+- 输入：Prompt描述 + 模型能力（来自调用2的结果）
+- 输出：能力跃迁分析（60-120字文本）
+
+#### 写入飞书
+调用飞书 API 更新记录，写入以下11个字段：
+```javascript
+{
+  '所属场景': scene,
+  '模型能力': abilities,
+  '豆包创意标题': title,
+  '豆包创意描述': description,
+  '豆包标签': tags,
+  '示例Prompt': examplePrompt,
+  '实现步骤': steps.join('\n'),
+  '趣味分': interestingScore,
+  '实用分': usefulScore,
+  '用户痛点': painPoint,
+  '能力跃迁': abilityLeap
 }
 ```
 
-#### Step 3.2: 获取预览文件（如有）
-- 如果有预览文件，获取临时下载 URL
-- 如果获取失败，记录日志并继续（仅用 Prompt 描述分析）
-
-#### Step 3.3: 调用 Gemini API（4次分步调用）
-
-**调用 1 - 场景分类**
-- 读取 `prompts/场景分类.md` 获取提示词模板
-- 构建请求：Prompt描述 + 预览文件（如有）+ 提示词
-- 解析响应获取：所属场景
-
-**调用 2 - 能力识别**
-- 读取 `prompts/能力识别.md` 获取提示词模板
-- 构建请求：Prompt描述 + 预览文件（如有）+ 提示词
-- 解析响应获取：模型能力[]
-
-**调用 3 - 创意生成**
-- 读取 `prompts/创意生成.md` 获取提示词模板
-- 构建请求：Prompt描述 + 预览文件（如有）+ 提示词
-- 解析响应获取：豆包创意标题, 豆包创意描述, 豆包标签
-
-**调用 4 - 评分**
-- 读取 `prompts/评分标准.md` 获取提示词模板
-- 构建请求：Prompt描述 + 预览文件（如有）+ 提示词
-- 解析响应获取：趣味分, 实用分
-
-#### Step 3.4: 写入飞书
-- 调用飞书 API 更新记录
-- 记录成功/失败状态
-
-### Phase 4: 重试机制
-- 收集所有失败的记录
-- 对失败记录统一重试一次
-- 记录最终状态
-
-### Phase 5: 结果汇报
+### Phase 4: 结果汇报
 输出处理统计表：
 
 ```
@@ -186,26 +199,28 @@ license: MIT
 | Agent | AI替你干活 |
 | 代码生成 | 一句话生成App |
 
-如果已有场景名可以直接映射，则不调用 API，直接使用映射值。
-
-### 数据异常
+### 数据异常默认值
 | 异常情况 | 默认值 |
 |----------|--------|
-| 预览文件获取失败 | 仅用 Prompt描述 分析 |
 | 场景无法判断 | "一句话生成App" |
 | 能力无法判断 | ["代码狂魔"] |
+| 标题解析失败 | 使用Demo名称 |
+| 描述解析失败 | 使用Prompt描述 |
+| 评分解析失败 | 趣味分25, 实用分25 |
 | JSON 解析失败 | 使用正则提取关键信息 |
+| **痛点分析失败** | "传统方式需要大量时间和专业技能，效率低且容易出错。" |
+| **能力跃迁失败** | "1.8凭借原生多模态和增强的Agent能力，可以更高效地完成此类任务。" |
 
 ### 原则
 - **Log & Continue**: 记录错误日志，继续处理下一条
 - **Never Ask**: 不要因为单条失败而中断整个流程
-- **Retry Once**: 失败记录在最后统一重试一次
+- **Retry Once**: 失败记录自动重试3次
 
 ---
 
 ## Gemini API 调用模板
 
-### 请求格式
+### 请求格式（OpenAI兼容格式）
 ```javascript
 const response = await fetch(`${BASE_URL}${ENDPOINT}`, {
   method: 'POST',
@@ -214,27 +229,20 @@ const response = await fetch(`${BASE_URL}${ENDPOINT}`, {
     'Authorization': `Bearer ${API_KEY}`
   },
   body: JSON.stringify({
-    contents: [{
-      parts: [
-        { text: promptTemplate + "\n\n输入：" + promptDesc },
-        // 如果有预览文件（图片/视频），添加：
-        { inline_data: { mime_type: "video/mp4", data: base64Data } }
-      ]
-    }],
-    generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 1024
-    }
+    model: 'gemini-3-pro-preview',
+    messages: [{ role: 'user', content: promptTemplate + '\n\n输入: ' + promptDesc }],
+    temperature: 0.7,
+    max_tokens: 2048
   })
 });
 ```
 
 ### 响应解析
 ```javascript
-const result = response.data.candidates[0].content.parts[0].text;
-// 去除可能的 markdown 代码块标记
-const cleanJson = result.replace(/```json\n?|\n?```/g, '').trim();
-const parsed = JSON.parse(cleanJson);
+const result = response.choices[0].message.content;
+// 提取JSON对象
+const jsonMatch = result.match(/\{[\s\S]*\}/);
+const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
 ```
 
 ---
@@ -251,12 +259,28 @@ const tokenResponse = await fetch('https://open.feishu.cn/open-apis/auth/v3/tena
 const { tenant_access_token } = await tokenResponse.json();
 ```
 
-### 获取记录
+### 获取记录（分页获取全部数据）
 ```javascript
-const records = await fetch(
-  `https://open.feishu.cn/open-apis/bitable/v1/apps/${APP_TOKEN}/tables/${TABLE_ID}/records`,
-  { headers: { 'Authorization': `Bearer ${token}` } }
-);
+// 支持分页，获取超过100条的全部记录
+async function getAllRecords(token) {
+  let allRecords = [];
+  let pageToken = null;
+
+  do {
+    let url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${APP_TOKEN}/tables/${TABLE_ID}/records?page_size=500`;
+    if (pageToken) url += `&page_token=${pageToken}`;
+
+    const response = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+    const { data } = await response.json();
+
+    allRecords = allRecords.concat(data.items || []);
+    pageToken = data.page_token;
+
+    if (!data.has_more) break;
+  } while (true);
+
+  return allRecords;
+}
 ```
 
 ### 更新记录
@@ -276,6 +300,8 @@ await fetch(
         "豆包创意标题": title,
         "豆包创意描述": description,
         "豆包标签": tags,
+        "示例Prompt": examplePrompt,
+        "实现步骤": steps,
         "趣味分": interestingScore,
         "实用分": usefulScore
       }
@@ -296,14 +322,19 @@ await fetch(
 ```
 正在分析 Demo 表格...
 
-[处理中] 虚拟主播 - 调用场景分类...完成
-[处理中] 虚拟主播 - 调用能力识别...完成
-[处理中] 虚拟主播 - 调用创意生成...完成
-[处理中] 虚拟主播 - 调用评分...完成
-[处理中] 虚拟主播 - 写入飞书...完成
+[1/15] 处理: 虚拟主播
+  → 场景分类...完成 (一句话生成App)
+  → 能力识别...完成 (多模态输入, 代码狂魔)
+  → 创意生成（完整版）...完成
+    标题: 虚拟主播实时驱动系统
+    示例Prompt: ✓
+    实现步骤: ✓
+  → 评分...完成 (趣味38, 实用22)
+  → 写入飞书...✓ 完成
 
-[处理中] 3D乐高编辑器 - 调用场景分类...完成
-...
+[2/15] 处理: 3D乐高编辑器
+  → 场景分类...完成 (一句话出3D)
+  ...
 
 === Demo 分析完成 ===
 
@@ -314,7 +345,7 @@ await fetch(
 - 跳过（已完成）：0
 
 失败记录：
-- 智能助手Demo: Gemini API 超时，已记录
+- 智能助手Demo: Gemini API 超时
 
 所有结果已写入飞书表格。
 ```
@@ -328,17 +359,7 @@ await fetch(
 
 ❌ **错误示例 2 - 逐条询问**:
 ```
-已完成"虚拟主播"的分析，生成结果如下：
-- 所属场景：一句话生成App
-- 模型能力：多模态输入, 代码狂魔
-...
-是否继续处理下一条？
-```
-
-❌ **错误示例 3 - 遇到错误就停止**:
-```
-在处理"3D乐高编辑器"时遇到 API 超时错误。
-请问是否需要重试？
+已完成"虚拟主播"的分析，是否继续处理下一条？
 ```
 
 ✅ **正确做法**: 不询问，直接处理所有记录，最后统一汇报结果。
@@ -351,22 +372,35 @@ await fetch(
 
 | 文件 | 用途 | 路径 |
 |------|------|------|
-| 场景分类.md | 判断所属场景 | `prompts/场景分类.md` |
-| 能力识别.md | 识别模型能力 | `prompts/能力识别.md` |
-| 创意生成.md | 生成标题/描述/标签 | `prompts/创意生成.md` |
+| 场景分类.md | 判断所属场景（18选1） | `prompts/场景分类.md` |
+| 能力识别.md | 识别模型能力（1-3个） | `prompts/能力识别.md` |
+| 创意生成_完整版.md | 生成标题/描述/标签/示例Prompt/实现步骤 | `prompts/创意生成_完整版.md` |
 | 评分标准.md | 计算趣味分/实用分 | `prompts/评分标准.md` |
+| **痛点分析.md** | 分析用户在无AI时的核心痛点 | `prompts/痛点分析.md` |
+| **能力跃迁.md** | 分析1.6局限→1.8突破 | `prompts/能力跃迁.md` |
+| **豆包能力参考.md** | 1.6/1.8能力差异知识库（供能力跃迁参考） | `prompts/豆包能力参考.md` |
+
+---
+
+## 执行脚本
+
+本技能对应的执行脚本为项目根目录的 `analyze-demos-runner.js`，可通过以下命令运行：
+
+```bash
+node analyze-demos-runner.js
+```
 
 ---
 
 ## 限制与边界
 
 ### 本技能适用于
-- 飞书多维表格中的 Gemini Demo 数据
-- 批量生成缺失的元数据字段
-- 使用 Gemini 3 Pro 进行多模态分析
+- 飞书多维表格中的 Gemini Demo 数据（表格ID: tblGpra2WmGUFXM0）
+- 批量生成缺失的11个元数据字段
+- 使用 Gemini 3 Pro 进行分析
 
 ### 本技能不适用于
 - 手动逐条编辑记录
 - 删除或重置已有数据
 - 非飞书多维表格的数据源
-- 其他 AI 模型的 Demo 分析
+- 豆包Demo创意表的分析（使用 /doubao-demos）
