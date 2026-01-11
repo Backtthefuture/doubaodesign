@@ -1523,7 +1523,8 @@
         <div class="header-content">
             <div class="header-title-row">
                 <h1 class="header-title">竞品Demo分析与豆包Demo创意</h1>
-                <button class="header-tab active" data-tab="gemini3">Gemini3</button>
+                <button class="header-tab" data-tab="gemini3" onclick="switchModel('gemini3')">Gemini3</button>
+                <button class="header-tab active" data-tab="gpt52" onclick="switchModel('gpt52')">GPT5.2</button>
             </div>
             <div class="header-badge loading" id="dataBadge">
                 <span>数据加载中...</span>
@@ -1705,6 +1706,54 @@
         // Vercel 部署后，API 路由在同域下，使用相对路径
         const API_BASE = '/api';
 
+        // ========== 多模型配置 ==========
+        const MODEL_CONFIGS = {
+            gemini3: {
+                id: 'gemini3',
+                name: 'Gemini3',
+                displayName: 'Gemini 3',
+                description: '世界上多模态理解能力最强的模型，采用稀疏混合专家架构（MoE），万亿级参数',
+                abilities: [
+                    { icon: '🧠', title: '推理能力', desc: '1501 Elo领跑LMArena，GPQA Diamond 91.9%，Deep Think模式突破智能边界' },
+                    { icon: '👁️', title: '多模态理解', desc: '原生整合文本/图像/视频/音频/代码，100万token上下文窗口' },
+                    { icon: '💻', title: '编码能力', desc: 'WebDev Arena 1487 Elo，SWE-bench 76.2%，最强氛围编码模型' },
+                    { icon: '🤖', title: 'Agent能力', desc: 'Terminal-Bench 54.2%，Vending-Bench榜首，多步骤任务规划' },
+                    { icon: '📚', title: '长上下文', desc: '100万token窗口，可处理整本书籍、代码库、超长视频' }
+                ],
+                api: {
+                    records: '/api/records',
+                    doubaoRecords: '/api/doubao-records',
+                    updateRecord: '/api/update-record',
+                    updateDoubaoRecord: '/api/update-doubao-record'
+                },
+                storagePrefix: 'gemini3_'
+            },
+            gpt52: {
+                id: 'gpt52',
+                name: 'GPT5.2',
+                displayName: 'GPT 5.2',
+                description: 'OpenAI最新旗舰模型，突破性推理能力和专业知识工作，2025年12月发布',
+                abilities: [
+                    { icon: '🧠', title: '深度推理', desc: 'ARC-AGI-1突破90%，ARC-AGI-2达54.2%，抽象推理达人类专家水平' },
+                    { icon: '📊', title: '专业知识工作', desc: '擅长电子表格、演示文稿、多步骤项目，Pro版减少45%事实错误' },
+                    { icon: '💻', title: '代码生成', desc: 'SWE-bench Verified 80%，GPT-5.2-Codex版本支持大型重构和迁移' },
+                    { icon: '🔬', title: '科学数学', desc: 'GPQA Diamond 93.2%，FrontierMath 40.3%，研究生级问题求解' },
+                    { icon: '📚', title: '超长上下文', desc: '400K token上下文窗口，128K最大输出，处理大型代码库和文档' }
+                ],
+                api: {
+                    records: '/api/gpt52-records',
+                    doubaoRecords: '/api/gpt52-doubao-records',
+                    updateRecord: '/api/gpt52-update-record',
+                    updateDoubaoRecord: '/api/gpt52-update-doubao-record'
+                },
+                storagePrefix: 'gpt52_'
+            }
+        };
+
+        // 全局状态
+        let currentModel = localStorage.getItem('currentModel') || 'gpt52';  // 默认GPT5.2
+        let modelDataCache = {};  // 数据缓存: { gemini3: {demoData, doubaoData}, gpt52: {...} }
+
         // 全局数据
         let demoData = [];
 
@@ -1864,7 +1913,10 @@
         async function updateRecord(recordId, fields) {
             try {
                 console.log('正在更新记录:', recordId, '字段:', fields);
-                const response = await fetch(`${API_BASE}/update-record`, {
+
+                // 使用当前模型的API配置
+                const config = MODEL_CONFIGS[currentModel];
+                const response = await fetch(config.api.updateRecord, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -2807,57 +2859,226 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // ========== Initialize ==========
-        async function init() {
+        // ========== 标签页切换逻辑 ==========
+
+        // 切换模型
+        function switchModel(modelId) {
+            if (modelId === currentModel) return;
+
+            // 1. 保存当前模型的筛选状态
+            saveFilters(currentModel);
+
+            // 2. 更新标签激活状态
+            document.querySelectorAll('.header-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === modelId);
+            });
+
+            // 3. 切换模型
+            currentModel = modelId;
+            localStorage.setItem('currentModel', modelId);
+
+            // 4. 加载新模型数据
+            loadModelData(modelId);
+        }
+
+        // 加载模型数据
+        async function loadModelData(modelId) {
+            const config = MODEL_CONFIGS[modelId];
             const badge = document.getElementById('dataBadge');
+
+            // 检查缓存
+            if (modelDataCache[modelId]) {
+                console.log(`✓ 从缓存加载 ${modelId} 数据`);
+                applyModelData(modelId);
+                return;
+            }
+
+            // 显示加载状态
             badge.className = 'header-badge loading';
-            badge.innerHTML = `<span>正在加载数据...</span>`;
+            badge.innerHTML = `<span>正在加载 ${config.displayName} 数据...</span>`;
 
             try {
-                // Fetch records from API
-                console.log('正在获取数据...');
-                badge.innerHTML = `<span>正在获取数据...</span>`;
+                // 并行加载竞品Demo和豆包Demo
+                const [recordsResponse, doubaoResponse] = await Promise.all([
+                    fetch(config.api.records),
+                    fetch(config.api.doubaoRecords)
+                ]);
 
-                const records = await fetchRecords();
-                demoData = records.map(transformRecord);
-                console.log(`成功获取 ${demoData.length} 条记录`);
+                const recordsData = await recordsResponse.json();
+                const doubaoData = await doubaoResponse.json();
 
-                // Update UI
-                updateStats();
-                populateFilters();
-                filterData();
-
-                // Success - 检测数据来源
-                const isLocalMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                badge.className = 'header-badge';
-                if (isLocalMode) {
-                    badge.innerHTML = `<span>✓ 已加载 ${demoData.length} 条 (本地Mock)</span>`;
-                } else {
-                    badge.innerHTML = `<span>✓ 已加载 ${demoData.length} 条</span>`;
+                if (recordsData.code !== 0 || doubaoData.code !== 0) {
+                    throw new Error('数据加载失败');
                 }
 
+                // 转换并缓存数据
+                modelDataCache[modelId] = {
+                    demoData: recordsData.data.items.map(transformRecord),
+                    doubaoData: transformDoubaoRecords(doubaoData.data.items)
+                };
+
+                console.log(`✓ ${config.displayName} 数据加载完成`);
+
+                // 应用数据
+                applyModelData(modelId);
+
+                badge.className = 'header-badge';
+                badge.innerHTML = `<span>✓ 已加载 ${recordsData.data.items.length} 条</span>`;
+
             } catch (error) {
-                console.error('Init error:', error);
                 badge.className = 'header-badge error';
                 badge.innerHTML = '<span>✕ 加载失败</span>';
-
-                document.getElementById('categorySections').innerHTML = `
-                    <div class="category-section">
-                        <div class="loading-state">
-                            <div style="color: var(--accent-red);">加载失败: ${error.message}</div>
-                            <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">
-                                可能原因：<br>
-                                1. API 服务未部署或配置错误<br>
-                                2. 网络连接问题<br>
-                                3. 飞书 API 访问限制<br>
-                                4. 本地mock-data.json文件缺失
-                            </div>
-                            <button onclick="init()" style="margin-top: 16px; padding: 8px 16px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; cursor: pointer;">重试</button>
-                            <a href="https://superhuang.feishu.cn/base/PTZxbnALPai6Zys0RNYcp9sznWe?table=tbl3fl3SZd9YxzJ6" target="_blank" style="display: inline-block; margin-top: 8px; margin-left: 8px; padding: 8px 16px; background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">直接访问飞书</a>
-                        </div>
-                    </div>
-                `;
+                console.error(`${config.displayName} 数据加载失败:`, error);
             }
+        }
+
+        // 应用模型数据到UI
+        function applyModelData(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const cache = modelDataCache[modelId];
+
+            // 1. 更新全局数据（供现有逻辑使用）
+            demoData = cache.demoData;
+            doubaoData = cache.doubaoData;
+
+            // 2. 更新核心能力展示区
+            renderCoreAbilities(config);
+
+            // 3. 更新统计数据
+            updateStats();
+
+            // 4. 恢复筛选器状态
+            restoreFilters(modelId);
+
+            // 5. 重新填充筛选器选项
+            populateFilters();
+
+            // 6. 渲染表格
+            filterData();
+
+            // 7. 渲染豆包展示区
+            if (doubaoData && doubaoData.abilities) {
+                document.getElementById('doubaoShowcase').style.display = 'block';
+                renderDoubaoShowcase();
+            }
+        }
+
+        // 动态渲染核心能力
+        function renderCoreAbilities(config) {
+            const container = document.querySelector('.core-abilities');
+
+            const html = `
+                <div class="core-abilities-header">
+                    <div>
+                        <div class="core-abilities-title">${config.displayName} <span>核心能力</span></div>
+                        <div class="core-abilities-subtitle">${config.description}</div>
+                    </div>
+                </div>
+                <div class="abilities-grid">
+                    ${config.abilities.map(ability => `
+                        <div class="ability-card">
+                            <div class="ability-card-icon">${ability.icon}</div>
+                            <div class="ability-card-title">${ability.title}</div>
+                            <div class="ability-card-desc">${ability.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // 保存筛选器状态
+        function saveFilters(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const state = {
+                search: document.getElementById('searchInput').value,
+                scene: document.getElementById('sceneFilter').value,
+                ability: document.getElementById('abilityFilter').value,
+                score: document.getElementById('scoreFilter').value,
+                note: document.getElementById('noteFilter').value,
+                assignee: document.getElementById('assigneeFilter').value,
+                date: document.getElementById('dateFilter').value,
+                sort: document.getElementById('sortFilter').value
+            };
+
+            try {
+                localStorage.setItem(config.storagePrefix + 'filters', JSON.stringify(state));
+            } catch (e) {
+                console.warn('保存筛选状态失败:', e);
+            }
+        }
+
+        // 恢复筛选器状态
+        function restoreFilters(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const stateJson = localStorage.getItem(config.storagePrefix + 'filters');
+
+            if (!stateJson) {
+                // 没有保存的状态，使用默认值
+                document.getElementById('searchInput').value = '';
+                document.getElementById('sceneFilter').value = '';
+                document.getElementById('abilityFilter').value = '';
+                document.getElementById('scoreFilter').value = '';
+                document.getElementById('noteFilter').value = '';
+                document.getElementById('assigneeFilter').value = '';
+                document.getElementById('dateFilter').value = '';
+                document.getElementById('sortFilter').value = 'score-desc';
+                return;
+            }
+
+            try {
+                const state = JSON.parse(stateJson);
+                document.getElementById('searchInput').value = state.search || '';
+                document.getElementById('sceneFilter').value = state.scene || '';
+                document.getElementById('abilityFilter').value = state.ability || '';
+                document.getElementById('scoreFilter').value = state.score || '';
+                document.getElementById('noteFilter').value = state.note || '';
+                document.getElementById('assigneeFilter').value = state.assignee || '';
+                document.getElementById('dateFilter').value = state.date || '';
+                document.getElementById('sortFilter').value = state.sort || 'score-desc';
+            } catch (e) {
+                console.warn('恢复筛选状态失败:', e);
+            }
+        }
+
+        // ========== Initialize ==========
+        async function init() {
+            console.log('=== 页面初始化开始 ===');
+
+            // 1. 设置标签激活状态
+            document.querySelectorAll('.header-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === currentModel);
+            });
+
+            // 2. 绑定筛选器自动保存监听
+            attachFilterListeners();
+
+            // 3. 加载当前模型数据
+            await loadModelData(currentModel);
+        }
+
+        // 绑定筛选器监听（自动保存）
+        function attachFilterListeners() {
+            const filters = [
+                'searchInput', 'sceneFilter', 'abilityFilter',
+                'scoreFilter', 'noteFilter', 'assigneeFilter',
+                'dateFilter', 'sortFilter'
+            ];
+
+            filters.forEach(id => {
+                const element = document.getElementById(id);
+                const handler = () => {
+                    saveFilters(currentModel);
+                    filterData();
+                };
+
+                // 移除原有的监听器绑定，统一在这里绑定
+                element.removeEventListener('input', handler);
+                element.removeEventListener('change', handler);
+                element.addEventListener('input', handler);
+                element.addEventListener('change', handler);
+            });
         }
 
         // Start
@@ -3228,8 +3449,9 @@
             const note = document.getElementById(`doubaoNoteTextarea${id}`).value.trim();
 
             try {
-                // 调用飞书API更新备注
-                const response = await fetch(`${API_BASE}/update-doubao-record`, {
+                // 使用当前模型的API配置
+                const config = MODEL_CONFIGS[currentModel];
+                const response = await fetch(config.api.updateDoubaoRecord, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -3265,7 +3487,9 @@
         // ========== 豆包执行人编辑函数 ==========
         async function saveDoubaoAssignee(id, assignee) {
             try {
-                const response = await fetch(`${API_BASE}/update-doubao-record`, {
+                // 使用当前模型的API配置
+                const config = MODEL_CONFIGS[currentModel];
+                const response = await fetch(config.api.updateDoubaoRecord, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
