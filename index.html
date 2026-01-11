@@ -2911,9 +2911,19 @@
                     throw new Error('数据加载失败');
                 }
 
-                // 转换并缓存数据
+                // 转换数据
+                let transformedDemoData = recordsData.data.items.map(transformRecord);
+
+                // GPT5.2 特殊处理：只保留热度10000以上的demo
+                if (modelId === 'gpt52') {
+                    const originalCount = transformedDemoData.length;
+                    transformedDemoData = transformedDemoData.filter(demo => demo.viewsNum >= 10000);
+                    console.log(`✓ GPT-5.2 数据过滤: ${originalCount} 条 → ${transformedDemoData.length} 条（热度≥10000）`);
+                }
+
+                // 缓存数据
                 modelDataCache[modelId] = {
-                    demoData: recordsData.data.items.map(transformRecord),
+                    demoData: transformedDemoData,
                     doubaoData: transformDoubaoRecords(doubaoData.data.items)
                 };
 
@@ -2923,7 +2933,7 @@
                 applyModelData(modelId);
 
                 badge.className = 'header-badge';
-                badge.innerHTML = `<span>✓ 已加载 ${recordsData.data.items.length} 条</span>`;
+                badge.innerHTML = `<span>✓ 已加载 ${transformedDemoData.length} 条</span>`;
 
             } catch (error) {
                 badge.className = 'header-badge error';
