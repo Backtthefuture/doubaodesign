@@ -1991,6 +1991,10 @@
             const rawScene = fields['所属场景'] || '';
             const previewFile = fields['预览文件'] && fields['预览文件'][0] ? fields['预览文件'][0] : null;
 
+            // 检测媒体链接是否过期（飞书临时链接有效期24小时，保守检测20小时）
+            const mediaUrlTimestamp = fields['_mediaUrlTimestamp'];
+            const isExpired = mediaUrlTimestamp && (Date.now() - mediaUrlTimestamp > 20 * 60 * 60 * 1000);
+
             return {
                 id: record.record_id,
                 name: fields['Demo名称'] || '',
@@ -2013,8 +2017,9 @@
                 execDate: formatTimestampToDate(fields['执行日期']),
                 previewFile: previewFile,
                 attachments: fields['附件'] || [],
-                // 使用服务端预加载的媒体 URL（优化后不再需要单独请求）
-                mediaUrl: fields['_mediaUrl'] || null,
+                // 使用服务端预加载的媒体 URL（如果过期则置为null，触发重新获取）
+                mediaUrl: isExpired ? null : (fields['_mediaUrl'] || null),
+                mediaUrlTimestamp: mediaUrlTimestamp,
                 // 新增字段
                 userPainPoint: fields['用户痛点'] || '',
                 capabilityLeap: fields['能力跃迁'] || ''
@@ -2935,17 +2940,64 @@
             badge.innerHTML = `<span>正在加载 ${config.displayName} 数据...</span>`;
 
             try {
-                // 并行加载竞品Demo和豆包Demo
-                const [recordsResponse, doubaoResponse] = await Promise.all([
-                    fetch(config.api.records),
-                    fetch(config.api.doubaoRecords)
-                ]);
+                let recordsData, doubaoRecordsData;
 
-                const recordsData = await recordsResponse.json();
-                const doubaoData = await doubaoResponse.json();
+                // 尝试从Vercel API加载
+                try {
+                    const [recordsResponse, doubaoResponse] = await Promise.all([
+                        fetch(config.api.records),
+                        fetch(config.api.doubaoRecords)
+                    ]);
 
-                if (recordsData.code !== 0 || doubaoData.code !== 0) {
-                    throw new Error('数据加载失败');
+                    // 检查响应是否为JSON
+                    const recordsContentType = recordsResponse.headers.get('content-type');
+                    const doubaoContentType = doubaoResponse.headers.get('content-type');
+
+                    if (!recordsContentType?.includes('application/json') ||
+                        !doubaoContentType?.includes('application/json')) {
+                        throw new Error('API返回非JSON响应');
+                    }
+
+                    recordsData = await recordsResponse.json();
+                    doubaoRecordsData = await doubaoResponse.json();
+
+                    if (recordsData.code !== 0 || doubaoRecordsData.code !== 0) {
+                        throw new Error('API返回错误码');
+                    }
+
+                    console.log(`✓ 成功从Vercel API加载 ${config.displayName} 数据`);
+                } catch (apiError) {
+                    // API失败，尝试本地mock数据回退
+                    console.log(`${config.displayName} API请求失败，尝试本地mock数据回退...`, apiError.message);
+
+                    // 根据modelId选择对应的mock文件
+                    const mockFiles = {
+                        gemini3: { records: './mock-data.json', doubao: './gemini3-doubao18.json' },
+                        gpt52: { records: './gpt52-mock-data.json', doubao: './gpt52-doubao18.json' }
+                    };
+
+                    const mockConfig = mockFiles[modelId];
+                    if (!mockConfig) {
+                        throw new Error(`没有找到 ${modelId} 的mock数据配置`);
+                    }
+
+                    try {
+                        const [recordsResponse, doubaoResponse] = await Promise.all([
+                            fetch(mockConfig.records),
+                            fetch(mockConfig.doubao)
+                        ]);
+
+                        if (!recordsResponse.ok || !doubaoResponse.ok) {
+                            throw new Error('本地mock文件不存在');
+                        }
+
+                        recordsData = await recordsResponse.json();
+                        doubaoRecordsData = await doubaoResponse.json();
+                        console.log(`✓ 成功从本地mock数据加载 ${config.displayName}（本地开发模式）`);
+                    } catch (mockError) {
+                        console.error('本地mock数据也加载失败:', mockError);
+                        throw new Error(`无法加载 ${config.displayName} 数据：API和本地mock都不可用`);
+                    }
                 }
 
                 // 转换数据
@@ -2958,10 +3010,15 @@
                     console.log(`✓ GPT-5.2 数据过滤: ${originalCount} 条 → ${transformedDemoData.length} 条（热度≥10000）`);
                 }
 
-                // 缓存数据
+                // 缓存数据 - 支持两种数据格式（API返回 vs 本地JSON）
+                const doubaoItems = doubaoRecordsData.data?.items || doubaoRecordsData.abilities;
+                const transformedDoubaoData = doubaoRecordsData.abilities
+                    ? doubaoRecordsData  // 本地JSON已经是正确格式
+                    : transformDoubaoRecords(doubaoItems);  // API返回需要转换
+
                 modelDataCache[modelId] = {
                     demoData: transformedDemoData,
-                    doubaoData: transformDoubaoRecords(doubaoData.data.items)
+                    doubaoData: transformedDoubaoData
                 };
 
                 console.log(`✓ ${config.displayName} 数据加载完成`);

@@ -165,6 +165,8 @@ export default async function handler(req, res) {
         if (mediaUrlMap[fileToken]) {
           // 添加预解析的媒体 URL
           record.fields['_mediaUrl'] = mediaUrlMap[fileToken];
+          // 添加获取时间戳，用于前端检测链接是否过期（飞书临时链接有效期24小时）
+          record.fields['_mediaUrlTimestamp'] = Date.now();
         }
       }
       return record;
