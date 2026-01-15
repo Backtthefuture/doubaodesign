@@ -1790,7 +1790,7 @@
         };
 
         // 全局状态
-        let currentModel = localStorage.getItem('currentModel') || 'gpt52';  // 默认GPT5.2
+        let currentModel = localStorage.getItem('currentModel') || 'skills';  // 默认Skills
         let modelDataCache = {};  // 数据缓存: { gemini3: {demoData, doubaoData}, gpt52: {...} }
 
         // 全局数据
@@ -3068,8 +3068,13 @@
             demoData = cache.demoData;
             doubaoData = cache.doubaoData;
 
-            // 2. 更新核心能力展示区
-            renderCoreAbilities(config);
+            // 2. 更新核心能力展示区（Skills 不显示）
+            if (modelId === 'skills') {
+                document.querySelector('.core-abilities').style.display = 'none';
+            } else {
+                document.querySelector('.core-abilities').style.display = 'block';
+                renderCoreAbilities(config);
+            }
 
             // 3. 更新统计数据
             updateStats();
