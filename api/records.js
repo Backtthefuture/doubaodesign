@@ -1,10 +1,25 @@
-// Vercel Serverless Function - 获取飞书多维表格记录
-// 部署后通过 /api/records 访问
+// Vercel Serverless Function - 通用获取飞书多维表格记录
+// 部署后通过 /api/records?model=gemini3|gpt52|skills 访问
 // 优化版：在服务端批量获取所有媒体 URL，减少前端请求次数
 
 const FEISHU_APP_ID = 'cli_a989e0fcbd7f100c';
 const FEISHU_APP_TOKEN = 'PTZxbnALPai6Zys0RNYcp9sznWe';
-const FEISHU_TABLE_ID = 'tbl3fl3SZd9YxzJ6';
+
+// 多模型表格配置映射
+const TABLE_CONFIGS = {
+  gemini3: {
+    recordsTable: 'tbl3fl3SZd9YxzJ6',
+    name: 'Gemini 3'
+  },
+  gpt52: {
+    recordsTable: 'tblGpra2WmGUFXM0',
+    name: 'GPT 5.2'
+  },
+  skills: {
+    recordsTable: 'tbl6MNuG7sVaCZp1',
+    name: 'Skills'
+  }
+};
 
 // Token 缓存
 let cachedToken = null;
@@ -43,13 +58,13 @@ async function getAccessToken() {
   throw new Error('获取 access token 失败: ' + (data.msg || 'Unknown error'));
 }
 
-async function fetchAllRecords(token) {
+async function fetchAllRecords(token, tableId) {
   const allRecords = [];
   let pageToken = null;
   let hasMore = true;
 
   while (hasMore) {
-    let url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_APP_TOKEN}/tables/${FEISHU_TABLE_ID}/records?page_size=100`;
+    let url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_APP_TOKEN}/tables/${tableId}/records?page_size=500`;
     if (pageToken) {
       url += `&page_token=${pageToken}`;
     }
@@ -105,8 +120,6 @@ async function batchGetMediaUrls(token, fileTokens) {
         });
         const data = await response.json();
 
-        console.log('批量获取媒体 URL 响应:', JSON.stringify(data).slice(0, 500));
-
         if (data.code === 0 && data.data?.tmp_download_urls) {
           return data.data.tmp_download_urls;
         } else {
@@ -126,8 +139,6 @@ async function batchGetMediaUrls(token, fileTokens) {
     }
   });
 
-  console.log('成功获取媒体 URL 数量:', Object.keys(mediaUrlMap).length, '/', fileTokens.length);
-
   return mediaUrlMap;
 }
 
@@ -141,9 +152,23 @@ export default async function handler(req, res) {
     return res.status(204).end();
   }
 
+  // 获取 model 参数，默认 gemini3
+  const model = req.query.model || 'gemini3';
+
+  // 验证 model 参数
+  const config = TABLE_CONFIGS[model];
+  if (!config) {
+    return res.status(400).json({
+      code: -1,
+      error: `Invalid model: ${model}. Supported: ${Object.keys(TABLE_CONFIGS).join(', ')}`
+    });
+  }
+
+  const tableId = config.recordsTable;
+
   try {
     const token = await getAccessToken();
-    const records = await fetchAllRecords(token);
+    const records = await fetchAllRecords(token, tableId);
 
     // 收集所有需要获取 URL 的 file_token
     const fileTokens = [];
@@ -163,9 +188,7 @@ export default async function handler(req, res) {
       if (previewFile && previewFile[0] && previewFile[0].file_token) {
         const fileToken = previewFile[0].file_token;
         if (mediaUrlMap[fileToken]) {
-          // 添加预解析的媒体 URL
           record.fields['_mediaUrl'] = mediaUrlMap[fileToken];
-          // 添加获取时间戳，用于前端检测链接是否过期（飞书临时链接有效期24小时）
           record.fields['_mediaUrlTimestamp'] = Date.now();
         }
       }
@@ -177,7 +200,8 @@ export default async function handler(req, res) {
       data: {
         items: enrichedRecords,
         total: enrichedRecords.length
-      }
+      },
+      model: model
     });
   } catch (error) {
     console.error('API Error:', error);

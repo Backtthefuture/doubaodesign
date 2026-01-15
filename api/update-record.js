@@ -1,9 +1,15 @@
-// Vercel Serverless Function - 更新飞书多维表格记录
-// 部署后通过 POST /api/update-record 访问
+// Vercel Serverless Function - 通用更新飞书多维表格记录
+// 部署后通过 POST /api/update-record?model=gemini3|gpt52|skills 访问
 
 const FEISHU_APP_ID = 'cli_a989e0fcbd7f100c';
 const FEISHU_APP_TOKEN = 'PTZxbnALPai6Zys0RNYcp9sznWe';
-const FEISHU_TABLE_ID = 'tbl3fl3SZd9YxzJ6';
+
+// 多模型表格配置映射
+const TABLE_CONFIGS = {
+  gemini3: { recordsTable: 'tbl3fl3SZd9YxzJ6', name: 'Gemini 3' },
+  gpt52: { recordsTable: 'tblGpra2WmGUFXM0', name: 'GPT 5.2' },
+  skills: { recordsTable: 'tbl6MNuG7sVaCZp1', name: 'Skills' }
+};
 
 // Token 缓存
 let cachedToken = null;
@@ -24,10 +30,7 @@ async function getAccessToken() {
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        app_id: FEISHU_APP_ID,
-        app_secret: appSecret
-      })
+      body: JSON.stringify({ app_id: FEISHU_APP_ID, app_secret: appSecret })
     }
   );
 
@@ -56,27 +59,32 @@ export default async function handler(req, res) {
     return res.status(405).json({ code: -1, error: 'Method not allowed' });
   }
 
+  // 获取 model 参数
+  const model = req.query.model || req.body.model || 'gemini3';
+
+  const config = TABLE_CONFIGS[model];
+  if (!config) {
+    return res.status(400).json({
+      code: -1,
+      error: `Invalid model: ${model}. Supported: ${Object.keys(TABLE_CONFIGS).join(', ')}`
+    });
+  }
+
+  const tableId = config.recordsTable;
   const { record_id, fields } = req.body;
 
   if (!record_id || !fields) {
-    return res.status(400).json({
-      code: -1,
-      error: 'Missing record_id or fields'
-    });
+    return res.status(400).json({ code: -1, error: 'Missing record_id or fields' });
   }
 
   try {
     const token = await getAccessToken();
 
-    // 调用飞书 API 更新记录
     const response = await fetch(
-      `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_APP_TOKEN}/tables/${FEISHU_TABLE_ID}/records/${record_id}`,
+      `https://open.feishu.cn/open-apis/bitable/v1/apps/${FEISHU_APP_TOKEN}/tables/${tableId}/records/${record_id}`,
       {
         method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ fields })
       }
     );
@@ -84,19 +92,12 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (data.code !== 0) {
-      console.error('飞书 API 返回错误:', data);
       throw new Error('更新记录失败: ' + (data.msg || 'Unknown error'));
     }
 
-    return res.status(200).json({
-      code: 0,
-      data: data.data
-    });
+    return res.status(200).json({ code: 0, data: data.data, model: model });
   } catch (error) {
     console.error('API Error:', error);
-    return res.status(500).json({
-      code: -1,
-      error: error.message
-    });
+    return res.status(500).json({ code: -1, error: error.message });
   }
 }

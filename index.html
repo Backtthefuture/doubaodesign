@@ -1740,10 +1740,10 @@
                     { icon: '📚', title: '长上下文', desc: '100万token窗口，可处理整本书籍、代码库、超长视频' }
                 ],
                 api: {
-                    records: '/api/records',
-                    doubaoRecords: '/api/doubao-records',
-                    updateRecord: '/api/update-record',
-                    updateDoubaoRecord: '/api/update-doubao-record'
+                    records: '/api/records?model=gemini3',
+                    doubaoRecords: '/api/doubao-records?model=gemini3',
+                    updateRecord: '/api/update-record?model=gemini3',
+                    updateDoubaoRecord: '/api/update-doubao-record?model=gemini3'
                 },
                 storagePrefix: 'gemini3_'
             },
@@ -1760,10 +1760,10 @@
                     { icon: '📚', title: '超长上下文', desc: '400K token上下文窗口，128K最大输出，处理大型代码库和文档' }
                 ],
                 api: {
-                    records: '/api/gpt52-records',
-                    doubaoRecords: '/api/gpt52-doubao-records',
-                    updateRecord: '/api/gpt52-update-record',
-                    updateDoubaoRecord: '/api/gpt52-update-doubao-record'
+                    records: '/api/records?model=gpt52',
+                    doubaoRecords: '/api/doubao-records?model=gpt52',
+                    updateRecord: '/api/update-record?model=gpt52',
+                    updateDoubaoRecord: '/api/update-doubao-record?model=gpt52'
                 },
                 storagePrefix: 'gpt52_'
             },
@@ -1780,10 +1780,10 @@
                     { icon: '🔄', title: '能力跃迁', desc: '1.6→1.8 能力对比分析' }
                 ],
                 api: {
-                    records: '/api/skills-records',
-                    doubaoRecords: '/api/skills-doubao-records',
-                    updateRecord: '/api/skills-update-record',
-                    updateDoubaoRecord: '/api/skills-update-doubao-record'
+                    records: '/api/records?model=skills',
+                    doubaoRecords: '/api/doubao-records?model=skills',
+                    updateRecord: '/api/update-record?model=skills',
+                    updateDoubaoRecord: '/api/update-doubao-record?model=skills'
                 },
                 storagePrefix: 'skills_'
             }
