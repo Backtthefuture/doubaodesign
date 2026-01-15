@@ -1,0 +1,3648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>竞品Demo分析与豆包Demo创意 - 飞书数据源</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Pro+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Apple Design System Colors */
+            --bg-primary: #f5f5f7;
+            --bg-card: #ffffff;
+            --bg-hover: #fbfbfd;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent-blue: #0071e3;
+            --accent-blue-hover: #0077ed;
+            --accent-green: #34c759;
+            --accent-orange: #ff9500;
+            --accent-red: #ff3b30;
+            --accent-purple: #af52de;
+            --accent-pink: #ff2d55;
+            --border-color: #d2d2d7;
+            --border-light: #e8e8ed;
+            --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title { font-size: 21px; font-weight: 600; color: var(--text-primary); }
+        .header-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+        .header-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #34c759, #30d158);
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .header-badge.loading { background: linear-gradient(135deg, #ff9500, #ffb340); }
+        .header-badge.error { background: linear-gradient(135deg, #ff3b30, #ff453a); }
+
+        /* Header Tab - 标题旁标签 */
+        .header-tab {
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .header-tab:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .header-tab.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .header-tab.active::before {
+            content: '✦ ';
+        }
+
+        /* Main Container */
+        .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+
+        /* Stats Cards */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .stat-number { font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 4px; }
+        .stat-number.orange { color: #ff9500; }
+        .stat-label { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Core Abilities Section */
+        .core-abilities {
+            background: linear-gradient(135deg, #fff 0%, #fef7ff 50%, #f0f7ff 100%);
+            border: 1px solid rgba(175, 82, 222, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+        .core-abilities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .core-abilities-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .core-abilities-title span { color: var(--accent-blue); }
+        .core-abilities-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .abilities-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+        .ability-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .ability-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        .ability-card-icon { font-size: 32px; margin-bottom: 12px; }
+        .ability-card-title { font-size: 14px; font-weight: 600; color: var(--accent-blue); margin-bottom: 8px; }
+        .ability-card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+        @media (max-width: 1200px) {
+            .abilities-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .abilities-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 24px;
+        }
+        .filter-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .search-box { flex: 1; min-width: 200px; max-width: 280px; position: relative; }
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            background: var(--bg-primary);
+            transition: all 0.2s ease;
+        }
+        .search-box input:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
+        .search-box::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2386868b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E") no-repeat center;
+        }
+        .filter-select {
+            padding: 12px 36px 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            background: var(--bg-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2386868b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") no-repeat right 12px center;
+            background-size: 16px;
+            cursor: pointer;
+            appearance: none;
+            min-width: 110px;
+            max-width: 140px;
+        }
+        .filter-select:focus { outline: none; border-color: var(--accent-blue); }
+        .quick-filters { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+        .quick-filter {
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .quick-filter:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .quick-filter.active { background: var(--accent-blue); border-color: var(--accent-blue); color: white; }
+
+        /* Table Container */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        /* Demo Table */
+        .demo-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .demo-table thead th {
+            background: var(--bg-primary);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+        }
+        .demo-table tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.2s ease; }
+        .demo-table tbody tr:hover { background: var(--bg-hover); }
+        .demo-table tbody tr:last-child { border-bottom: none; }
+        .demo-table td { padding: 16px; vertical-align: top; }
+
+        /* Column Styles */
+        .col-rank { width: 60px; text-align: center; }
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #ffb800); color: #5a4800; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #4a4a4a; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b56b20); color: #3d2500; }
+        .rank-default { background: var(--bg-primary); color: var(--text-secondary); }
+
+        .col-demo-info {
+            width: 400px;
+            min-width: 400px;
+            max-width: 400px;
+            padding: 12px 16px;
+        }
+        .demo-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        .demo-prompt {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .demo-prompt:hover {
+            -webkit-line-clamp: unset;
+            background: white;
+            padding: 8px;
+            margin: -8px;
+            margin-bottom: 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 10;
+        }
+
+        .col-preview { width: 100px; }
+        .preview-thumb {
+            width: 80px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+        }
+        .preview-thumb:hover { transform: scale(1.05); box-shadow: var(--shadow-hover); }
+        .preview-wrapper { position: relative; display: inline-block; }
+        .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .video-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid white;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            margin-left: 2px;
+        }
+        .preview-placeholder {
+            width: 80px;
+            height: 50px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            border: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 11px;
+        }
+
+        .col-views { width: 80px; }
+        .views-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        .views-hot { font-size: 10px; }
+
+        .col-scene { width: 130px; }
+        .scene-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #e8f4fd, #d4e9fc);
+            border: 1px solid #b8d9f8;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #0066cc;
+            white-space: nowrap;
+        }
+
+        .col-abilities { width: 160px; }
+        .ability-tags {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .ability-tags-left {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .ability-tag {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-block;
+            background: #f0f0f5;
+            color: #666;
+        }
+        .ability-tag.multimodal { background: #fef3e2; color: #b85c00; }
+        .ability-tag.image { background: #e3f2fd; color: #1976d2; }
+        .ability-tag.tool { background: #f3e5f5; color: #8e24aa; }
+        .ability-tag.coding { background: #e8f5e9; color: #2e7d32; }
+        .ability-tag.agent { background: #f3e5f5; color: #7b1fa2; }
+        .ability-tag.vision { background: #e3f2fd; color: #1565c0; }
+        .ability-tag.instruction { background: #fff3e0; color: #e65100; }
+        .ability-tag.space { background: #e0f2f1; color: #00695c; }
+        .ability-tag.physics { background: #fce4ec; color: #c2185b; }
+        .ability-tag.context { background: #ede7f6; color: #512da8; }
+        .ability-tag.document { background: #e8eaf6; color: #3949ab; }
+        .ability-tag.video { background: #fff8e1; color: #ff8f00; }
+
+        /* 原链接按钮样式 - 与能力标签风格一致 */
+        .link-btn {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #f0f0f5;
+            color: #666;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+        .link-btn:hover {
+            background: #e5e5ea;
+            color: #333;
+        }
+        .link-btn svg {
+            width: 10px;
+            height: 10px;
+        }
+
+        .col-doubao {
+            width: 280px;
+            min-width: 280px;
+            max-width: 280px;
+        }
+
+        .doubao-card-new {
+            padding: 12px;
+            background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+            border: 1px solid #ffe0b2;
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .doubao-card-new:hover {
+            background: linear-gradient(135deg, #fff5e6 0%, #fff0d6 100%);
+            border-color: #ffb74d;
+            box-shadow: 0 2px 8px rgba(255, 152, 0, 0.1);
+        }
+
+        .doubao-title-line {
+            font-size: 13px;
+            font-weight: 600;
+            color: #e65100;
+            line-height: 1.4;
+        }
+
+        .doubao-desc-preview {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .doubao-prompt-preview {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+            font-style: italic;
+        }
+
+        .expand-link {
+            font-size: 11px;
+            color: #999;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            align-self: flex-end;
+            transition: color 0.2s ease;
+            pointer-events: none;
+        }
+
+        .expand-icon-small {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-size: 10px;
+        }
+
+        .expand-link.expanded .expand-icon-small {
+            transform: rotate(180deg);
+        }
+
+        .doubao-detail-row {
+            background: #fffbf0;
+            border-top: 3px solid #ff9500;
+        }
+
+        .doubao-detail-row td {
+            padding: 0 !important;
+        }
+
+        .doubao-detail-content {
+            padding: 24px 32px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .doubao-detail-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e65100;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #ffe0b2;
+        }
+
+        .doubao-section {
+            margin-bottom: 20px;
+            background: white;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid #ffe0b2;
+        }
+
+        /* 用户痛点区域样式 */
+        .pain-point-section {
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFF4E6 0%, #FFEBCC 100%);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid #FFB84D;
+        }
+
+        /* 能力跃迁区域样式 */
+        .capability-leap-section {
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #F0F4FF 0%, #E6EFFF 100%);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid #5B8FF9;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-content {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .example-prompt {
+            background: #f5f5f7;
+            padding: 12px;
+            border-left: 3px solid #ff9500;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .implementation-steps {
+            padding-left: 0;
+        }
+
+        .implementation-steps ol {
+            margin: 0;
+            padding-left: 24px;
+        }
+
+        .implementation-steps li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .doubao-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .doubao-tag {
+            padding: 4px 10px;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 12px;
+            font-size: 11px;
+            color: #e65100;
+            font-weight: 500;
+        }
+
+        .doubao-tags-standalone {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid #ffe0b2;
+        }
+
+        .col-score { width: 90px; text-align: center; }
+        .score-circle {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0071e3, #00a0e3);
+            color: white;
+            margin-bottom: 6px;
+        }
+        .score-circle.excellent { background: linear-gradient(135deg, #34c759, #30d158); }
+        .score-circle.good { background: linear-gradient(135deg, #0071e3, #00a0e3); }
+        .score-circle.average { background: linear-gradient(135deg, #ff9500, #ffb340); }
+        .score-number { font-size: 18px; font-weight: 700; }
+        .score-label { font-size: 9px; opacity: 0.9; }
+        .score-detail { font-size: 11px; color: var(--text-secondary); }
+        .score-item { display: flex; justify-content: space-between; gap: 8px; }
+
+        .col-notes { width: 120px; }
+        .col-assignee { width: 100px; min-width: 100px; }
+        .col-exec-date { width: 90px; min-width: 90px; }
+        .exec-date-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .exec-date-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+        .exec-date-display:hover { border-color: var(--accent-blue); }
+        .exec-date-display .date-text { color: var(--text-primary); }
+        .exec-date-display .date-text.empty { color: var(--text-tertiary); }
+        .exec-date-display .date-icon { color: var(--text-tertiary); font-size: 14px; }
+        .exec-date-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .assignee-select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .assignee-select:hover { border-color: var(--accent-blue); }
+        .assignee-select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
+        .note-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            min-height: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .note-display:hover { border-color: var(--accent-blue); background: white; }
+        .note-display.empty { color: var(--text-tertiary); font-style: italic; }
+        .note-display.empty::before { content: '+ '; }
+        .note-edit { display: none; }
+        .note-edit textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        .note-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .note-btn { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; border: none; }
+        .note-btn.save { background: var(--accent-blue); color: white; }
+        .note-btn.cancel { background: var(--bg-primary); color: var(--text-secondary); }
+
+        /* Image Upload Section */
+        .image-upload-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+        }
+        .upload-file-input {
+            display: none;
+        }
+        .upload-btn-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .upload-btn {
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .upload-btn:hover {
+            border-color: var(--accent-blue);
+            background: white;
+        }
+        .upload-submit-btn {
+            padding: 6px 14px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .upload-submit-btn:hover {
+            background: var(--accent-blue-hover);
+        }
+        .upload-submit-btn:disabled {
+            background: var(--bg-primary);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+        .selected-file-info {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        /* Image Preview Section */
+        .image-preview-section {
+            margin-top: 8px;
+        }
+        .image-preview-header {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .image-thumbnails {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .image-thumb-wrapper {
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+        .image-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .image-thumb:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+        .image-delete-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-red);
+            color: white;
+            border: 2px solid white;
+            font-size: 14px;
+            line-height: 1;
+            cursor: pointer;
+            display: none;
+            transition: all 0.2s ease;
+        }
+        .image-thumb-wrapper:hover .image-delete-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-delete-btn:hover {
+            background: #ff1a1a;
+            transform: scale(1.1);
+        }
+        .image-thumb-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 9px;
+            padding: 2px 4px;
+            text-align: center;
+            border-bottom-left-radius: var(--radius-sm);
+            border-bottom-right-radius: var(--radius-sm);
+        }
+        .no-images {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox-content { max-width: 90vw; max-height: 85vh; border-radius: var(--radius-lg); overflow: hidden; }
+        .lightbox-content img, .lightbox-content video { max-width: 90vw; max-height: 85vh; object-fit: contain; }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.25); }
+        .lightbox-title {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Loading State */
+        .loading-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-light);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Skeleton Loading */
+        .skeleton-row { display: flex; align-items: center; padding: 16px; border-bottom: 1px solid var(--border-light); }
+        .skeleton-cell { margin-right: 16px; }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+        }
+        .skeleton-rank { width: 32px; height: 32px; border-radius: 50%; }
+        .skeleton-info { flex: 1; }
+        .skeleton-title { width: 180px; height: 18px; margin-bottom: 8px; }
+        .skeleton-text { width: 280px; height: 14px; }
+        .skeleton-thumb { width: 80px; height: 50px; }
+        .skeleton-badge { width: 60px; height: 24px; border-radius: 12px; }
+        .skeleton-tag { width: 80px; height: 28px; border-radius: 14px; }
+        .skeleton-tags { display: flex; gap: 6px; }
+        .skeleton-card { width: 200px; height: 80px; border-radius: var(--radius-md); }
+        .skeleton-score { width: 56px; height: 56px; border-radius: 50%; }
+        .skeleton-note { width: 120px; height: 60px; }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1d1d1f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1100;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* Category Section Styles */
+        .category-sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .category-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px 28px 20px;
+            position: relative;
+        }
+        .category-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 28px;
+            right: 28px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
+            border-radius: 2px;
+        }
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: var(--radius-md);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .category-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex: 1;
+        }
+        .category-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .category-table thead th {
+            background: var(--bg-primary);
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .category-table tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.2s ease; }
+        .category-table tbody tr:hover { background: var(--bg-hover); }
+        .category-table tbody tr:last-child { border-bottom: none; }
+        .category-table td { padding: 16px; vertical-align: top; }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-row { grid-template-columns: repeat(4, 1fr); }
+            .col-doubao { display: none; }
+        }
+        @media (max-width: 900px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .filter-row { flex-direction: column; align-items: stretch; }
+            .search-box { min-width: 100%; }
+            .demo-table { display: block; overflow-x: auto; }
+            .category-table { display: block; overflow-x: auto; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
+        }
+
+        /* ========== Doubao Showcase Section ========== */
+        .doubao-showcase {
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 3px solid transparent;
+            background-image: linear-gradient(var(--bg-primary), var(--bg-primary)),
+                              linear-gradient(90deg, #6366f1 0%, #06b6d4 50%, #f59e0b 100%);
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .doubao-showcase-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .doubao-showcase-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #06b6d4 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .doubao-showcase-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Ability Section */
+        .doubao-ability-section {
+            margin-bottom: 48px;
+        }
+
+        .doubao-ability-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+        }
+
+        .doubao-ability-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .doubao-ability-number.agent { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .doubao-ability-number.multimodal { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .doubao-ability-number.llm { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .doubao-ability-icon {
+            font-size: 28px;
+        }
+
+        .doubao-ability-title {
+            font-size: 22px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .doubao-ability-title.agent { color: #6366f1; }
+        .doubao-ability-title.multimodal { color: #06b6d4; }
+        .doubao-ability-title.llm { color: #f59e0b; }
+
+        .doubao-ability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .doubao-ability-tag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .doubao-ability-tag.agent {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+        }
+
+        .doubao-ability-tag.multimodal {
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4;
+        }
+
+        .doubao-ability-tag.llm {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        /* Demo Cards Grid */
+        .doubao-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .doubao-demo-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .doubao-demo-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Demo Card */
+        .doubao-demo-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doubao-demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .doubao-demo-card-header {
+            padding: 20px 20px 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .doubao-demo-card-title {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .doubao-demo-card-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .doubao-demo-card-name {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .doubao-demo-card-name.agent { color: #6366f1; }
+        .doubao-demo-card-name.multimodal { color: #06b6d4; }
+        .doubao-demo-card-name.llm { color: #f59e0b; }
+
+        .doubao-demo-card-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding-left: 30px;
+        }
+
+        .doubao-demo-card-body {
+            padding: 16px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doubao-demo-section {
+            margin-bottom: 16px;
+        }
+
+        .doubao-demo-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .doubao-demo-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .doubao-demo-section-content {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .doubao-demo-steps {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .doubao-demo-steps li {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 6px;
+            padding-left: 4px;
+        }
+
+        .doubao-demo-steps li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Core Display Box */
+        .doubao-core-display {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: auto;
+        }
+
+        .doubao-core-display.agent {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-left: 3px solid #6366f1;
+            color: #4f46e5;
+        }
+
+        .doubao-core-display.multimodal {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.1));
+            border-left: 3px solid #06b6d4;
+            color: #0891b2;
+        }
+
+        .doubao-core-display.llm {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+            border-left: 3px solid #f59e0b;
+            color: #d97706;
+        }
+
+        .doubao-core-display-label {
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        /* Expected Effect */
+        .doubao-expected-effect {
+            padding: 12px 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .doubao-expected-effect-label {
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-right: 4px;
+        }
+
+        /* Doubao Note Styles */
+        .doubao-demo-note {
+            padding: 12px 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .doubao-note-display {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: white;
+            border-radius: var(--radius-sm);
+            min-height: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .doubao-note-display:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .doubao-note-display.empty {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .doubao-note-edit textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--accent-blue);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+
+        .doubao-note-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .doubao-note-btn {
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .doubao-note-btn.save {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .doubao-note-btn.save:hover {
+            background: var(--accent-blue-hover);
+        }
+
+        .doubao-note-btn.cancel {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .doubao-note-btn.cancel:hover {
+            background: var(--bg-hover);
+        }
+
+        /* 豆包执行人样式 */
+        .doubao-assignee-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #e0e0e0;
+        }
+        .doubao-assignee-label {
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+        }
+        .doubao-assignee-select {
+            padding: 6px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .doubao-assignee-select:hover { border-color: var(--accent-blue); }
+        .doubao-assignee-select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1); }
+
+        /* 豆包筛选结果计数 */
+        .doubao-filter-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-left: auto;
+        }
+
+        /* 无结果提示 */
+        .doubao-no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            margin-top: 20px;
+        }
+
+        /* 豆包展示区标题筛选提示 */
+        .doubao-showcase-filter-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Doubao Score Styles - 右上角徽章样式 */
+        .doubao-score-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            min-width: 56px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .doubao-score-badge.excellent {
+            background: linear-gradient(135deg, #34c759, #30d158);
+        }
+        .doubao-score-badge.good {
+            background: linear-gradient(135deg, #0071e3, #00a0e3);
+        }
+        .doubao-score-badge.average {
+            background: linear-gradient(135deg, #ff9500, #ffb340);
+        }
+
+        .doubao-score-badge-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .doubao-score-badge-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 2px;
+        }
+
+        .doubao-score-badge-detail {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+
+        /* 卡片头部需要relative定位 */
+        .doubao-demo-card-header {
+            position: relative;
+            padding-right: 80px; /* 为右上角徽章留出空间 */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title-row">
+                <h1 class="header-title">竞品Demo分析与豆包Demo创意</h1>
+                <button class="header-tab" data-tab="gemini3" onclick="switchModel('gemini3')">Gemini3</button>
+                <button class="header-tab active" data-tab="gpt52" onclick="switchModel('gpt52')">GPT5.2</button>
+                <button class="header-tab" data-tab="skills" onclick="switchModel('skills')">Skills</button>
+            </div>
+            <div class="header-badge loading" id="dataBadge">
+                <span>数据加载中...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Core Abilities Section -->
+        <div class="core-abilities">
+            <div class="core-abilities-header">
+                <div>
+                    <div class="core-abilities-title">Gemini 3 <span>核心能力</span></div>
+                    <div class="core-abilities-subtitle">世界上多模态理解能力最强的模型，采用稀疏混合专家架构（MoE），万亿级参数</div>
+                </div>
+            </div>
+            <div class="abilities-grid">
+                <div class="ability-card">
+                    <div class="ability-card-icon">🧠</div>
+                    <div class="ability-card-title">推理能力</div>
+                    <div class="ability-card-desc">1501 Elo领跑LMArena，GPQA Diamond 91.9%，Deep Think模式突破智能边界</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">👁️</div>
+                    <div class="ability-card-title">多模态理解</div>
+                    <div class="ability-card-desc">原生整合文本/图像/视频/音频/代码，100万token上下文窗口</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">💻</div>
+                    <div class="ability-card-title">编码能力</div>
+                    <div class="ability-card-desc">WebDev Arena 1487 Elo，SWE-bench 76.2%，最强氛围编码模型</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">🤖</div>
+                    <div class="ability-card-title">Agent能力</div>
+                    <div class="ability-card-desc">Terminal-Bench 54.2%，Vending-Bench榜首，多步骤任务规划</div>
+                </div>
+                <div class="ability-card">
+                    <div class="ability-card-icon">📚</div>
+                    <div class="ability-card-title">长上下文</div>
+                    <div class="ability-card-desc">100万token窗口，可处理整本书籍、代码库、超长视频</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number orange" id="statCreativeTotal">--</div>
+                <div class="stat-label">创意总数量</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statTotal">--</div>
+                <div class="stat-label">分析Demo数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statExcellent">--</div>
+                <div class="stat-label">优秀(>=80)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statCategories">--</div>
+                <div class="stat-label">Demo分类数量</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索Demo名称或Prompt关键词...">
+                </div>
+                <select class="filter-select" id="sceneFilter">
+                    <option value="">全部场景</option>
+                </select>
+                <select class="filter-select" id="abilityFilter">
+                    <option value="">全部能力</option>
+                </select>
+                <select class="filter-select" id="scoreFilter">
+                    <option value="">全部分数</option>
+                    <option value="excellent">优秀(>=80)</option>
+                    <option value="good">良好(60-79)</option>
+                    <option value="average">一般(<60)</option>
+                </select>
+                <select class="filter-select" id="noteFilter">
+                    <option value="">全部备注</option>
+                    <option value="has-note">有备注</option>
+                    <option value="no-note">无备注</option>
+                </select>
+                <select class="filter-select" id="assigneeFilter">
+                    <option value="">全部执行人</option>
+                </select>
+                <select class="filter-select" id="sortFilter">
+                    <option value="score-desc">按评分降序</option>
+                    <option value="score-asc">按评分升序</option>
+                    <option value="views-desc">按热度降序</option>
+                    <option value="name-asc">按名称排序</option>
+                </select>
+                <select class="filter-select" id="dateFilter">
+                    <option value="">执行日期</option>
+                </select>
+            </div>
+            <div class="quick-filters" id="quickFilters">
+                <button class="quick-filter active" data-scene="">全部</button>
+            </div>
+        </div>
+
+        <!-- Category Sections Container -->
+        <div class="category-sections-container" id="categorySections">
+            <!-- 骨架屏加载效果 -->
+            <div class="category-section">
+                <div class="category-header">
+                    <div class="skeleton" style="width: 48px; height: 48px; border-radius: 12px;"></div>
+                    <div class="skeleton" style="width: 200px; height: 28px;"></div>
+                    <div class="skeleton" style="width: 80px; height: 28px; border-radius: 20px;"></div>
+                </div>
+                <table class="category-table">
+                    <thead>
+                        <tr>
+                            <th class="col-rank">排名</th>
+                            <th class="col-demo-info">Demo信息</th>
+                            <th class="col-preview">预览</th>
+                            <th class="col-views">热度</th>
+                            <th class="col-doubao">豆包创意</th>
+                            <th class="col-score">评分</th>
+                            <th class="col-notes">备注</th>
+                            <th class="col-assignee">执行人</th>
+                            <th class="col-exec-date">执行日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="skeleton-row">
+                            <td><div class="skeleton skeleton-rank"></div></td>
+                            <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                            <td><div class="skeleton skeleton-thumb"></div></td>
+                            <td><div class="skeleton skeleton-badge"></div></td>
+                            <td><div class="skeleton skeleton-card"></div></td>
+                            <td><div class="skeleton skeleton-score"></div></td>
+                            <td><div class="skeleton skeleton-note"></div></td>
+                        </tr>
+                        <tr class="skeleton-row">
+                            <td><div class="skeleton skeleton-rank"></div></td>
+                            <td class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></td>
+                            <td><div class="skeleton skeleton-thumb"></div></td>
+                            <td><div class="skeleton skeleton-badge"></div></td>
+                            <td><div class="skeleton skeleton-card"></div></td>
+                            <td><div class="skeleton skeleton-score"></div></td>
+                            <td><div class="skeleton skeleton-note"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Doubao Showcase Section (动态加载，仅当 JSON 文件存在时显示) -->
+        <div class="doubao-showcase" id="doubaoShowcase" style="display: none;">
+            <div class="doubao-showcase-header">
+                <h2 class="doubao-showcase-title">豆包1.8 能力Demo展示</h2>
+                <p class="doubao-showcase-subtitle">基于豆包大模型1.8的三大优势能力，对标Gemini 3的Demo创意方案</p>
+            </div>
+            <div id="doubaoAbilities">
+                <!-- 动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <div class="lightbox-content" id="lightboxContent"></div>
+        <div class="lightbox-title" id="lightboxTitle"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ========== Vercel API 配置 ==========
+        // Vercel 部署后，API 路由在同域下，使用相对路径
+        const API_BASE = '/api';
+
+        // ========== 多模型配置 ==========
+        const MODEL_CONFIGS = {
+            gemini3: {
+                id: 'gemini3',
+                name: 'Gemini3',
+                displayName: 'Gemini 3',
+                description: '世界上多模态理解能力最强的模型，采用稀疏混合专家架构（MoE），万亿级参数',
+                abilities: [
+                    { icon: '🧠', title: '推理能力', desc: '1501 Elo领跑LMArena，GPQA Diamond 91.9%，Deep Think模式突破智能边界' },
+                    { icon: '👁️', title: '多模态理解', desc: '原生整合文本/图像/视频/音频/代码，100万token上下文窗口' },
+                    { icon: '💻', title: '编码能力', desc: 'WebDev Arena 1487 Elo，SWE-bench 76.2%，最强氛围编码模型' },
+                    { icon: '🤖', title: 'Agent能力', desc: 'Terminal-Bench 54.2%，Vending-Bench榜首，多步骤任务规划' },
+                    { icon: '📚', title: '长上下文', desc: '100万token窗口，可处理整本书籍、代码库、超长视频' }
+                ],
+                api: {
+                    records: '/api/records',
+                    doubaoRecords: '/api/doubao-records',
+                    updateRecord: '/api/update-record',
+                    updateDoubaoRecord: '/api/update-doubao-record'
+                },
+                storagePrefix: 'gemini3_'
+            },
+            gpt52: {
+                id: 'gpt52',
+                name: 'GPT5.2',
+                displayName: 'GPT 5.2',
+                description: 'OpenAI最新旗舰模型，突破性推理能力和专业知识工作，2025年12月发布',
+                abilities: [
+                    { icon: '🧠', title: '深度推理', desc: 'ARC-AGI-1突破90%，ARC-AGI-2达54.2%，抽象推理达人类专家水平' },
+                    { icon: '📊', title: '专业知识工作', desc: '擅长电子表格、演示文稿、多步骤项目，Pro版减少45%事实错误' },
+                    { icon: '💻', title: '代码生成', desc: 'SWE-bench Verified 80%，GPT-5.2-Codex版本支持大型重构和迁移' },
+                    { icon: '🔬', title: '科学数学', desc: 'GPQA Diamond 93.2%，FrontierMath 40.3%，研究生级问题求解' },
+                    { icon: '📚', title: '超长上下文', desc: '400K token上下文窗口，128K最大输出，处理大型代码库和文档' }
+                ],
+                api: {
+                    records: '/api/gpt52-records',
+                    doubaoRecords: '/api/gpt52-doubao-records',
+                    updateRecord: '/api/gpt52-update-record',
+                    updateDoubaoRecord: '/api/gpt52-update-doubao-record'
+                },
+                storagePrefix: 'gpt52_'
+            },
+            skills: {
+                id: 'skills',
+                name: 'Skills',
+                displayName: 'Skills',
+                description: '基于飞书多维表格的 AI 技能展示平台',
+                abilities: [
+                    { icon: '🎯', title: '场景分类', desc: '18个预设场景智能分类' },
+                    { icon: '🏷️', title: '能力标签', desc: '多维度能力识别与标注' },
+                    { icon: '💡', title: '创意生成', desc: '豆包创意标题与描述' },
+                    { icon: '📊', title: '智能评分', desc: '趣味分与实用分双维度评估' },
+                    { icon: '🔄', title: '能力跃迁', desc: '1.6→1.8 能力对比分析' }
+                ],
+                api: {
+                    records: '/api/skills-records',
+                    doubaoRecords: '/api/skills-doubao-records',
+                    updateRecord: '/api/skills-update-record',
+                    updateDoubaoRecord: '/api/skills-update-doubao-record'
+                },
+                storagePrefix: 'skills_'
+            }
+        };
+
+        // 全局状态
+        let currentModel = localStorage.getItem('currentModel') || 'gpt52';  // 默认GPT5.2
+        let modelDataCache = {};  // 数据缓存: { gemini3: {demoData, doubaoData}, gpt52: {...} }
+
+        // 全局数据
+        let demoData = [];
+
+        // 执行人选项列表
+        const ASSIGNEE_OPTIONS = ['苍何', '梦飞', '徐阳'];
+
+        // Ability color mapping
+        const abilityColors = {
+            "多模态输入": "multimodal",
+            "图像生成": "image",
+            "工具达人": "tool",
+            "代码狂魔": "coding",
+            "3D空间感": "space",
+            "物理引擎脑": "physics",
+            "Agent自动化": "agent",
+            "指令遵循王": "instruction",
+            "视觉推理师": "vision",
+            "视频读秒器": "video",
+            "长文不遗忘": "context",
+            "文档结构化": "document"
+        };
+
+        // ========== 场景映射和动态配置 ==========
+
+        // 场景名称映射（处理历史数据中的非标准名称）
+        const SCENE_MAPPING = {
+            "看图知一切": "图生万物",
+            "图片理解": "图生万物",
+            "视频理解": "视频秒懂",
+            "文档处理": "文档秒读",
+            "Agent": "AI替你干活",
+            "代码生成": "一句话生成App"
+        };
+
+        // 标准化场景名称（应用映射规则）
+        function normalizeScene(scene) {
+            if (!scene) return "其他";
+            return SCENE_MAPPING[scene] || scene;
+        }
+
+        // 从数据中动态提取所有场景并按拼音排序
+        function extractUniqueScenes(data) {
+            const scenes = new Set();
+            data.forEach(demo => {
+                const normalizedScene = normalizeScene(demo.scene);
+                scenes.add(normalizedScene);
+            });
+
+            // 转换为数组并按拼音排序
+            return Array.from(scenes).sort((a, b) => {
+                return a.localeCompare(b, 'zh-CN');
+            });
+        }
+
+        // 为每个场景动态生成配置（图标、字母编号、排序）
+        function generateSceneConfig(scenes) {
+            const config = {};
+            const iconMap = {
+                '一句话生成App': '📱',
+                '一句话做网站': '🌐',
+                '一句话造游戏': '🎮',
+                '一句话出3D': '🧊',
+                '一句话写系统': '💻',
+                '一句话搞特效': '✨',
+                '图生万物': '🎨',
+                '视频秒懂': '🎬',
+                '文档秒读': '📄',
+                'AI替你干活': '🤖',
+                '一句话出图': '🖼️',
+                '一句话做PPT': '📊',
+                '一句话做表格': '📋',
+                '写作助手': '✍️',
+                'AI当老师': '👨‍🏫',
+                'AI陪聊': '💬',
+                '视觉考AI': '👁️',
+                '奇葩挑战': '🎯',
+                '其他': '📁'
+            };
+
+            scenes.forEach((scene, index) => {
+                config[scene] = {
+                    icon: iconMap[scene] || '📁',
+                    letter: String.fromCharCode(65 + index), // A, B, C...
+                    order: index + 1
+                };
+            });
+
+            return config;
+        }
+
+        // 按分类分组数据
+        function groupByCategory(data) {
+            const grouped = {};
+            data.forEach(demo => {
+                const category = demo.scene || '其他';
+                if (!grouped[category]) {
+                    grouped[category] = [];
+                }
+                grouped[category].push(demo);
+            });
+            return grouped;
+        }
+
+        // ========== API 函数 ==========
+        // 获取飞书多维表格记录（服务端已预加载所有媒体 URL）
+        // 支持本地开发：如果API不可用，自动回退到本地mock数据
+        async function fetchRecords() {
+            try {
+                // 先尝试访问Vercel API
+                const response = await fetch(`${API_BASE}/records`);
+
+                // 检查响应是否为JSON格式
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.log('API返回非JSON响应，可能是本地开发环境，回退到mock数据');
+                    throw new Error('Not JSON response');
+                }
+
+                const data = await response.json();
+                if (data.code === 0) {
+                    console.log('✓ 成功从Vercel API加载数据');
+                    return data.data.items;
+                }
+                throw new Error('Failed to fetch records: ' + (data.error || data.msg));
+            } catch (error) {
+                // API失败，尝试加载本地mock数据
+                console.log('API请求失败，尝试加载本地mock数据...', error.message);
+                try {
+                    const response = await fetch('./mock-data.json');
+                    const data = await response.json();
+                    if (data.code === 0) {
+                        console.log('✓ 成功从本地mock-data.json加载数据（本地开发模式）');
+                        return data.data.items;
+                    }
+                } catch (mockError) {
+                    console.error('加载本地mock数据也失败:', mockError);
+                }
+                throw new Error('无法加载数据：API和本地mock数据都不可用');
+            }
+        }
+
+        // 回退方案：单独获取媒体 URL（当服务端批量获取失败时使用）
+        async function getMediaUrl(fileToken) {
+            try {
+                const response = await fetch(`${API_BASE}/media?token=${fileToken}`);
+                const data = await response.json();
+                if (data.code === 0 && data.data.tmp_download_urls && data.data.tmp_download_urls.length > 0) {
+                    return data.data.tmp_download_urls[0].tmp_download_url;
+                }
+            } catch (e) {
+                console.error('Failed to get media URL:', e);
+            }
+            return null;
+        }
+
+        // 更新飞书多维表格记录
+        async function updateRecord(recordId, fields) {
+            try {
+                console.log('正在更新记录:', recordId, '字段:', fields);
+
+                // 使用当前模型的API配置
+                const config = MODEL_CONFIGS[currentModel];
+                const response = await fetch(config.api.updateRecord, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        record_id: recordId,
+                        fields: fields
+                    })
+                });
+
+                // 检查响应类型
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.error('API返回非JSON响应，可能是本地开发环境，API不可用');
+                    console.error('响应状态:', response.status, '内容类型:', contentType);
+                    return false;
+                }
+
+                const data = await response.json();
+                console.log('API响应:', data);
+
+                if (data.code === 0) {
+                    return true;
+                } else {
+                    console.error('Update failed:', data.error);
+                    return false;
+                }
+            } catch (e) {
+                console.error('Update record error:', e);
+                return false;
+            }
+        }
+
+        // ========== 数据转换 ==========
+        function formatTimestampToDate(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // 将 YYYY-MM-DD 格式转换为 MM-DD 显示格式
+        function formatDateDisplay(dateStr) {
+            if (!dateStr) return '选择';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                return `${parts[1]}-${parts[2]}`;
+            }
+            return dateStr;
+        }
+
+        function transformRecord(record) {
+            const fields = record.fields;
+            const rawScene = fields['所属场景'] || '';
+            const previewFile = fields['预览文件'] && fields['预览文件'][0] ? fields['预览文件'][0] : null;
+
+            // 检测媒体链接是否过期（飞书临时链接有效期24小时，保守检测20小时）
+            const mediaUrlTimestamp = fields['_mediaUrlTimestamp'];
+            const isExpired = mediaUrlTimestamp && (Date.now() - mediaUrlTimestamp > 20 * 60 * 60 * 1000);
+
+            return {
+                id: record.record_id,
+                name: fields['Demo名称'] || '',
+                prompt: fields['Prompt描述'] || '',
+                isVideo: fields['是否视频'] || false,
+                views: fields['热度'] || '',
+                viewsNum: parseInt(fields['热度数值']) || 0,
+                scene: normalizeScene(rawScene),  // 应用场景映射规则
+                abilities: fields['模型能力'] || [],
+                doubaoTitle: fields['豆包创意标题'] || '',
+                doubaoDesc: fields['豆包创意描述'] || '',
+                doubaoTags: (fields['豆包标签'] || '').split(',').map(t => t.trim()).filter(t => t),
+                examplePrompt: fields['示例Prompt'] || '',
+                implementationSteps: fields['实现步骤'] || '',
+                scoreInteresting: parseInt(fields['趣味分']) || 0,
+                scoreUseful: parseInt(fields['实用分']) || 0,
+                note: fields['备注'] || '',
+                link: (fields['链接'] && fields['链接'].link) ? fields['链接'].link : (typeof fields['链接'] === 'string' ? fields['链接'] : ''),
+                assignee: fields['执行人'] || '',
+                execDate: formatTimestampToDate(fields['执行日期']),
+                previewFile: previewFile,
+                attachments: fields['附件'] || [],
+                // 使用服务端预加载的媒体 URL（如果过期则置为null，触发重新获取）
+                mediaUrl: isExpired ? null : (fields['_mediaUrl'] || null),
+                mediaUrlTimestamp: mediaUrlTimestamp,
+                // 新增字段
+                userPainPoint: fields['用户痛点'] || '',
+                capabilityLeap: fields['能力跃迁'] || ''
+            };
+        }
+
+        // ========== UI函数 ==========
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function getScoreClass(total) {
+            if (total >= 80) return 'excellent';
+            if (total >= 60) return 'good';
+            return 'average';
+        }
+
+        function updateStats() {
+            const total = demoData.length;
+            const demoExcellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
+
+            // 统计不同场景数量（使用动态提取，应用映射后去重）
+            const uniqueScenes = extractUniqueScenes(demoData);
+            const categoryCount = uniqueScenes.length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statCategories').textContent = categoryCount;
+
+            // 更新创意总数量和优秀数量（需要合并两个表格数据）
+            updateCombinedStats();
+        }
+
+        // 更新合并统计数据（创意总数量 + 优秀数量）
+        function updateCombinedStats() {
+            // 竞品Demo统计
+            const demoCount = demoData.length;
+            const demoExcellent = demoData.filter(d => d.scoreInteresting + d.scoreUseful >= 80).length;
+
+            // 豆包Demo统计
+            let doubaoCount = 0;
+            let doubaoExcellent = 0;
+
+            if (doubaoData && doubaoData.abilities) {
+                doubaoData.abilities.forEach(ability => {
+                    if (ability.demos) {
+                        ability.demos.forEach(demo => {
+                            doubaoCount++;
+                            const total = (demo.scoreInteresting || 0) + (demo.scoreUseful || 0);
+                            if (total >= 80) {
+                                doubaoExcellent++;
+                            }
+                        });
+                    }
+                });
+            }
+
+            // 更新创意总数量
+            const totalCreative = demoCount + doubaoCount;
+            document.getElementById('statCreativeTotal').textContent = totalCreative;
+
+            // 更新优秀数量（两个表格合计）
+            const totalExcellent = demoExcellent + doubaoExcellent;
+            document.getElementById('statExcellent').textContent = totalExcellent;
+        }
+
+        function populateFilters() {
+            const scenes = [...new Set(demoData.map(d => d.scene).filter(s => s))];
+            const abilities = [...new Set(demoData.flatMap(d => d.abilities))];
+
+            // 清空并重新填充场景筛选器
+            const sceneSelect = document.getElementById('sceneFilter');
+            sceneSelect.innerHTML = '<option value="">全部场景</option>';
+            scenes.forEach(scene => {
+                const option = document.createElement('option');
+                option.value = scene;
+                option.textContent = scene;
+                sceneSelect.appendChild(option);
+            });
+
+            // 清空并重新填充能力筛选器
+            const abilitySelect = document.getElementById('abilityFilter');
+            abilitySelect.innerHTML = '<option value="">全部能力</option>';
+            abilities.forEach(ability => {
+                const option = document.createElement('option');
+                option.value = ability;
+                option.textContent = ability;
+                abilitySelect.appendChild(option);
+            });
+
+            // 清空并重新填充执行人筛选器
+            const assigneeSelect = document.getElementById('assigneeFilter');
+            assigneeSelect.innerHTML = '<option value="">全部执行人</option>';
+            ASSIGNEE_OPTIONS.forEach(assignee => {
+                const option = document.createElement('option');
+                option.value = assignee;
+                option.textContent = assignee;
+                assigneeSelect.appendChild(option);
+            });
+
+            // 填充执行日期筛选器
+            updateDateFilterOptions();
+
+            // 清空并重新填充快速筛选按钮
+            const quickFilters = document.getElementById('quickFilters');
+            quickFilters.innerHTML = '<button class="quick-filter active" data-scene="">全部</button>';
+            scenes.forEach(scene => {
+                const btn = document.createElement('button');
+                btn.className = 'quick-filter';
+                btn.dataset.scene = scene;
+                btn.textContent = scene;
+                quickFilters.appendChild(btn);
+            });
+        }
+
+        // 更新执行日期筛选选项
+        function updateDateFilterOptions() {
+            const dateSelect = document.getElementById('dateFilter');
+
+            // 清空现有选项（保留第一个默认选项）
+            dateSelect.innerHTML = '<option value="">执行日期</option>';
+
+            // 提取所有非空的执行日期
+            const uniqueDates = [...new Set(
+                demoData
+                    .filter(demo => demo.execDate && demo.execDate.trim() !== '')
+                    .map(demo => demo.execDate)
+            )];
+
+            // 按日期降序排序（最新的在前）
+            uniqueDates.sort((a, b) => new Date(b) - new Date(a));
+
+            // 如果有日期数据，添加"已设日期"选项
+            if (uniqueDates.length > 0) {
+                const allDatesOption = document.createElement('option');
+                allDatesOption.value = '__ALL_WITH_DATE__';
+                allDatesOption.textContent = '⚡ 已设日期';
+                dateSelect.appendChild(allDatesOption);
+            }
+
+            // 添加每个具体日期
+            uniqueDates.forEach(date => {
+                const option = document.createElement('option');
+                option.value = date;
+                option.textContent = formatDateForDisplay(date);
+                dateSelect.appendChild(option);
+            });
+        }
+
+        // 格式化日期显示（YYYY-MM-DD -> M月D日）
+        function formatDateForDisplay(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                const month = parseInt(parts[1]);
+                const day = parseInt(parts[2]);
+                return `${month}月${day}日`;
+            }
+            return dateStr;
+        }
+
+        // 渲染分组表格（按分类聚合展示）
+        async function renderTable(data) {
+            const container = document.getElementById('categorySections');
+
+            // 动态提取场景并生成配置（按拼音排序）
+            const uniqueScenes = extractUniqueScenes(data);
+            const sceneConfig = generateSceneConfig(uniqueScenes);
+
+            // 按场景分组
+            const grouped = groupByCategory(data);
+
+            // 场景已经按拼音排序，过滤掉空分组
+            const sortedCategories = uniqueScenes.filter(scene => grouped[scene] && grouped[scene].length > 0);
+
+            // 生成分类区块HTML
+            let html = '';
+
+            sortedCategories.forEach(category => {
+                const demos = grouped[category];
+                if (demos.length === 0) return; // 跳过空分类
+
+                const config = sceneConfig[category];
+
+                html += `
+                    <div class="category-section" id="category-${encodeURIComponent(category)}">
+                        <div class="category-header">
+                            <div class="category-icon">${config.icon}</div>
+                            <h2 class="category-title">${config.letter}. ${category}</h2>
+                            <span class="category-count">(${demos.length}个Demo)</span>
+                        </div>
+                        <table class="category-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-rank">排名</th>
+                                    <th class="col-demo-info">Demo信息</th>
+                                    <th class="col-preview">预览</th>
+                                    <th class="col-views">热度</th>
+                                    <th class="col-doubao">豆包创意</th>
+                                    <th class="col-score">评分</th>
+                                    <th class="col-notes">备注</th>
+                                    <th class="col-assignee">执行人</th>
+                                    <th class="col-exec-date">执行日期</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${demos.map((demo, index) => renderRow(demo, index, demo.mediaUrl)).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            // 对于没有预加载媒体URL的记录，逐个异步加载
+            const demosWithoutMedia = data.filter(d => !d.mediaUrl && d.previewFile && d.previewFile.file_token);
+            if (demosWithoutMedia.length > 0) {
+                console.log(`需要单独获取媒体URL: ${demosWithoutMedia.length} 个（预加载成功: ${data.length - demosWithoutMedia.length} 个）`);
+                for (const demo of demosWithoutMedia) {
+                    const url = await getMediaUrl(demo.previewFile.file_token);
+                    if (url) {
+                        demo.mediaUrl = url;
+                        const row = container.querySelector(`tr[data-id="${demo.id}"]`);
+                        if (row) {
+                            const previewCell = row.querySelector('.col-preview');
+                            if (previewCell) {
+                                previewCell.innerHTML = getPreviewHtml(demo, url);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 渲染所有demo的图片缩略图
+            for (const demo of data) {
+                if (demo.attachments && demo.attachments.length > 0) {
+                    await renderImageThumbnails(demo.id);
+                }
+            }
+        }
+
+        // 获取预览 HTML
+        function getPreviewHtml(demo, url) {
+            if (!url) {
+                return '<div class="preview-placeholder">无预览</div>';
+            }
+            if (demo.isVideo || (demo.previewFile && demo.previewFile.type?.includes('video'))) {
+                return `
+                    <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', true)">
+                        <video src="${url}" class="preview-thumb" muted preload="metadata"></video>
+                        <span class="video-icon"></span>
+                    </div>`;
+            } else {
+                return `
+                    <div class="preview-wrapper" onclick="openLightbox('${url}', '${demo.name}', false)">
+                        <img src="${url}" class="preview-thumb" alt="${demo.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=preview-placeholder>加载失败</div>'">
+                    </div>`;
+            }
+        }
+
+        // 渲染单行
+        function renderRow(demo, index, url) {
+            const total = demo.scoreInteresting + demo.scoreUseful;
+            const scoreClass = getScoreClass(total);
+            const rankClass = index < 3 ? `rank-${index + 1}` : 'rank-default';
+            const previewHtml = getPreviewHtml(demo, url);
+
+            return `
+                <tr data-id="${demo.id}">
+                    <td class="col-rank">
+                        <span class="rank-badge ${rankClass}">#${index + 1}</span>
+                    </td>
+                    <td class="col-demo-info">
+                        <div class="demo-name">${demo.name}</div>
+                        <div class="demo-prompt">${demo.prompt}</div>
+                        <div class="ability-tags">
+                            <div class="ability-tags-left">
+                                ${demo.abilities.map(a => `<span class="ability-tag ${abilityColors[a] || ''}">${a}</span>`).join('')}
+                            </div>
+                            ${demo.link ? `<a href="${demo.link}" target="_blank" rel="noopener noreferrer" class="link-btn" title="打开原链接">
+                                原链接
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <line x1="10" y1="14" x2="21" y2="3"/>
+                                </svg>
+                            </a>` : ''}
+                        </div>
+                    </td>
+                    <td class="col-preview">${previewHtml}</td>
+                    <td class="col-views">
+                        <span class="views-badge">
+                            <span class="views-hot">🔥</span>
+                            ${demo.viewsNum || '-'}
+                        </span>
+                    </td>
+                    <td class="col-doubao">
+                        <div class="doubao-card-new" onclick="toggleDoubaoDetail('${demo.id}')">
+                            <div class="doubao-title-line">💡 ${demo.doubaoTitle}</div>
+                            <div class="doubao-prompt-preview">${demo.examplePrompt || '暂无示例Prompt'}</div>
+                            <span class="expand-link" id="expandLink-${demo.id}">
+                                更多 <span class="expand-icon-small">▼</span>
+                            </span>
+                        </div>
+                    </td>
+                    <td class="col-score">
+                        <div class="score-circle ${scoreClass}">
+                            <span class="score-number">${total}</span>
+                            <span class="score-label">分</span>
+                        </div>
+                        <div class="score-detail">
+                            <div class="score-item"><span>趣${demo.scoreInteresting}</span><span>用${demo.scoreUseful}</span></div>
+                        </div>
+                    </td>
+                    <td class="col-notes">
+                        <div class="note-display ${demo.note ? '' : 'empty'}" onclick="startEditNote('${demo.id}')" id="noteDisplay${demo.id}">
+                            ${demo.note || '添加备注'}
+                        </div>
+                        <div class="note-edit" id="noteEdit${demo.id}">
+                            <textarea id="noteTextarea${demo.id}">${demo.note || ''}</textarea>
+                            <div class="note-actions">
+                                <button class="note-btn save" onclick="saveNoteClick('${demo.id}')">保存</button>
+                                <button class="note-btn cancel" onclick="cancelEditNote('${demo.id}')">取消</button>
+                            </div>
+                        </div>
+
+                        <!-- 图片上传区域 -->
+                        <div class="image-upload-section">
+                            <div class="upload-btn-wrapper">
+                                <label class="upload-btn" for="fileInput${demo.id}">
+                                    选图
+                                </label>
+                                <input type="file"
+                                    id="fileInput${demo.id}"
+                                    class="upload-file-input"
+                                    accept="image/*"
+                                    onchange="handleImageSelect(event, '${demo.id}')">
+                                <button class="upload-submit-btn"
+                                    id="uploadBtn${demo.id}"
+                                    onclick="uploadImage('${demo.id}')"
+                                    disabled>上传</button>
+                                <span class="selected-file-info" id="selectedFileInfo${demo.id}"></span>
+                            </div>
+                        </div>
+
+                        <!-- 图片预览区域 -->
+                        <div class="image-preview-section" id="imagePreview${demo.id}">
+                            <!-- 动态渲染 -->
+                        </div>
+                    </td>
+                    <td class="col-assignee">
+                        <select class="assignee-select" onchange="saveAssignee('${demo.id}', this.value)">
+                            <option value="">选择</option>
+                            ${ASSIGNEE_OPTIONS.map(a => `<option value="${a}" ${demo.assignee === a ? 'selected' : ''}>${a}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td class="col-exec-date">
+                        <div class="exec-date-wrapper">
+                            <div class="exec-date-display" onclick="triggerDatePicker(this)">
+                                <span class="date-text ${demo.execDate ? '' : 'empty'}">${formatDateDisplay(demo.execDate)}</span>
+                                <span class="date-icon">📅</span>
+                            </div>
+                            <input type="date" class="exec-date-input"
+                                value="${demo.execDate || ''}"
+                                onchange="saveExecDate('${demo.id}', this.value, this)">
+                        </div>
+                    </td>
+                </tr>
+                <tr class="doubao-detail-row" id="doubaoDetail${demo.id}" style="display: none;">
+                    <td colspan="9">
+                        <div class="doubao-detail-content">
+                            <div class="doubao-detail-header">💡 ${demo.doubaoTitle}</div>
+
+                            <!-- Tags as standalone row -->
+                            <div class="doubao-tags-standalone">
+                                ${demo.doubaoTags.map(t => `<span class="doubao-tag">#${t}</span>`).join('')}
+                            </div>
+
+                            <!-- 用户痛点 -->
+                            ${demo.userPainPoint ? `
+                            <div class="pain-point-section">
+                                <div class="section-title">🎯 用户痛点：</div>
+                                <div class="section-content">${demo.userPainPoint}</div>
+                            </div>
+                            ` : ''}
+
+                            <!-- 能力跃迁 -->
+                            ${demo.capabilityLeap ? `
+                            <div class="capability-leap-section">
+                                <div class="section-title">🚀 能力跃迁：</div>
+                                <div class="section-content">${demo.capabilityLeap}</div>
+                            </div>
+                            ` : ''}
+
+                            <div class="doubao-section">
+                                <div class="section-title">📝 创意描述：</div>
+                                <div class="section-content">${demo.doubaoDesc || '暂无'}</div>
+                            </div>
+                            <div class="doubao-section">
+                                <div class="section-title">💬 示例Prompt：</div>
+                                <div class="section-content example-prompt">"${demo.examplePrompt || '暂无'}"</div>
+                            </div>
+                            <div class="doubao-section">
+                                <div class="section-title">🔧 实现步骤：</div>
+                                <div class="section-content implementation-steps">
+                                    ${formatSteps(demo.implementationSteps)}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sceneFilter = document.getElementById('sceneFilter').value;
+            const abilityFilter = document.getElementById('abilityFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            const noteFilter = document.getElementById('noteFilter').value;
+            const assigneeFilter = document.getElementById('assigneeFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            let filtered = demoData.filter(demo => {
+                if (searchTerm && !demo.name.toLowerCase().includes(searchTerm) && !demo.prompt.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                if (sceneFilter && demo.scene !== sceneFilter) {
+                    return false;
+                }
+                if (abilityFilter && !demo.abilities.includes(abilityFilter)) {
+                    return false;
+                }
+                const total = demo.scoreInteresting + demo.scoreUseful;
+                if (scoreFilter === 'excellent' && total < 80) return false;
+                if (scoreFilter === 'good' && (total < 60 || total >= 80)) return false;
+                if (scoreFilter === 'average' && total >= 60) return false;
+
+                // 备注筛选
+                if (noteFilter === 'has-note' && (!demo.note || demo.note.trim() === '')) {
+                    return false;
+                }
+                if (noteFilter === 'no-note' && demo.note && demo.note.trim() !== '') {
+                    return false;
+                }
+
+                // 执行人筛选
+                if (assigneeFilter && demo.assignee !== assigneeFilter) {
+                    return false;
+                }
+
+                // 执行日期筛选
+                if (dateFilter === '__ALL_WITH_DATE__') {
+                    // 选中"已设日期"：只显示有日期的数据
+                    if (!demo.execDate || demo.execDate.trim() === '') {
+                        return false;
+                    }
+                } else if (dateFilter) {
+                    // 选中具体日期：只显示该日期的数据
+                    if (demo.execDate !== dateFilter) {
+                        return false;
+                    }
+                }
+                // dateFilter 为空字符串：显示所有数据（默认状态）
+
+                return true;
+            });
+
+            filtered.sort((a, b) => {
+                const totalA = a.scoreInteresting + a.scoreUseful;
+                const totalB = b.scoreInteresting + b.scoreUseful;
+                switch (sortFilter) {
+                    case 'score-desc': return totalB - totalA;
+                    case 'score-asc': return totalA - totalB;
+                    case 'views-desc': return b.viewsNum - a.viewsNum;
+                    case 'name-asc': return a.name.localeCompare(b.name, 'zh-CN');
+                    default: return totalB - totalA;
+                }
+            });
+
+            renderTable(filtered);
+
+            // 联动筛选豆包Demo
+            filterDoubaoData();
+        }
+
+        // ========== Lightbox ==========
+        function openLightbox(src, title, isVideo) {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightboxContent');
+            const titleEl = document.getElementById('lightboxTitle');
+
+            if (isVideo) {
+                content.innerHTML = `<video src="${src}" controls autoplay></video>`;
+            } else {
+                content.innerHTML = `<img src="${src}" alt="${title}">`;
+            }
+            titleEl.textContent = title;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const video = lightbox.querySelector('video');
+            if (video) video.pause();
+            lightbox.classList.remove('active');
+        }
+
+        // ========== Note Editing ==========
+        function startEditNote(id) {
+            document.getElementById(`noteDisplay${id}`).style.display = 'none';
+            document.getElementById(`noteEdit${id}`).style.display = 'block';
+            document.getElementById(`noteTextarea${id}`).focus();
+        }
+
+        function cancelEditNote(id) {
+            document.getElementById(`noteDisplay${id}`).style.display = 'block';
+            document.getElementById(`noteEdit${id}`).style.display = 'none';
+        }
+
+        async function saveNoteClick(id) {
+            const note = document.getElementById(`noteTextarea${id}`).value.trim();
+            const demo = demoData.find(d => d.id === id);
+            if (demo) {
+                demo.note = note;
+
+                // Update in Feishu
+                const success = await updateRecord(id, { '备注': note });
+                if (success) {
+                    showToast('备注已保存到飞书');
+                } else {
+                    showToast('保存失败，请重试');
+                }
+
+                const display = document.getElementById(`noteDisplay${id}`);
+                display.textContent = note || '添加备注';
+                display.className = `note-display ${note ? '' : 'empty'}`;
+            }
+            cancelEditNote(id);
+        }
+
+        // ========== Assignee Editing ==========
+        async function saveAssignee(id, assignee) {
+            const demo = demoData.find(d => d.id === id);
+
+            if (demo) {
+                demo.assignee = assignee;
+
+                // Update in Feishu
+                const success = await updateRecord(id, { '执行人': assignee });
+                if (success) {
+                    showToast('执行人已保存');
+                } else {
+                    showToast('保存失败，请重试');
+                }
+            }
+        }
+
+        function triggerDatePicker(displayEl) {
+            const input = displayEl.nextElementSibling;
+            if (input && input.showPicker) {
+                input.showPicker();
+            } else if (input) {
+                input.click();
+            }
+        }
+
+        async function saveExecDate(id, dateValue, inputEl) {
+            const demo = demoData.find(d => d.id === id);
+
+            if (demo) {
+                demo.execDate = dateValue;
+
+                // Update display text
+                if (inputEl) {
+                    const wrapper = inputEl.closest('.exec-date-wrapper');
+                    const textEl = wrapper.querySelector('.date-text');
+                    if (textEl) {
+                        textEl.textContent = formatDateDisplay(dateValue);
+                        textEl.classList.toggle('empty', !dateValue);
+                    }
+                }
+
+                // Convert date string to timestamp for Feishu
+                const timestamp = dateValue ? new Date(dateValue).getTime() : null;
+
+                // Update in Feishu
+                const success = await updateRecord(id, { '执行日期': timestamp });
+                if (success) {
+                    showToast('执行日期已保存');
+                    // 更新日期筛选选项
+                    updateDateFilterOptions();
+                } else {
+                    showToast('保存失败，请重试');
+                }
+            }
+        }
+
+        // ========== Image Upload Functions ==========
+        // 选择图片文件
+        function handleImageSelect(event, demoId) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast('❌ 仅支持 JPG、PNG、GIF、WebP 格式');
+                event.target.value = '';
+                return;
+            }
+
+            const maxSize = 30 * 1024 * 1024;
+            if (file.size > maxSize) {
+                const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                showToast(`❌ 图片过大 (${sizeMB}MB),最大支持 30MB`);
+                event.target.value = '';
+                return;
+            }
+
+            const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+            window.pendingImage = { demoId, file };
+            document.getElementById(`selectedFileInfo${demoId}`).innerHTML = `✓ ${file.name} (${sizeMB}MB)`;
+            document.getElementById(`uploadBtn${demoId}`).disabled = false;
+            showToast(`✓ 已选择图片: ${file.name}`);
+        }
+
+        // 上传图片
+        async function uploadImage(demoId) {
+            const pending = window.pendingImage;
+            if (!pending || pending.demoId !== demoId) {
+                showToast('请先选择图片');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', pending.file);
+
+            try {
+                showToast('上传中...');
+                document.getElementById(`uploadBtn${demoId}`).disabled = true;
+
+                const uploadRes = await fetch(`${API_BASE}/upload-image`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const uploadData = await uploadRes.json();
+
+                if (uploadData.code !== 0) {
+                    throw new Error(uploadData.error);
+                }
+
+                const demo = demoData.find(d => d.id === demoId);
+                const currentAttachments = demo.attachments || [];
+                const newAttachments = [
+                    ...currentAttachments,
+                    { file_token: uploadData.data.file_token, name: uploadData.data.name, size: uploadData.data.size }
+                ];
+
+                const updateRes = await updateRecord(demoId, { '附件': newAttachments });
+
+                if (updateRes) {
+                    demo.attachments = newAttachments;
+                    await renderImageThumbnails(demoId);
+                    showToast('✓ 上传成功');
+                    window.pendingImage = null;
+                    document.getElementById(`fileInput${demoId}`).value = '';
+                    document.getElementById(`selectedFileInfo${demoId}`).innerHTML = '';
+                    document.getElementById(`uploadBtn${demoId}`).disabled = true;
+                } else {
+                    throw new Error('更新记录失败');
+                }
+            } catch (error) {
+                console.error('上传失败:', error);
+                showToast('❌ 上传失败: ' + error.message);
+                document.getElementById(`uploadBtn${demoId}`).disabled = false;
+            }
+        }
+
+        // 批量获取图片URL
+        async function batchGetImageUrls(fileTokens) {
+            if (!fileTokens || fileTokens.length === 0) return {};
+
+            try {
+                const tokenParams = fileTokens.map(t => `file_tokens=${t}`).join('&');
+                const response = await fetch(`${API_BASE}/media?${tokenParams}`);
+                const data = await response.json();
+
+                if (data.code === 0 && data.data.tmp_download_urls) {
+                    const urlMap = {};
+                    data.data.tmp_download_urls.forEach(item => {
+                        if (item.file_token && item.tmp_download_url) {
+                            urlMap[item.file_token] = item.tmp_download_url;
+                        }
+                    });
+                    return urlMap;
+                }
+            } catch (error) {
+                console.error('获取图片URL失败:', error);
+            }
+            return {};
+        }
+
+        // 渲染图片缩略图
+        async function renderImageThumbnails(demoId) {
+            const demo = demoData.find(d => d.id === demoId);
+            const attachments = demo.attachments || [];
+            const container = document.getElementById(`imagePreview${demoId}`);
+
+            if (attachments.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const fileTokens = attachments.map(a => a.file_token);
+            const urls = await batchGetImageUrls(fileTokens);
+
+            const html = `
+                <div class="image-preview-header">📷 已上传图片 (${attachments.length}张)</div>
+                <div class="image-thumbnails">
+                    ${attachments.map((attachment, index) => {
+                        const url = urls[attachment.file_token];
+                        const sizeMB = attachment.size ? (attachment.size / 1024 / 1024).toFixed(2) : '未知';
+                        const fileName = attachment.name || `图片${index + 1}`;
+
+                        if (!url) {
+                            return `<div class="image-thumb-wrapper"><div class="image-thumb" style="background:var(--bg-primary);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-tertiary);">加载中...</div></div>`;
+                        }
+
+                        return `
+                            <div class="image-thumb-wrapper">
+                                <img src="${url}" class="image-thumb" alt="${fileName}" title="${fileName}" onclick="openImageLightbox('${demoId}', ${index})" loading="lazy">
+                                <button class="image-delete-btn" onclick="deleteImage('${demoId}', ${index}, '${fileName.replace(/'/g, "\\'")}')" title="删除图片">×</button>
+                                <div class="image-thumb-info">${sizeMB}MB</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        // 删除图片
+        async function deleteImage(demoId, imageIndex, imageName) {
+            const confirmMessage = `⚠️ 确定要删除这张图片吗?\n\n文件名: ${imageName}\n\n删除后将无法恢复!`;
+            if (!confirm(confirmMessage)) return;
+
+            showToast('删除中...');
+            try {
+                const demo = demoData.find(d => d.id === demoId);
+                const attachments = [...(demo.attachments || [])];
+                attachments.splice(imageIndex, 1);
+
+                const success = await updateRecord(demoId, { '附件': attachments });
+
+                if (success) {
+                    demo.attachments = attachments;
+                    await renderImageThumbnails(demoId);
+                    showToast('✓ 已删除');
+                } else {
+                    showToast('❌ 删除失败,请重试');
+                }
+            } catch (error) {
+                console.error('删除图片失败:', error);
+                showToast('❌ 删除失败: ' + error.message);
+            }
+        }
+
+        // 打开图片预览
+        function openImageLightbox(demoId, imageIndex) {
+            const demo = demoData.find(d => d.id === demoId);
+            const attachments = demo.attachments || [];
+            if (attachments.length === 0) return;
+
+            window.currentLightboxImages = { demoId, images: attachments, currentIndex: imageIndex };
+            showLightboxImage(imageIndex);
+        }
+
+        // 显示Lightbox图片
+        async function showLightboxImage(index) {
+            const { demoId, images } = window.currentLightboxImages;
+            const attachment = images[index];
+            if (!attachment) return;
+
+            const urls = await batchGetImageUrls([attachment.file_token]);
+            const url = urls[attachment.file_token];
+            if (!url) {
+                showToast('无法加载图片');
+                return;
+            }
+
+            const fileName = attachment.name || `图片${index + 1}`;
+            openLightbox(url, fileName, false);
+            window.currentLightboxImages.currentIndex = index;
+        }
+
+        // ========== Doubao Detail Expansion ==========
+        function toggleDoubaoDetail(demoId) {
+            const detailRow = document.getElementById(`doubaoDetail${demoId}`);
+            const expandLink = document.getElementById(`expandLink-${demoId}`);
+
+            if (detailRow.style.display === 'none' || !detailRow.style.display) {
+                // 展开
+                detailRow.style.display = 'table-row';
+                expandLink.classList.add('expanded');
+                expandLink.innerHTML = '收起 <span class="expand-icon-small">▼</span>';
+
+                // 平滑滚动到展开区域
+                setTimeout(() => {
+                    detailRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            } else {
+                // 收起
+                detailRow.style.display = 'none';
+                expandLink.classList.remove('expanded');
+                expandLink.innerHTML = '更多 <span class="expand-icon-small">▼</span>';
+            }
+        }
+
+        function formatSteps(stepsText) {
+            if (!stepsText) return '<div style="color: #999;">暂无实现步骤</div>';
+
+            // 如果是换行分隔的步骤
+            const steps = stepsText.split('\n').filter(s => s.trim());
+
+            return `
+                <ol>
+                    ${steps.map(step => {
+                        // 移除可能的序号前缀（如 "1. "）
+                        const cleanStep = step.replace(/^\d+\.\s*/, '');
+                        return `<li>${cleanStep}</li>`;
+                    }).join('')}
+                </ol>
+            `;
+        }
+
+        // ========== Event Listeners ==========
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('sceneFilter').addEventListener('change', filterData);
+        document.getElementById('abilityFilter').addEventListener('change', filterData);
+        document.getElementById('scoreFilter').addEventListener('change', filterData);
+        document.getElementById('noteFilter').addEventListener('change', filterData);
+        document.getElementById('assigneeFilter').addEventListener('change', filterData);
+        document.getElementById('dateFilter').addEventListener('change', filterData);
+        document.getElementById('sortFilter').addEventListener('change', filterData);
+
+        // 快速筛选按钮改为跳转逻辑
+        document.getElementById('quickFilters').addEventListener('click', (e) => {
+            if (e.target.classList.contains('quick-filter')) {
+                const category = e.target.dataset.scene;
+
+                // 更新激活状态
+                document.querySelectorAll('.quick-filter').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+
+                if (category === '' || category === '全部') {
+                    // 滚动到页面顶部
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    // 滚动到对应分类区块
+                    const section = document.getElementById(`category-${encodeURIComponent(category)}`);
+                    if (section) {
+                        // 考虑顶部固定header的高度
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+                    }
+                }
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // ========== 标签页切换逻辑 ==========
+
+        // 切换模型
+        function switchModel(modelId) {
+            if (modelId === currentModel) return;
+
+            // 1. 保存当前模型的筛选状态
+            saveFilters(currentModel);
+
+            // 2. 更新标签激活状态
+            document.querySelectorAll('.header-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === modelId);
+            });
+
+            // 3. 切换模型
+            currentModel = modelId;
+            localStorage.setItem('currentModel', modelId);
+
+            // 4. 加载新模型数据
+            loadModelData(modelId);
+        }
+
+        // 加载模型数据
+        async function loadModelData(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const badge = document.getElementById('dataBadge');
+
+            // 检查缓存
+            if (modelDataCache[modelId]) {
+                console.log(`✓ 从缓存加载 ${modelId} 数据`);
+                applyModelData(modelId);
+                return;
+            }
+
+            // 显示加载状态
+            badge.className = 'header-badge loading';
+            badge.innerHTML = `<span>正在加载 ${config.displayName} 数据...</span>`;
+
+            try {
+                let recordsData, doubaoRecordsData;
+
+                // 尝试从Vercel API加载
+                try {
+                    const [recordsResponse, doubaoResponse] = await Promise.all([
+                        fetch(config.api.records),
+                        fetch(config.api.doubaoRecords)
+                    ]);
+
+                    // 检查响应是否为JSON
+                    const recordsContentType = recordsResponse.headers.get('content-type');
+                    const doubaoContentType = doubaoResponse.headers.get('content-type');
+
+                    if (!recordsContentType?.includes('application/json') ||
+                        !doubaoContentType?.includes('application/json')) {
+                        throw new Error('API返回非JSON响应');
+                    }
+
+                    recordsData = await recordsResponse.json();
+                    doubaoRecordsData = await doubaoResponse.json();
+
+                    if (recordsData.code !== 0 || doubaoRecordsData.code !== 0) {
+                        throw new Error('API返回错误码');
+                    }
+
+                    console.log(`✓ 成功从Vercel API加载 ${config.displayName} 数据`);
+                } catch (apiError) {
+                    // API失败，尝试本地mock数据回退
+                    console.log(`${config.displayName} API请求失败，尝试本地mock数据回退...`, apiError.message);
+
+                    // 根据modelId选择对应的mock文件
+                    const mockFiles = {
+                        gemini3: { records: './mock-data.json', doubao: './gemini3-doubao18.json' },
+                        gpt52: { records: './gpt52-mock-data.json', doubao: './gpt52-doubao18.json' },
+                        skills: { records: './skills-mock-data.json', doubao: './skills-doubao18.json' }
+                    };
+
+                    const mockConfig = mockFiles[modelId];
+                    if (!mockConfig) {
+                        throw new Error(`没有找到 ${modelId} 的mock数据配置`);
+                    }
+
+                    try {
+                        const [recordsResponse, doubaoResponse] = await Promise.all([
+                            fetch(mockConfig.records),
+                            fetch(mockConfig.doubao)
+                        ]);
+
+                        if (!recordsResponse.ok || !doubaoResponse.ok) {
+                            throw new Error('本地mock文件不存在');
+                        }
+
+                        recordsData = await recordsResponse.json();
+                        doubaoRecordsData = await doubaoResponse.json();
+                        console.log(`✓ 成功从本地mock数据加载 ${config.displayName}（本地开发模式）`);
+                    } catch (mockError) {
+                        console.error('本地mock数据也加载失败:', mockError);
+                        throw new Error(`无法加载 ${config.displayName} 数据：API和本地mock都不可用`);
+                    }
+                }
+
+                // 转换数据
+                let transformedDemoData = recordsData.data.items.map(transformRecord);
+
+                // GPT5.2 特殊处理：只保留热度10000以上的demo
+                if (modelId === 'gpt52') {
+                    const originalCount = transformedDemoData.length;
+                    transformedDemoData = transformedDemoData.filter(demo => demo.viewsNum >= 10000);
+                    console.log(`✓ GPT-5.2 数据过滤: ${originalCount} 条 → ${transformedDemoData.length} 条（热度≥10000）`);
+                }
+
+                // 缓存数据 - 支持两种数据格式（API返回 vs 本地JSON）
+                const doubaoItems = doubaoRecordsData.data?.items || doubaoRecordsData.abilities;
+                const transformedDoubaoData = doubaoRecordsData.abilities
+                    ? doubaoRecordsData  // 本地JSON已经是正确格式
+                    : transformDoubaoRecords(doubaoItems);  // API返回需要转换
+
+                modelDataCache[modelId] = {
+                    demoData: transformedDemoData,
+                    doubaoData: transformedDoubaoData
+                };
+
+                console.log(`✓ ${config.displayName} 数据加载完成`);
+
+                // 应用数据
+                applyModelData(modelId);
+
+                badge.className = 'header-badge';
+                badge.innerHTML = `<span>✓ 已加载 ${transformedDemoData.length} 条</span>`;
+
+            } catch (error) {
+                badge.className = 'header-badge error';
+                badge.innerHTML = '<span>✕ 加载失败</span>';
+                console.error(`${config.displayName} 数据加载失败:`, error);
+            }
+        }
+
+        // 应用模型数据到UI
+        function applyModelData(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const cache = modelDataCache[modelId];
+
+            // 1. 更新全局数据（供现有逻辑使用）
+            demoData = cache.demoData;
+            doubaoData = cache.doubaoData;
+
+            // 2. 更新核心能力展示区
+            renderCoreAbilities(config);
+
+            // 3. 更新统计数据
+            updateStats();
+
+            // 4. 恢复筛选器状态
+            restoreFilters(modelId);
+
+            // 5. 重新填充筛选器选项
+            populateFilters();
+
+            // 6. 渲染表格
+            filterData();
+
+            // 7. 渲染豆包展示区
+            if (doubaoData && doubaoData.abilities) {
+                document.getElementById('doubaoShowcase').style.display = 'block';
+                renderDoubaoShowcase();
+            }
+        }
+
+        // 动态渲染核心能力
+        function renderCoreAbilities(config) {
+            const container = document.querySelector('.core-abilities');
+
+            const html = `
+                <div class="core-abilities-header">
+                    <div>
+                        <div class="core-abilities-title">${config.displayName} <span>核心能力</span></div>
+                        <div class="core-abilities-subtitle">${config.description}</div>
+                    </div>
+                </div>
+                <div class="abilities-grid">
+                    ${config.abilities.map(ability => `
+                        <div class="ability-card">
+                            <div class="ability-card-icon">${ability.icon}</div>
+                            <div class="ability-card-title">${ability.title}</div>
+                            <div class="ability-card-desc">${ability.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // 保存筛选器状态
+        function saveFilters(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const state = {
+                search: document.getElementById('searchInput').value,
+                scene: document.getElementById('sceneFilter').value,
+                ability: document.getElementById('abilityFilter').value,
+                score: document.getElementById('scoreFilter').value,
+                note: document.getElementById('noteFilter').value,
+                assignee: document.getElementById('assigneeFilter').value,
+                date: document.getElementById('dateFilter').value,
+                sort: document.getElementById('sortFilter').value
+            };
+
+            try {
+                localStorage.setItem(config.storagePrefix + 'filters', JSON.stringify(state));
+            } catch (e) {
+                console.warn('保存筛选状态失败:', e);
+            }
+        }
+
+        // 恢复筛选器状态
+        function restoreFilters(modelId) {
+            const config = MODEL_CONFIGS[modelId];
+            const stateJson = localStorage.getItem(config.storagePrefix + 'filters');
+
+            if (!stateJson) {
+                // 没有保存的状态，使用默认值
+                document.getElementById('searchInput').value = '';
+                document.getElementById('sceneFilter').value = '';
+                document.getElementById('abilityFilter').value = '';
+                document.getElementById('scoreFilter').value = '';
+                document.getElementById('noteFilter').value = '';
+                document.getElementById('assigneeFilter').value = '';
+                document.getElementById('dateFilter').value = '';
+                document.getElementById('sortFilter').value = 'score-desc';
+                return;
+            }
+
+            try {
+                const state = JSON.parse(stateJson);
+                document.getElementById('searchInput').value = state.search || '';
+                document.getElementById('sceneFilter').value = state.scene || '';
+                document.getElementById('abilityFilter').value = state.ability || '';
+                document.getElementById('scoreFilter').value = state.score || '';
+                document.getElementById('noteFilter').value = state.note || '';
+                document.getElementById('assigneeFilter').value = state.assignee || '';
+                document.getElementById('dateFilter').value = state.date || '';
+                document.getElementById('sortFilter').value = state.sort || 'score-desc';
+            } catch (e) {
+                console.warn('恢复筛选状态失败:', e);
+            }
+        }
+
+        // ========== Initialize ==========
+        async function init() {
+            console.log('=== 页面初始化开始 ===');
+
+            // 1. 设置标签激活状态
+            document.querySelectorAll('.header-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === currentModel);
+            });
+
+            // 2. 绑定筛选器自动保存监听
+            attachFilterListeners();
+
+            // 3. 加载当前模型数据
+            await loadModelData(currentModel);
+        }
+
+        // 绑定筛选器监听（自动保存）
+        function attachFilterListeners() {
+            const filters = [
+                'searchInput', 'sceneFilter', 'abilityFilter',
+                'scoreFilter', 'noteFilter', 'assigneeFilter',
+                'dateFilter', 'sortFilter'
+            ];
+
+            filters.forEach(id => {
+                const element = document.getElementById(id);
+                const handler = () => {
+                    saveFilters(currentModel);
+                    filterData();
+                };
+
+                // 移除原有的监听器绑定，统一在这里绑定
+                element.removeEventListener('input', handler);
+                element.removeEventListener('change', handler);
+                element.addEventListener('input', handler);
+                element.addEventListener('change', handler);
+            });
+        }
+
+        // Start
+        init();
+
+        // ========== Doubao Showcase Functions ==========
+        let doubaoData = null;
+        let doubaoRecordsMap = {}; // record_id -> demo对象的映射
+
+        // 能力配置（硬编码）
+        const ABILITY_CONFIG = {
+            agent: {
+                id: 'agent',
+                name: '更强Agent能力',
+                icon: '💡',
+                tags: ['自动任务', '多步骤执行', '工具调用']
+            },
+            multimodal: {
+                id: 'multimodal',
+                name: '更强多模态能力',
+                icon: '👁️',
+                tags: ['图像理解', '视频分析', '跨模态']
+            },
+            llm: {
+                id: 'llm',
+                name: '更强LLM能力',
+                icon: '🧠',
+                tags: ['推理', '创作', '知识']
+            }
+        };
+
+        // 将飞书记录转换为嵌套结构
+        function transformDoubaoRecords(records) {
+            const grouped = { agent: [], multimodal: [], llm: [] };
+
+            // 能力名称到ID的映射（飞书字段值 -> 代码中的key）
+            const abilityNameToId = {
+                '更强Agent能力': 'agent',
+                '更强多模态能力': 'multimodal',
+                '更强LLM能力': 'llm'
+            };
+
+            records.forEach(record => {
+                const fields = record.fields;
+                const demo = {
+                    id: record.record_id,
+                    name: fields['Demo名称'] || '',
+                    subtitle: fields['副标题'] || '',
+                    scene: fields['使用场景'] || '',
+                    steps: (fields['操作步骤'] || '').split('\n').filter(s => s.trim()),
+                    coreDisplay: fields['核心展示'] || '',
+                    expectedEffect: fields['预期效果'] || '',
+                    note: fields['备注'] || '',
+                    assignee: fields['执行人'] || '',
+                    sortWeight: fields['排序权重'] || 0,
+                    scoreInteresting: parseInt(fields['趣味分']) || 0,
+                    scoreUseful: parseInt(fields['实用分']) || 0
+                };
+
+                // 存储到映射表
+                doubaoRecordsMap[demo.id] = demo;
+
+                // 将飞书的能力名称转换为代码中的ID
+                const abilityName = fields['能力分类'];
+                const abilityType = abilityNameToId[abilityName];
+                if (abilityType && grouped[abilityType]) {
+                    grouped[abilityType].push(demo);
+                }
+            });
+
+            // 按权重排序
+            Object.keys(grouped).forEach(key => {
+                grouped[key].sort((a, b) => (b.sortWeight || 0) - (a.sortWeight || 0));
+            });
+
+            return {
+                abilities: ['agent', 'multimodal', 'llm'].map(id => ({
+                    ...ABILITY_CONFIG[id],
+                    demos: grouped[id]
+                }))
+            };
+        }
+
+        async function loadDoubaoData() {
+            try {
+                // 从飞书API获取数据
+                const response = await fetch(`${API_BASE}/doubao-records`);
+
+                // 检查响应是否为JSON格式
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.log('豆包API返回非JSON响应，尝试本地JSON回退');
+                    throw new Error('Not JSON response');
+                }
+
+                const data = await response.json();
+                if (data.code !== 0) {
+                    throw new Error(data.error || '获取豆包Demo失败');
+                }
+
+                // 转换数据结构
+                doubaoData = transformDoubaoRecords(data.data.items);
+
+                // 显示展示区域
+                document.getElementById('doubaoShowcase').style.display = 'block';
+                renderDoubaoShowcase();
+                updateCombinedStats(); // 更新合并统计数据
+                console.log('✓ 成功从飞书API加载豆包Demo数据');
+            } catch (error) {
+                // API失败，尝试本地JSON回退
+                console.log('飞书API请求失败，尝试本地JSON回退:', error.message);
+                try {
+                    const response = await fetch('./gemini3-doubao18.json');
+                    if (!response.ok) {
+                        console.log('豆包Demo JSON 文件不存在，跳过展示区域');
+                        return;
+                    }
+                    doubaoData = await response.json();
+
+                    // 显示展示区域
+                    document.getElementById('doubaoShowcase').style.display = 'block';
+                    renderDoubaoShowcase();
+                    updateCombinedStats(); // 更新合并统计数据
+                    console.log('✓ 成功从本地JSON加载豆包Demo数据（回退模式，备注不可编辑）');
+                } catch (jsonError) {
+                    console.log('豆包Demo数据未加载:', jsonError.message);
+                }
+            }
+        }
+
+        function renderDoubaoShowcase() {
+            if (!doubaoData || !doubaoData.abilities) return;
+
+            const container = document.getElementById('doubaoAbilities');
+            let html = '';
+
+            doubaoData.abilities.forEach((ability, index) => {
+                const abilityClass = ability.id; // agent, multimodal, llm
+
+                html += `
+                    <div class="doubao-ability-section">
+                        <div class="doubao-ability-header">
+                            <div class="doubao-ability-number ${abilityClass}">${index + 1}</div>
+                            <div class="doubao-ability-icon">${ability.icon}</div>
+                            <h3 class="doubao-ability-title ${abilityClass}">${ability.name}</h3>
+                            <div class="doubao-ability-tags">
+                                ${ability.tags.map(tag => `<span class="doubao-ability-tag ${abilityClass}">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="doubao-demo-grid">
+                            ${ability.demos.map(demo => renderDoubaoCard(demo, abilityClass, ability.icon)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ========== 豆包Demo筛选联动 ==========
+        // 竞品能力 → 豆包能力类型 映射
+        const abilityToDoubaoType = {
+            '多模态输入': 'multimodal',
+            '图像生成': 'multimodal',
+            '视觉推理师': 'multimodal',
+            '视频读秒器': 'multimodal',
+            '工具达人': 'agent',
+            'Agent自动化': 'agent',
+            '代码狂魔': 'llm',
+            '指令遵循王': 'llm',
+            '长文不遗忘': 'llm',
+            '文档结构化': 'llm',
+            '3D空间感': 'multimodal',
+            '物理引擎脑': 'llm'
+        };
+
+        // 筛选豆包Demo数据
+        function filterDoubaoData() {
+            if (!doubaoData || !doubaoData.abilities) return;
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const abilityFilter = document.getElementById('abilityFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            const noteFilter = document.getElementById('noteFilter').value;
+            const assigneeFilter = document.getElementById('assigneeFilter').value;
+
+            renderDoubaoShowcaseFiltered(searchTerm, abilityFilter, scoreFilter, noteFilter, assigneeFilter);
+        }
+
+        // 带筛选的豆包展示渲染
+        function renderDoubaoShowcaseFiltered(searchTerm, abilityFilter, scoreFilter, noteFilter, assigneeFilter) {
+            if (!doubaoData || !doubaoData.abilities) return;
+
+            const container = document.getElementById('doubaoAbilities');
+            let html = '';
+            let totalFiltered = 0;
+            let totalAll = 0;
+
+            doubaoData.abilities.forEach((ability, index) => {
+                const abilityClass = ability.id;
+
+                // 筛选当前能力下的demos
+                const filteredDemos = ability.demos.filter(demo => {
+                    totalAll++;
+
+                    // 1. 关键词搜索
+                    if (searchTerm) {
+                        const matchText = [demo.name, demo.subtitle, demo.scene, demo.coreDisplay]
+                            .join(' ').toLowerCase();
+                        if (!matchText.includes(searchTerm)) return false;
+                    }
+
+                    // 2. 能力筛选（通过映射关系）
+                    if (abilityFilter) {
+                        const targetType = abilityToDoubaoType[abilityFilter];
+                        if (targetType && ability.id !== targetType) return false;
+                    }
+
+                    // 3. 分数筛选
+                    const total = (demo.scoreInteresting || 0) + (demo.scoreUseful || 0);
+                    if (scoreFilter === 'excellent' && total < 80) return false;
+                    if (scoreFilter === 'good' && (total < 60 || total >= 80)) return false;
+                    if (scoreFilter === 'average' && total >= 60) return false;
+
+                    // 4. 备注筛选
+                    if (noteFilter === 'has-note' && (!demo.note || !demo.note.trim())) return false;
+                    if (noteFilter === 'no-note' && demo.note && demo.note.trim()) return false;
+
+                    // 5. 执行人筛选
+                    if (assigneeFilter && demo.assignee !== assigneeFilter) return false;
+
+                    return true;
+                });
+
+                totalFiltered += filteredDemos.length;
+
+                // 如果该能力分类下没有匹配的Demo，隐藏整个分类
+                if (filteredDemos.length === 0) return;
+
+                html += `
+                    <div class="doubao-ability-section">
+                        <div class="doubao-ability-header">
+                            <div class="doubao-ability-number ${abilityClass}">${index + 1}</div>
+                            <div class="doubao-ability-icon">${ability.icon}</div>
+                            <h3 class="doubao-ability-title ${abilityClass}">${ability.name}</h3>
+                            <div class="doubao-ability-tags">
+                                ${ability.tags.map(tag => `<span class="doubao-ability-tag ${abilityClass}">${tag}</span>`).join('')}
+                            </div>
+                            <span class="doubao-filter-count">${filteredDemos.length}/${ability.demos.length}</span>
+                        </div>
+                        <div class="doubao-demo-grid">
+                            ${filteredDemos.map(demo => renderDoubaoCard(demo, abilityClass, ability.icon)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 更新标题显示筛选结果数量
+            updateDoubaoShowcaseTitle(totalFiltered, totalAll);
+
+            container.innerHTML = html || '<div class="doubao-no-results">当前筛选条件下没有匹配的豆包Demo<br><span style="font-size: 13px; margin-top: 8px; display: inline-block;">尝试调整筛选条件或清除筛选</span></div>';
+        }
+
+        // 更新豆包展示区标题
+        function updateDoubaoShowcaseTitle(filtered, total) {
+            const titleEl = document.querySelector('.doubao-showcase-title');
+            const subtitleEl = document.querySelector('.doubao-showcase-subtitle');
+
+            if (titleEl) {
+                if (filtered < total) {
+                    titleEl.innerHTML = `豆包1.8 能力Demo展示 <span style="font-size: 18px; font-weight: normal;">(${filtered}/${total})</span>`;
+                } else {
+                    titleEl.textContent = '豆包1.8 能力Demo展示';
+                }
+            }
+        }
+
+        // 豆包Demo评分分级函数
+        function getDoubaoScoreClass(total) {
+            if (total >= 70) return 'excellent';  // 绿色
+            if (total >= 50) return 'good';       // 蓝色
+            return 'average';                      // 橙色
+        }
+
+        function renderDoubaoCard(demo, abilityClass, icon) {
+            // 检查是否有record_id（从飞书API加载的数据才有）
+            const hasRecordId = demo.id && demo.id.startsWith('rec');
+            const noteDisplay = demo.note || (hasRecordId ? '点击添加备注' : '');
+            const noteClass = demo.note ? '' : 'empty';
+
+            // 评分相关
+            const total = (demo.scoreInteresting || 0) + (demo.scoreUseful || 0);
+            const scoreClass = getDoubaoScoreClass(total);
+            const hasScore = demo.scoreInteresting > 0 || demo.scoreUseful > 0;
+
+            return `
+                <div class="doubao-demo-card">
+                    <div class="doubao-demo-card-header">
+                        <div class="doubao-demo-card-title">
+                            <span class="doubao-demo-card-icon">${icon}</span>
+                            <span class="doubao-demo-card-name ${abilityClass}">${demo.name}</span>
+                        </div>
+                        <div class="doubao-demo-card-subtitle">${demo.subtitle}</div>
+                        ${hasScore ? `
+                        <div class="doubao-score-badge ${scoreClass}">
+                            <span class="doubao-score-badge-number">${total}</span>
+                            <span class="doubao-score-badge-label">分</span>
+                            <span class="doubao-score-badge-detail">趣${demo.scoreInteresting} 实${demo.scoreUseful}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="doubao-demo-card-body">
+                        <div class="doubao-demo-section">
+                            <div class="doubao-demo-section-title">使用场景</div>
+                            <div class="doubao-demo-section-content">${demo.scene}</div>
+                        </div>
+                        <div class="doubao-demo-section">
+                            <div class="doubao-demo-section-title">操作步骤</div>
+                            <ul class="doubao-demo-steps">
+                                ${demo.steps.map(step => `<li>${step}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="doubao-core-display ${abilityClass}">
+                            <span class="doubao-core-display-label">核心展示：</span>${demo.coreDisplay}
+                        </div>
+                    </div>
+                    <div class="doubao-expected-effect">
+                        <span class="doubao-expected-effect-label">预期效果：</span>${demo.expectedEffect}
+                    </div>
+                    ${hasRecordId ? `
+                    <div class="doubao-demo-note">
+                        <div class="doubao-note-display ${noteClass}" id="doubaoNoteDisplay${demo.id}" onclick="startEditDoubaoNote('${demo.id}')">
+                            ${noteDisplay}
+                        </div>
+                        <div class="doubao-note-edit" id="doubaoNoteEdit${demo.id}" style="display:none;">
+                            <textarea id="doubaoNoteTextarea${demo.id}">${demo.note || ''}</textarea>
+                            <div class="doubao-note-actions">
+                                <button class="doubao-note-btn save" onclick="saveDoubaoNote('${demo.id}')">保存</button>
+                                <button class="doubao-note-btn cancel" onclick="cancelEditDoubaoNote('${demo.id}')">取消</button>
+                            </div>
+                        </div>
+                        <div class="doubao-assignee-row">
+                            <span class="doubao-assignee-label">执行人:</span>
+                            <select class="doubao-assignee-select" onchange="saveDoubaoAssignee('${demo.id}', this.value)">
+                                <option value="">选择</option>
+                                ${ASSIGNEE_OPTIONS.map(a => `<option value="${a}" ${demo.assignee === a ? 'selected' : ''}>${a}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // ========== 豆包备注编辑函数 ==========
+        function startEditDoubaoNote(id) {
+            document.getElementById(`doubaoNoteDisplay${id}`).style.display = 'none';
+            document.getElementById(`doubaoNoteEdit${id}`).style.display = 'block';
+            document.getElementById(`doubaoNoteTextarea${id}`).focus();
+        }
+
+        function cancelEditDoubaoNote(id) {
+            document.getElementById(`doubaoNoteDisplay${id}`).style.display = 'block';
+            document.getElementById(`doubaoNoteEdit${id}`).style.display = 'none';
+        }
+
+        async function saveDoubaoNote(id) {
+            const note = document.getElementById(`doubaoNoteTextarea${id}`).value.trim();
+
+            try {
+                // 使用当前模型的API配置
+                const config = MODEL_CONFIGS[currentModel];
+                const response = await fetch(config.api.updateDoubaoRecord, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        record_id: id,
+                        fields: { '备注': note }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.code === 0) {
+                    // 更新本地数据
+                    if (doubaoRecordsMap[id]) {
+                        doubaoRecordsMap[id].note = note;
+                    }
+
+                    // 更新显示
+                    const display = document.getElementById(`doubaoNoteDisplay${id}`);
+                    display.textContent = note || '点击添加备注';
+                    display.className = `doubao-note-display ${note ? '' : 'empty'}`;
+
+                    showToast('备注已保存到飞书');
+                } else {
+                    throw new Error(data.error || '保存失败');
+                }
+            } catch (error) {
+                console.error('保存豆包备注失败:', error);
+                showToast('保存失败，请重试');
+            }
+
+            cancelEditDoubaoNote(id);
+        }
+
+        // ========== 豆包执行人编辑函数 ==========
+        async function saveDoubaoAssignee(id, assignee) {
+            try {
+                // 使用当前模型的API配置
+                const config = MODEL_CONFIGS[currentModel];
+                const response = await fetch(config.api.updateDoubaoRecord, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        record_id: id,
+                        fields: { '执行人': assignee }
+                    })
+                });
+
+                const data = await response.json();
+                if (data.code === 0) {
+                    // 更新本地数据
+                    if (doubaoRecordsMap[id]) {
+                        doubaoRecordsMap[id].assignee = assignee;
+                    }
+                    showToast('执行人已保存');
+                } else {
+                    throw new Error(data.error || '保存失败');
+                }
+            } catch (error) {
+                console.error('保存豆包执行人失败:', error);
+                showToast('保存失败，请重试');
+            }
+        }
+
+        // Load Doubao data after main init
+        loadDoubaoData();
+    </script>
+</body>
+</html>

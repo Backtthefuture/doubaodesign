@@ -1,0 +1,1915 @@
+{
+  "code": 0,
+  "data": {
+    "items": [
+      {
+        "fields": {
+          "Demo名称": "ppt创意生成",
+          "Prompt描述": "我的公司 Crabracadabra Games 正在开发一款令人兴奋的新游戏——《谢尔顿与隐士的魔法书》。请帮我们制作创意提案演示文稿！",
+          "实现步骤": "用户说：帮我为新游戏《谢尔顿与隐士的魔法书》制作一份创意提案演示文稿\n1.AI分析输入信息，确定奇幻冒险风格基调，规划包含背景、玩法、美术、商业化的PPT大纲\n2.AI构建世界观故事，撰写关于谢尔顿与隐士魔法书的背景叙事文案\n3.AI设计核心玩法描述，梳理魔法机制与关卡互动的具体逻辑\n4.AI生成角色与场景的美术需求描述，为每页PPT建议视觉配图方案\n5.AI利用python-pptx库初始化演示文稿对象，设置幻灯片母版样式\n6.AI将生成的各章节标题、正文内容自动填充至对应的幻灯片布局中\n7.AI输出完整的PPTX文件，包含结构清晰的提案内容，供用户直接演示或微调",
+          "实用分": "44",
+          "所属场景": "一句话做PPT",
+          "是否视频": true,
+          "模型能力": [
+            "指令遵循王",
+            "代码狂魔"
+          ],
+          "热度数值": "67628",
+          "用户痛点": "从零制作游戏提案PPT需要耗费大量精力梳理逻辑结构，且需具备专业的设计审美来匹配游戏风格。手动排版和寻找素材耗时数小时，非设计人员难以快速产出高质量的演示文稿。",
+          "示例Prompt": "帮我为新游戏《谢尔顿与隐士的魔法书》制作一份创意提案演示文稿",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，复杂演示文稿代码容易出现格式错误或内容遗漏；1.8凭借增强的指令遵循能力和更稳定的代码输出，可以一次性生成结构完整、内容丰富的创意提案演示文稿代码。",
+          "豆包创意描述": "利用豆包内容创作与文档生成能力，快速构建专业的游戏创意提案。自动规划大纲、撰写剧情与玩法文案，并生成结构化演示文稿，助力高效完成项目路演。",
+          "豆包创意标题": "游戏提案PPT智能生成",
+          "豆包标签": "办公效率, 创意写作, 方案策划",
+          "趣味分": "18",
+          "链接": {
+            "link": "https://www.youtube.com/watch?v=IoqpBKrNaZI",
+            "text": "https://www.youtube.com/watch?v=IoqpBKrNaZI"
+          },
+          "预览文件": [
+            {
+              "file_token": "RaVWbgtgpo5oJLx15t9c6X3xneb",
+              "name": "20260113145445_rec_.mp4",
+              "size": 10609964,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=RaVWbgtgpo5oJLx15t9c6X3xneb",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/RaVWbgtgpo5oJLx15t9c6X3xneb/download"
+            }
+          ]
+        },
+        "id": "recv8hWYkTAW6a",
+        "record_id": "recv8hWYkTAW6a"
+      },
+      {
+        "fields": {
+          "Demo名称": "创建概念海报",
+          "Prompt描述": "太棒了！为了更好地展现这个想法，我们来创作几张不同的概念海报——让它们充满魔幻、海洋气息……以及史诗般的感觉！",
+          "实现步骤": "用户说：帮我生成几张魔幻风格的海洋概念海报，要有一种史诗般的宏大感觉\n1.AI分析语义，提取“魔幻”、“海洋”、“史诗”关键词，构建高维特征向量\n2.AI调用图像生成模型，设定宏大叙事风格与电影级光影参数\n3.AI生成初步构图，融合深海生物、魔法符文与波涛纹理\n4.AI进行多步迭代去噪，细化海浪泡沫、光线折射等物理细节\n5.AI应用风格迁移算法，增强画面的史诗感与神秘氛围\n6.AI生成多张不同视角的变体方案，提供多样化创意选择\n7.AI进行超分辨率处理，输出高清概念海报图片",
+          "实用分": "16",
+          "所属场景": "一句话出图",
+          "是否视频": true,
+          "模型能力": [
+            "图像生成"
+          ],
+          "热度数值": "67628",
+          "用户痛点": "创作多张魔幻史诗风格的概念海报需要深厚的美术功底和精通专业设计软件，从构思、素材搜集到绘制合成往往耗时数天，普通用户难以快速尝试多种视觉方案。",
+          "示例Prompt": "帮我生成几张魔幻风格的海洋概念海报，要有一种史诗般的宏大感觉",
+          "能力跃迁": "1.6已具备图像生成能力，但在对“魔幻、史诗感”等抽象风格的精准把控上存在局限；1.8延续强大的图像生成能力，并凭借原生多模态架构，对复杂提示词的理解更加深刻，能生成风格融合更自然、视觉冲击力更强的概念海报。",
+          "豆包创意描述": "利用豆包图像生成能力，根据描述创作魔幻海洋主题概念海报。支持史诗氛围渲染、光影细节刻画与多风格变体生成，快速产出电影级视觉大片，激发无限创意灵感。",
+          "豆包创意标题": "魔幻海洋史诗海报创作",
+          "豆包标签": "图像生成, 创意设计, 视觉艺术",
+          "趣味分": "20",
+          "链接": {
+            "link": "https://www.youtube.com/watch?v=IoqpBKrNaZI",
+            "text": "https://www.youtube.com/watch?v=IoqpBKrNaZI"
+          },
+          "预览文件": [
+            {
+              "file_token": "FQKCbadfgoLv0YxQqj4cYPfAn3x",
+              "name": "20260113145604_rec_-convert.mp4",
+              "size": 14271748,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=FQKCbadfgoLv0YxQqj4cYPfAn3x",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/FQKCbadfgoLv0YxQqj4cYPfAn3x/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVfh8B",
+        "record_id": "recv8hWZNVfh8B"
+      },
+      {
+        "fields": {
+          "Demo名称": "制作苹果风格的ppt",
+          "Prompt描述": "做一个苹果公司风格的PPT",
+          "实现步骤": "用户说：帮我做一份关于未来科技趋势的PPT，要苹果发布会那种极简高冷的风格\n1.AI分析主题内容，构建符合苹果发布会逻辑的叙事大纲，确立核心Slogan\n2.AI调用设计引擎，设定极简视觉规范，选用黑白主色调与无衬线字体组合\n3.AI编写精炼的幻灯片文案，遵循少即是多的原则，突出关键数据和概念\n4.AI进行页面布局设计，采用大面积留白与网格对齐，确保视觉焦点集中\n5.AI生成或检索高分辨率极简风格配图，进行去底处理以完美融入背景\n6.AI添加平滑的转场动画与元素入场效果，模拟Keynote的优雅动态体验\n7.AI利用python-pptx库封装所有元素，输出可编辑的.pptx文件供用户下载",
+          "实用分": "45",
+          "所属场景": "一句话做PPT",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "指令遵循王"
+          ],
+          "热度数值": "47922",
+          "用户痛点": "制作苹果风格PPT对极简美学和排版细节要求极高，非专业设计师难以把握留白与节奏。从零寻找素材并逐页调整动画，耗时漫长且很难达到发布会级别的高级质感。",
+          "示例Prompt": "帮我做一份关于未来科技趋势的PPT，要苹果发布会那种极简高冷的风格",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以在生成复杂PPT代码时精准把控苹果风的极简细节与排版格式；1.8凭借增强的指令遵循能力和更稳定的代码输出，可以严格执行设计规范，一次性生成结构完整、风格统一的演示文稿代码。",
+          "豆包创意描述": "利用豆包智能排版与审美设计能力，自动生成苹果发布会风格PPT。支持极简大图排版、经典字体搭配与高对比度配色，输出专业级演示文档，瞬间提升演讲质感。",
+          "豆包创意标题": "苹果极简风演示文稿生成",
+          "豆包标签": "演示文稿, 极简设计, 智能排版",
+          "趣味分": "26",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5NDc1NzQ4MA==&mid=2654632545&idx=3&sn=2cfbe0e2aee64ad295e01705a45d768c",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5NDc1NzQ4MA==&mid=2654632545&idx=3&sn=2cfbe0e2aee64ad295e01705a45d768c"
+          },
+          "预览文件": [
+            {
+              "file_token": "KorDbQS5AoGheixELpoceN3cnuf",
+              "name": "image.png",
+              "size": 321712,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=KorDbQS5AoGheixELpoceN3cnuf",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/KorDbQS5AoGheixELpoceN3cnuf/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVJHfP",
+        "record_id": "recv8hWZNVJHfP"
+      },
+      {
+        "fields": {
+          "Demo名称": "优化网页",
+          "Prompt描述": "使用frontend-design skill，优化一下https://www.waytoagi.com",
+          "实现步骤": "用户说：使用frontend-design skill，优化一下https://www.waytoagi.com\n1.AI分析目标网站当前的DOM结构与CSS样式，诊断布局拥挤与视觉层级不清等问题\n2.AI构建现代化设计系统，确立以深色系为主的科技感配色与无衬线字体规范\n3.AI使用CSS Grid重构核心网格布局，优化资源卡片的排列密度与留白比例\n4.AI重新设计顶部导航与侧边栏，采用Glassmorphism（毛玻璃）效果提升质感\n5.AI优化组件交互细节，为卡片添加Hover悬停光效与平滑的缩放反馈\n6.AI编写移动端媒体查询代码，确保在手机平板上的自适应完美展示\n7.AI集成性能优化方案，生成精简的React/Tailwind代码供直接替换使用",
+          "实用分": "42",
+          "所属场景": "一句话做网站",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "35842",
+          "用户痛点": "优化现有网站界面需要同时具备UI设计审美和前端代码能力，手动调整布局、配色及交互细节涉及大量CSS代码编写与调试，非专业人士难以入手，且耗时费力。",
+          "示例Prompt": "帮我优化WaytoAGI网站的前端设计，提升视觉风格和交互流畅度",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，面对复杂的网页优化任务容易出现格式错误或逻辑遗漏；1.8凭借更规范的代码输出能力和增强的指令遵循，可以生成结构完整、样式精准的高质量前端代码，实现对目标网站的有效优化。",
+          "豆包创意描述": "利用豆包前端设计与代码生成能力，对WaytoAGI网站进行深度优化。重构响应式布局，升级UI配色体系，添加流畅的微交互动画，打造兼具科技感与极佳用户体验的AGI资源导航平台。",
+          "豆包创意标题": "WaytoAGI网站视觉交互重构",
+          "豆包标签": "前端设计, UI/UX优化, 交互体验",
+          "趣味分": "26",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIwMTU5OTQ1Nw==&mid=2653723996&idx=1&sn=49703300983c1f0dc752db62516c9f0c",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIwMTU5OTQ1Nw==&mid=2653723996&idx=1&sn=49703300983c1f0dc752db62516c9f0c"
+          },
+          "预览文件": [
+            {
+              "file_token": "BplObd5IBoGK8FxvooJcn0A4nkd",
+              "name": "20260113161747_rec_.mp4",
+              "size": 635749,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=BplObd5IBoGK8FxvooJcn0A4nkd",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/BplObd5IBoGK8FxvooJcn0A4nkd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVf9He",
+        "record_id": "recv8hWZNVf9He"
+      },
+      {
+        "fields": {
+          "Demo名称": "带货视频自动化生成工作流",
+          "Prompt描述": "调用n8n-gen-skill帮我做一个用veo3.1生成tiktok带货视频的n8n工作流，要求每天定时晚上11点跑工作流，先读取我的谷歌表格，把状态为未完成的记录提取出来，里面是我放到的产品图、拍摄风格，需要你循环逐个图片作为参考图，连同拍摄风格传给veo3.1来生成视频，把生成好的视频，下载后上传到谷歌云盘，最后把视频地址同步回谷歌表格，同时这行标记状态为已完成。",
+          "实现步骤": "用户说：帮我用n8n做一个自动化工作流，每天晚上11点用Veo 3.1根据谷歌表格里的产品图生成TikTok带货视频并归档\n1.AI创建n8n工作流，配置Schedule Trigger节点，设置Cron表达式为每天23:00定时触发\n2.AI添加Google Sheets读取节点，拉取表格数据并用Filter筛选出状态为“未完成”的记录\n3.AI配置Split In Batches节点，对筛选出的产品数据列表进行逐条循环处理\n4.AI调用Veo 3.1 API，将产品图作为参考图（Image-to-Video），结合风格提示词生成视频\n5.AI设置HTTP Request轮询机制等待生成完成，获取视频URL并下载二进制文件\n6.AI连接Google Drive节点，将生成的视频文件上传至指定目录，获取文件分享链接\n7.AI使用Google Sheets更新节点，将视频链接回填至表格，并将该行状态更新为“已完成”",
+          "实用分": "48",
+          "所属场景": "AI替你干活",
+          "是否视频": false,
+          "模型能力": [
+            "Agent自动化",
+            "工具达人"
+          ],
+          "热度数值": "27008",
+          "用户痛点": "每天手动筛选表格数据、逐个上传素材生成视频，再跨平台搬运文件并更新记录，全流程操作繁琐枯燥，且需深夜准点守候执行，极易因疲劳导致数据遗漏或出错。",
+          "示例Prompt": "帮我用n8n做一个自动化工作流，每天晚上11点用Veo 3.1根据谷歌表格里的产品图生成TikTok带货视频并归档",
+          "能力跃迁": "1.6受限于基础工具调用能力，在处理包含循环、条件过滤及多平台交互（Sheet/Veo/Drive）的复杂长链条任务时容易出现逻辑断链；1.8凭借思考+工具一体化的能力，能精准理解跨应用自动化逻辑，稳定生成包含定时、循环调用及状态回写的完整n8n工作流。",
+          "豆包创意描述": "利用豆包n8n工作流编排与Veo 3.1视频生成能力，构建无人值守的电商视频生产线。定时读取表格素材，批量生成高质量带货视频，自动上传云盘并回填数据，实现全流程自动化闭环。",
+          "豆包创意标题": "TikTok带货视频全自动生成",
+          "豆包标签": "工作流自动化, 视频生成, 电商营销",
+          "趣味分": "36",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MjM5NDI4MTY3NA==&mid=2257497341&idx=1&sn=d1f6f80c879cc6dbb8ee89fa43b495ae",
+            "text": "http://mp.weixin.qq.com/s?__biz=MjM5NDI4MTY3NA==&mid=2257497341&idx=1&sn=d1f6f80c879cc6dbb8ee89fa43b495ae"
+          },
+          "预览文件": [
+            {
+              "file_token": "XrZkb20aFoqpaQxWdDvcRs1BnSd",
+              "name": "image.png",
+              "size": 661296,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=XrZkb20aFoqpaQxWdDvcRs1BnSd",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/XrZkb20aFoqpaQxWdDvcRs1BnSd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVINXG",
+        "record_id": "recv8hWZNVINXG"
+      },
+      {
+        "fields": {
+          "Demo名称": "构建AI partner ",
+          "Prompt描述": "AI partner skill-通用 Agent 深度学习你的记忆，塑造懂你的 AI 伴侣，给到个性回应-早上好,今天做点什么呢",
+          "实现步骤": "用户说：早上好，基于我之前的兴趣和最近的状态，今天有什么推荐做的事情吗？\n1.AI检索向量数据库，提取用户过往对话记录、兴趣偏好及近期情绪状态数据\n2.AI分析用户动态画像，结合当前时间上下文与历史习惯（如周末晨练、阅读）\n3.AI运用情感计算模块，识别用户当前语气的亲密度，匹配专属的沟通风格\n4.AI调用推理引擎，综合天气信息、历史偏好及未完成计划，生成个性化建议\n5.AI构建回复策略，采用自然语言生成技术，将建议融入富有温度的对话中\n6.AI生成最终回复，巧妙呼应过往记忆（如“记得你上次提到想去...”）\n7.AI将本次交互的关键信息结构化提取，更新至长期记忆存储，持续进化伴侣模型",
+          "实用分": "28",
+          "所属场景": "AI陪聊",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "23993",
+          "用户痛点": "现实中很难找到能随时在线且完全记得你过往细节的倾诉对象。建立深度的默契关系需要漫长的时间磨合，孤独时往往缺乏一个真正懂你、能即时提供情绪价值的伙伴。",
+          "示例Prompt": "早上好，基于我之前的兴趣和最近的状态，今天有什么推荐做的事情吗？",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以编写复杂的记忆存储与检索逻辑，容易出现功能遗漏；1.8凭借更规范且稳定的代码生成能力，能够完整生成包含深度记忆学习算法的Agent代码，实现精准的个性化回应。",
+          "豆包创意描述": "利用豆包记忆增强与个性化模型能力，构建真正懂你的数字伙伴。它能深度学习对话历史与用户偏好，提供独一无二的个性化回应与情感支持，成为时刻陪伴的贴心知己。",
+          "豆包创意标题": "深度记忆个性化AI伴侣",
+          "豆包标签": "情感陪伴, 记忆增强, 个性化Agent",
+          "趣味分": "15",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNDU0NzY1MA==&mid=2247489324&idx=1&sn=788fba586346ba6e3d7c03053482b868",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNDU0NzY1MA==&mid=2247489324&idx=1&sn=788fba586346ba6e3d7c03053482b868"
+          },
+          "预览文件": [
+            {
+              "file_token": "BqSrbG8Yyov7WMxpLaUcslLznse",
+              "name": "image.png",
+              "size": 256578,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=BqSrbG8Yyov7WMxpLaUcslLznse",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/BqSrbG8Yyov7WMxpLaUcslLznse/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVKeqw",
+        "record_id": "recv8hWZNVKeqw"
+      },
+      {
+        "fields": {
+          "Demo名称": "构建AI partner ",
+          "Prompt描述": "AI partner skill--我今年的产品思考的变化是怎么样的呀",
+          "实现步骤": "用户说：帮我分析一下今年我在产品设计方面的思考有哪些变化和提升\n1.AI调用记忆模块，检索用户今年所有关于“产品”、“设计”、“思考”的历史记录\n2.AI对获取的文本数据进行时间分片，划分为年初、年中、年末三个阶段\n3.AI利用NLP技术提取每个阶段的核心关键词和高频观点\n4.AI分析年初记录，建立用户早期的产品认知基线模型\n5.AI对比近期记录，识别思维模式的迁移（如从功能堆叠到用户价值导向）\n6.AI关联具体案例，佐证思考维度的拓宽和深度的增加\n7.AI生成年度思维进化报告，总结变化趋势并提出下一步成长建议",
+          "实用分": "42",
+          "所属场景": "AI陪聊",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "23993",
+          "用户痛点": "复盘年度思维变化需要翻阅大量零散记录，耗时且难以客观总结。寻找一位长期了解自己工作细节、又能进行深度专业探讨的伙伴极为困难，独自梳理容易陷入思维局限。",
+          "示例Prompt": "帮我分析一下今年我在产品设计方面的思考有哪些变化和提升",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以编写复杂的逻辑脚本来处理跨度一年的非结构化数据分析；1.8凭借更规范的代码生成能力，能够编写出逻辑严密的数据挖掘代码，精准提炼出产品思考的年度演进脉络。",
+          "豆包创意描述": "利用豆包长文本分析与记忆能力，深度回顾用户年度记录。支持观点提取、思维模式对比、成长轨迹可视化，精准总结产品思考的演变路径，助力自我认知升级。",
+          "豆包创意标题": "年度产品思维进化洞察",
+          "豆包标签": "思维复盘, 内容分析, 个人成长",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNDU0NzY1MA==&mid=2247489324&idx=1&sn=788fba586346ba6e3d7c03053482b868",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNDU0NzY1MA==&mid=2247489324&idx=1&sn=788fba586346ba6e3d7c03053482b868"
+          },
+          "预览文件": [
+            {
+              "file_token": "DTidbFSqSouS2qxSVeUcTtzhnBg",
+              "name": "image.png",
+              "size": 482894,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=DTidbFSqSouS2qxSVeUcTtzhnBg",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/DTidbFSqSouS2qxSVeUcTtzhnBg/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVbxXK",
+        "record_id": "recv8hWZNVbxXK"
+      },
+      {
+        "fields": {
+          "Demo名称": "AI搜索网站开发",
+          "Prompt描述": "要设计一个符合 Anthropic 公司设计规范的 AI 搜索网站",
+          "实现步骤": "用户说：帮我写一个AI搜索网站的前端，要求完全符合Anthropic的网页设计规范，字体优雅简洁\n1.AI分析Anthropic设计语言，确定暖灰与米色为主的色板及衬线字体排印策略\n2.AI初始化React项目并配置Tailwind CSS，定义自定义字体族和主题变量\n3.AI构建极简首页布局，设计居中且具有呼吸感的搜索输入框组件\n4.AI实现搜索结果页，使用精细的排版优化长文本阅读体验，模拟纸质阅读感\n5.AI集成Markdown渲染组件，为AI生成的回答提供清晰的标题和段落样式\n6.AI添加引用来源卡片组件，保持界面整洁的同时提供信息溯源功能\n7.AI优化交互细节，添加细腻的阴影和过渡动画，确保全端响应式适配",
+          "实用分": "42",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "指令遵循王"
+          ],
+          "热度数值": "23993",
+          "用户痛点": "开发符合特定企业设计规范的搜索网站，既要精通前端代码又要精准还原UI风格。人工从零构建搜索功能并调试视觉细节，开发周期长且门槛极高，非专业人士难以独立完成。",
+          "示例Prompt": "帮我写一个AI搜索网站的前端，要求完全符合Anthropic的网页设计规范，字体优雅简洁",
+          "能力跃迁": "1.6受限于长代码生成稳定性和指令遵循精度，难以精准复刻Anthropic特定的设计风格，生成的复杂网站代码易出现样式错乱；1.8凭借增强的指令遵循和代码生成能力，能精确把握极简设计规范，一次性生成结构严谨、视觉风格还原度极高的全套代码。",
+          "豆包创意描述": "利用豆包前端代码生成能力，打造符合Anthropic设计规范的AI搜索界面。采用经典衬线字体与暖色调配色，还原极简人文美学，提供优雅流畅的沉浸式搜索体验。",
+          "豆包创意标题": "Anthropic风格AI搜索站",
+          "豆包标签": "UI设计, 前端开发, AI搜索",
+          "趣味分": "25",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNDU0NzY1MA==&mid=2247489324&idx=1&sn=788fba586346ba6e3d7c03053482b868",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNDU0NzY1MA==&mid=2247489324&idx=1&sn=788fba586346ba6e3d7c03053482b868"
+          },
+          "预览文件": [
+            {
+              "file_token": "VbS8bKayNo5W9CxB9jPcdK7FnGe",
+              "name": "image.png",
+              "size": 148379,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=VbS8bKayNo5W9CxB9jPcdK7FnGe",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/VbS8bKayNo5W9CxB9jPcdK7FnGe/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVfAAs",
+        "record_id": "recv8hWZNVfAAs"
+      },
+      {
+        "fields": {
+          "Demo名称": "p5.js粒子流场创作体系",
+          "Prompt描述": "使用p5.js通过种子随机性和交互式参数探索创建算法艺术。当用户要求使用代码、生成艺术、算法艺术、流场或粒子系统创建艺术时使用此技能。创建原创算法艺术，不要复制现有艺术家的作品以避免版权侵权。",
+          "实现步骤": "用户说：帮我用p5.js写一个基于流场的生成艺术代码，要有粒子拖尾效果\n1.AI分析艺术需求，选择p5.js作为渲染库，确定基于Perlin噪声的流场算法架构\n2.AI初始化画布环境，定义粒子类(Particle)包含位置、速度和加速度属性\n3.AI构建流场网格系统，利用noise()函数计算每个坐标点的向量场角度\n4.AI编写粒子物理运动逻辑，使其跟随流场向量移动并更新状态\n5.AI处理边界条件，实现粒子在画布边缘的循环穿越或反弹逻辑\n6.AI优化渲染效果，设置低透明度背景实现拖尾，调整粒子颜色映射\n7.AI添加交互监听，支持点击鼠标更新随机种子(randomSeed)以生成全新图案",
+          "实用分": "24",
+          "所属场景": "一句话搞特效",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "21052",
+          "用户痛点": "创作原创算法艺术需要深厚的编程与数学功底，手动编写粒子系统或流场代码极为复杂。反复调试交互参数以获得理想视觉效果，不仅耗时巨大，对非技术人员而言更是难以实现。",
+          "示例Prompt": "帮我用p5.js写一个基于流场的生成艺术代码，要有粒子拖尾效果",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在编写流场或粒子系统等复杂算法逻辑时容易出现格式错误或功能遗漏；1.8凭借更规范的代码生成能力和增强的指令遵循，可以精准构建包含种子随机性和交互参数的原创算法艺术应用，确保运行流畅。",
+          "豆包创意描述": "利用豆包代码生成能力结合p5.js，打造沉浸式生成艺术体验。支持流场模拟、粒子系统与随机种子控制，通过交互式参数调整探索无限视觉可能，创造独一无二的算法美学作品。",
+          "豆包创意标题": "交互式算法艺术创作工坊",
+          "豆包标签": "生成艺术, 创意编程, 可视化",
+          "趣味分": "45",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzAxNDE2NzAxOQ==&mid=2667165274&idx=1&sn=0a5fd22e54a6170a6cf3042b171bbd6f",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzAxNDE2NzAxOQ==&mid=2667165274&idx=1&sn=0a5fd22e54a6170a6cf3042b171bbd6f"
+          },
+          "预览文件": [
+            {
+              "file_token": "E5m3b7e7GoHKU0xOlPrcCsD4nqc",
+              "name": "image.png",
+              "size": 389093,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=E5m3b7e7GoHKU0xOlPrcCsD4nqc",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/E5m3b7e7GoHKU0xOlPrcCsD4nqc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVESwR",
+        "record_id": "recv8hWZNVESwR"
+      },
+      {
+        "fields": {
+          "Demo名称": "app首页优化方案",
+          "Prompt描述": "使用@anthropics/skills/frontend-designskill,重新设计https://raphael.app的首页",
+          "实用分": "40",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "工具达人"
+          ],
+          "热度数值": "20991",
+          "用户痛点": "重新设计网站首页不仅需要专业的UI审美，还必须掌握复杂的前端开发技术。手动重写代码、调整布局细节及适配不同设备，开发周期长，且极易出现样式冲突。",
+          "能力跃迁": "1.6受限于基础工具调用能力和长代码生成稳定性不足，在调用特定设计工具重构复杂页面时易出现逻辑断链或代码格式错误；1.8凭借思考+工具一体化及更强的代码规范性，能精准调用技能工具并一次性输出结构完整、设计美观的首页代码。",
+          "豆包创意描述": "使用@anthropics/skills/frontend-designskill,重新设计https://raphael.app的首页",
+          "豆包创意标题": "app首页优化方案",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzI1MTUxNzgxMA==&mid=2247500222&idx=1&sn=db22a6eb5b076e8cf53a00977699bb16",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzI1MTUxNzgxMA==&mid=2247500222&idx=1&sn=db22a6eb5b076e8cf53a00977699bb16"
+          },
+          "预览文件": [
+            {
+              "file_token": "OMgkb5encoTU5DxH11ScbYEnnTc",
+              "name": "image.png",
+              "size": 246104,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=OMgkb5encoTU5DxH11ScbYEnnTc",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/OMgkb5encoTU5DxH11ScbYEnnTc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV806U",
+        "record_id": "recv8hWZNV806U"
+      },
+      {
+        "fields": {
+          "Demo名称": "首页界面重构",
+          "Prompt描述": "使用frontend-designskill来重新设计这个首页。",
+          "实现步骤": "用户说：帮我用现代简约风格重新设计这个首页，优化布局和配色方案\n1.AI分析当前页面结构与视觉痛点，确定符合潮流的\"现代简约\"设计方向\n2.AI生成新的配色方案与排版规范，选择高可读性的字体组合与间距系统\n3.AI重构页面布局，使用CSS Grid和Flexbox技术实现全端响应式适配\n4.AI重新设计Hero区域，整合视觉焦点与CTA按钮，提升首屏吸引力\n5.AI优化导航栏交互，采用Sticky定位与移动端折叠菜单，改善用户路径\n6.AI引入现代化UI组件，美化内容卡片与功能模块，统一圆角与阴影风格\n7.AI编写最终的HTML/CSS/React代码，输出完整的首页重构方案供预览",
+          "实用分": "42",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "15498",
+          "用户痛点": "重新设计网页首页需要同时具备专业的UI审美和扎实的前端编程能力，普通用户难以兼顾。从构思布局到编写代码还原设计，往往需要耗费数天时间，且细节调整极为繁琐。",
+          "示例Prompt": "帮我用现代简约风格重新设计这个首页，优化布局和配色方案",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在重构复杂首页时容易出现代码格式错误或功能遗漏；1.8凭借更稳定的代码生成能力和规范的输出格式，可以一次性生成结构完整、样式精准的首页重构代码。",
+          "豆包创意描述": "利用豆包前端设计能力，对旧版首页进行现代化重构。支持响应式布局升级、视觉风格优化及交互体验增强，快速输出符合现代审美的高质量前端代码，提升品牌形象。",
+          "豆包创意标题": "网页UI现代化智能重设计",
+          "豆包标签": "UI设计, 前端开发, 网页重构",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzkwMzY5NzU2Nw==&mid=2247488619&idx=1&sn=3c149b98f01f22fe89a8d11826e66e95",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzkwMzY5NzU2Nw==&mid=2247488619&idx=1&sn=3c149b98f01f22fe89a8d11826e66e95"
+          },
+          "预览文件": [
+            {
+              "file_token": "QUCTbytD9oFSpVx5ACacBEtpnec",
+              "name": "image.png",
+              "size": 174835,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=QUCTbytD9oFSpVx5ACacBEtpnec",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/QUCTbytD9oFSpVx5ACacBEtpnec/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVgR6w",
+        "record_id": "recv8hWZNVgR6w"
+      },
+      {
+        "fields": {
+          "Demo名称": "贪吃蛇游戏功能策划与代码开发",
+          "Prompt描述": "帮我策划并开发一个贪吃蛇游戏",
+          "���现步骤": "用户说：帮我做一个网页版贪吃蛇游戏，支持键盘上下左右控制，有计分功能\n1.AI分析游戏逻辑，选择HTML5 Canvas作为渲染画布，JavaScript处理核心逻辑\n2.AI初始化游戏环境，设置网格大小、蛇的初始位置和移动速度\n3.AI编写游戏主循环，使用requestAnimationFrame实现流畅的动画刷新\n4.AI实现键盘事件监听，捕捉方向键输入并更新蛇的移动方向\n5.AI构建碰撞检测机制，判断蛇头是否撞击墙壁或自身身体\n6.AI设计食物生成逻辑，确保食物随机出现在非蛇身区域的网格中\n7.AI添加计分系统和游戏结束界面，实现吃食物得分和重玩功能",
+          "实用分": "8",
+          "所属场景": "一句话造游戏",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "6705",
+          "用户痛点": "从零开发贪吃蛇游戏需要掌握编程语言和游戏逻辑，对于非技术人员而言门槛极高，且编写代码、调试运行和界面设计需要耗费大量时间和精力，难以快速验证创意。",
+          "示例Prompt": "帮我做一个网页版贪吃蛇游戏，支持键盘上下左右控制，有计分功能",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，生成的游戏代码容易出现格式错误或功能遗漏；1.8凭借更稳定的代码输出和规范的长代码格式，可以一次性生成结构完整、逻辑严密的贪吃蛇游戏，确保代码直接可运行。",
+          "豆包创意描述": "利用豆包代码生成能力，快速构建经典贪吃蛇游戏。支持键盘流畅操控、实时分数统计、动态难度调整，还原复古游戏体验，让休闲娱乐随时开启。",
+          "豆包创意标题": "经典贪吃蛇竞技挑战",
+          "豆包标签": "休闲游戏, 互动娱乐, 经典复刻",
+          "趣味分": "38",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=Mzg4MzYxODkzMg==&mid=2247506305&idx=1&sn=a3933430c2b90d421268feec417df3f9",
+            "text": "http://mp.weixin.qq.com/s?__biz=Mzg4MzYxODkzMg==&mid=2247506305&idx=1&sn=a3933430c2b90d421268feec417df3f9"
+          },
+          "预览文件": [
+            {
+              "file_token": "TWTIb51qxoGRahxS0xOcdsJ2nch",
+              "name": "image.png",
+              "size": 493351,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=TWTIb51qxoGRahxS0xOcdsJ2nch",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/TWTIb51qxoGRahxS0xOcdsJ2nch/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVCJmx",
+        "record_id": "recv8hWZNVCJmx"
+      },
+      {
+        "fields": {
+          "Demo名称": "PDF摘要提取",
+          "Prompt描述": "PDF摘要提取",
+          "实现步骤": "用户说：帮我分析这份年度报告PDF，提取主要业绩指标和未来规划，生成一份简要总结\n1.AI接收PDF文件，使用PyMuPDF库解析文档结构，提取文本和表格数据\n2.AI进行文本预处理，清洗页眉页脚干扰信息，对长文档进行智能分块\n3.AI运用NLP技术分析文本语义，识别文档中的关键实体、数据指标和核心观点\n4.AI根据用户需求，针对性提取业绩指标和规划相关的特定段落\n5.AI利用生成式模型对提取内容进行降维总结，生成各章节的精炼摘要\n6.AI将各部分摘要按逻辑结构整合，生成连贯的全文总结报告\n7.AI输出Markdown格式的最终摘要，支持一键导出或复制分享",
+          "实用分": "43",
+          "所属场景": "文档秒读",
+          "是否视频": true,
+          "模型能力": [
+            "多模态输入"
+          ],
+          "热度数值": "4253",
+          "用户痛点": "面对长篇幅的PDF文档，人工通读全文并提炼核心摘要往往需要数小时，不仅消耗大量精力，且难以在短时间内快速把握文档重点，信息获取效率极低。",
+          "示例Prompt": "帮我分析这份年度报告PDF，提取主要业绩指标和未来规划，生成一份简要总结",
+          "能力跃迁": "1.6受限于组合式多模态架构，在处理包含复杂图表、多栏排版的PDF时难以精准整合图文信息；1.8凭借原生多模态端到端训练，能够像人类一样直观理解文档结构与视觉细节，提取摘要更准确全面。",
+          "豆包创意描述": "利用豆包长文本理解能力，快速分析PDF文档内容。支持自动提取关键信息、生成结构化摘要、多语言互译，助你一键掌握长文档核心要点，大幅提升阅读效率。",
+          "豆包创意标题": "PDF长文档智能摘要生成",
+          "豆包标签": "文档分析, 效率工具, 摘要生成",
+          "趣味分": "15",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "C6ECbVVKWomQqWx1ERucaZsznzc",
+              "name": "20260113221016_rec_.mp4",
+              "size": 1036137,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=C6ECbVVKWomQqWx1ERucaZsznzc",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/C6ECbVVKWomQqWx1ERucaZsznzc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVBEQE",
+        "record_id": "recv8hWZNVBEQE"
+      },
+      {
+        "fields": {
+          "Demo名称": "长PDF翻译",
+          "Prompt描述": "长PDF翻译",
+          "实现步骤": "用户说：帮我把这份英文技术白皮书PDF翻译成中文，保持原来的排版格式\n1.AI解析PDF文档结构，提取文本内容并识别图片、表格等非文本元素位置\n2.AI根据语义完整性将长文档切分为适宜处理的文本块，标记段落序号\n3.AI调用翻译引擎对文本块进行翻译，结合上下文确保专业术语和长难句准确性\n4.AI分析原文排版样式，提取字体、字号、颜色及段落间距等格式信息\n5.AI将翻译后的译文回填至原文档布局中，自动调整字号以适应版面\n6.AI处理图表中的文字内容，尝试进行图片内文字替换或添加注释\n7.AI合成最终PDF文件，生成双语对照版或纯译文版供用户下载",
+          "实用分": "46",
+          "所属场景": "文档秒读",
+          "是否视频": true,
+          "模型能力": [
+            "多模态输入",
+            "超长待机"
+          ],
+          "热度数值": "4253",
+          "用户痛点": "阅读外文长篇PDF时，人工逐段复制翻译不仅效率低下，且常受限于格式无法直接提取文字。面对大量专业术语和复杂排版，手动对照翻译耗时极长，严重影响阅读流畅度。",
+          "示例Prompt": "帮我把这份英文技术白皮书PDF翻译成中文，保持原来的排版格式",
+          "能力跃迁": "1.6受限于组合式架构和上下文管理能力，处理超长PDF时容易丢失细节或前后术语不一致；1.8凭借原生多模态端到端训练及更灵活的上下文管理，能够精准理解全文脉络，实现长文档翻译的准确与连贯。",
+          "豆包创意描述": "利用豆包长文本理解与翻译能力，实现超长PDF文档的精准翻译。支持多语言互译、保留原文排版格式、上下文语义连贯，一键输出双语对照文档，轻松跨越语言障碍。",
+          "豆包创意标题": "超长PDF专业智能翻译",
+          "豆包标签": "文档翻译, 格式保持, 效率工具",
+          "趣味分": "16",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "LJJ5bdQ7CowHkpx332wcHoR8nxg",
+              "name": "20260113221103_rec_.mp4",
+              "size": 1073445,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=LJJ5bdQ7CowHkpx332wcHoR8nxg",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/LJJ5bdQ7CowHkpx332wcHoR8nxg/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV7TnH",
+        "record_id": "recv8hWZNV7TnH"
+      },
+      {
+        "fields": {
+          "Demo名称": "DOCX文档处理",
+          "Prompt描述": "DOCX文档处理",
+          "实现步骤": "用户说：帮我分析这个DOCX文档，提取所有表格数据，并将正文统一调整为宋体小四号\n1.AI读取DOCX文件二进制流，使用python-docx库加载文档对象模型(DOM)\n2.AI遍历文档Paragraphs和Tables，解析文档层级结构与样式信息\n3.AI定位所有Table对象，提取单元格文本，将其转换为结构化JSON或CSV格式\n4.AI遍历所有Paragraph对象，识别正文段落，过滤掉标题和页眉页脚\n5.AI修改Run对象的font.name属性为“宋体”，设置font.size为Pt(12)\n6.AI进行文档排版检查，确保行间距和段落间距符合标准格式\n7.AI保存修改后的Document对象，生成新的DOCX文件供用户下载",
+          "实用分": "44",
+          "所属场景": "文档秒读",
+          "是否视频": true,
+          "模型能力": [
+            "多模态输入"
+          ],
+          "热度数值": "4253",
+          "用户痛点": "人工处理长篇DOCX文档需要逐页阅读，难以快速定位关键信息。手动提取数据或整理格式属于高重复性劳动，不仅耗时费力，还容易因疲劳导致遗漏或错误。",
+          "示例Prompt": "帮我分析这个DOCX文档，提取所有表格数据，并将正文统一调整为宋体小四号",
+          "能力跃迁": "1.6受限于组合式多模态架构，在处理DOCX文档时往往依赖文本提取，难以精准理解复杂的表格结构和图文混排版式；1.8凭借原生多模态端到端训练，能够像人眼一样直接感知文档的视觉布局，精准还原文档层级、表格数据及图文关系。",
+          "豆包创意描述": "利用豆包文档处理能力，实现DOCX文档的深度自动化处理。支持结构化内容提取、批量格式调整、智能纠错与排版，一键生成标准化文档，大幅提升办公文档处理效率。",
+          "豆包创意标题": "智能Word文档深度解析",
+          "豆包标签": "文档处理, 办公效率, 自动化",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "ZZxQbKKL4o64wHxlTzYcbTMFnMh",
+              "name": "20260113221130_rec_.mp4",
+              "size": 2545749,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=ZZxQbKKL4o64wHxlTzYcbTMFnMh",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/ZZxQbKKL4o64wHxlTzYcbTMFnMh/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVmdny",
+        "record_id": "recv8hWZNVmdny"
+      },
+      {
+        "fields": {
+          "Demo名称": "PPTX演示文稿处理",
+          "Prompt描述": "PPTX演示文稿处理",
+          "实现步骤": "用户说：帮我生成一份关于“2024年人工智能发展趋势”的PPT演示文稿，包含大纲和详细内容\n1.AI分析用户主��，利用大模型知识库构建演示文稿的逻辑大纲和章节结构\n2.AI根据大纲扩写每一页的具体文本内容，梳理核心观点、数据支撑及演讲备注\n3.AI调用python-pptx库初始化演示文稿对象，加载预设的专业设计母版\n4.AI遍历生成的内容数据，自动创建幻灯片页面并将文本写入对应的占位符\n5.AI根据页面关键词检索或生成相关的高清配图，自动插入并调整图片布局\n6.AI通过代码算法优化文本框位置、字体样式和段落间距，确保视觉美观\n7.AI完成所有页面渲染，保存为标准PPTX格式文件并提供下载链接",
+          "实用分": "46",
+          "所属场景": "一句话做PPT",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "4253",
+          "用户痛点": "手动处理PPTX文档需要耗费大量时间进行排版美化，频繁调整字体、图片和对齐方式不仅枯燥重复，且非设计专业人员难以制作出视觉效果专业的演示文稿。",
+          "示例Prompt": "帮我生成一份关于“2024年人工智能发展趋势”的PPT演示文稿，包含大纲和详细内容",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在编写操作PPTX文件的复杂逻辑时，容易出现代码报错或版式参数偏差；1.8凭借更稳定的代码生成能力和规范的格式输出，能够精准调用相关库，生成逻辑严密的代码以实现PPT内容的完美处理。",
+          "豆包创意描述": "利用豆包文档处理与内容创作能力，实现PPTX演示文稿的自动化生成。支持一键生成大纲、智能填充内容、自动排版美化及素材插入，显著提升制作效率，让汇报演示更专业。",
+          "豆包创意标题": "智能PPT演示文稿生成助手",
+          "豆包标签": "办公效率, 文档自动化, 内容创作",
+          "趣味分": "24",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247854027&idx=3&sn=bab836e3242c0df5cca328d6174af31b&chksm=e9e3afb30c1ea196805c6c8bd424ad8350425a4b5ee277278d33ec030e095ad11a9971788e26#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "NkWtbcNcwoal5PxTYbTc9UtWn3g",
+              "name": "20260113221130_rec_.mp4",
+              "size": 2545749,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=NkWtbcNcwoal5PxTYbTc9UtWn3g",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/NkWtbcNcwoal5PxTYbTc9UtWn3g/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVRLNI",
+        "record_id": "recv8hWZNVRLNI"
+      },
+      {
+        "fields": {
+          "Demo名称": "红楼人物关系图谱构建",
+          "Prompt描述": "分析红楼梦人物关系",
+          "实现步骤": "用户说：帮我梳理红楼梦中贾宝玉的主要社会关系，生成一张人物关系图谱\n1.AI加载《红楼梦》全书文本，进行分词和去除停用词预处理\n2.AI运用NER（命名实体识别）技术，从文本中提取贾宝玉、林黛玉等人物实体\n3.AI通过句法分析和共现矩阵，识别人物之间的互动频率和关系类型\n4.AI构建图谱数据结构，定义节点为人物，边为亲属或社交关系\n5.AI使用力导向图算法计算节点布局，确保核心人物位于中心且关系清晰\n6.AI利用D3.js或ECharts库进行渲染，绘制节点连线并区分关系类别颜色\n7.AI添加交互功能，支持鼠标悬停显示人物简介和具体关系描述",
+          "实用分": "36",
+          "所属场景": "写作助手",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3855",
+          "用户痛点": "《红楼梦》人物高达数百人，家族谱系与社交网络错综复杂。人工梳理需要反复翻阅原著、逐一记录并比对细节，耗时巨大且极易因记忆模糊导致关系错乱或遗漏关键线索。",
+          "示例Prompt": "帮我梳理红楼梦中贾宝玉的主要社会关系，生成一张人物关系图谱",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以一次性编写出处理《红楼梦》复杂人物关系的完整分析脚本；1.8凭借更强的代码构建能力和规范的输出格式，能够生成逻辑严密的数据分析代码，精准梳理并可视化展示数百位人物的错综关系。",
+          "豆包创意描述": "利用豆包自然语言处理能力，深度解析《红楼梦》百万字巨著。精准提取数百位人物实体，自动梳理复杂的亲属、主仆与社交网络，生成可交互的知识图谱，让庞大的家族关系一目了然。",
+          "豆包创意标题": "红楼梦人物关系可视化图谱",
+          "豆包标签": "知识图谱, 文学分析, 可视化",
+          "趣味分": "32",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550823&idx=1&sn=2935a2edb474072c129c862eddf62ce5&chksm=f2cf848bfe5e95239c0c4eeb179470e9af483235391a6d21bd47e0dd56a5d96f1279a1c6860a#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550823&idx=1&sn=2935a2edb474072c129c862eddf62ce5&chksm=f2cf848bfe5e95239c0c4eeb179470e9af483235391a6d21bd47e0dd56a5d96f1279a1c6860a#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "KCGjbBoKlouU7Wxr5XpcaSOMnDc",
+              "name": "image.png",
+              "size": 193349,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=KCGjbBoKlouU7Wxr5XpcaSOMnDc",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/KCGjbBoKlouU7Wxr5XpcaSOMnDc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVXFVc",
+        "record_id": "recv8hWZNVXFVc"
+      },
+      {
+        "fields": {
+          "Demo名称": "战国国家红楼人物关系图谱构建",
+          "Prompt描述": "分析战国七雄",
+          "实现步骤": "用户说：帮我分析战国七雄的势力演变，对比各国军事实力，并梳理关键变法改革\n1.AI检索战国时期历史数据库，提取七国（齐楚燕韩赵魏秦）的时间线与关键事件\n2.AI利用GIS地理信息技术，构建七国疆域随时间变化的动态地图模型\n3.AI通过NLP分析史料，提取人口、兵力、粮食产量等数据，生成国力对比雷达图\n4.AI梳理商鞅变法、胡服骑射等关键改革措施，分析其对国力消长的具体影响\n5.AI构建人物关系图谱，展示君主、名将、纵横家之间的复杂政治与血缘关系\n6.AI复盘长平之战等决定性战役，结合地形数据分析战略战术与胜负原因\n7.AI综合上述分析，生成包含图表、地图与深度见解的战国历史全景报告",
+          "实用分": "26",
+          "所属场景": "AI当老师",
+          "是否视频": false,
+          "模型能力": [
+            "深度推理"
+          ],
+          "热度数值": "3855",
+          "用户痛点": "想要系统了解战国七雄的历史，需要查阅大量分散的资料，面对错综复杂的诸侯关系和战役细节难以理清脉络，且遇到疑问无法获得即时解答，整理知识框架耗时费力。",
+          "示例Prompt": "帮我分析战国七雄的势力演变，对比各国军事实力，并梳理关键变法改革",
+          "能力跃迁": "1.6受限于基础的推理模式，在分析复杂的历史博弈时往往流于史实罗列，难以构建严密的因果逻辑链条；1.8凭借思考状态保留和更完整的推理链能力，能够深入剖析七国间的地缘政治与经济动因，提供极具深度的历史洞察。",
+          "豆包创意描述": "利用豆包深厚的历史知识储备与数据可视化能力，全方位解析战国七雄。支持疆域变迁动态演示、国力数据对比、复杂人物关系梳理，生动还原战国纷争的历史脉络，辅助深度历史研究。",
+          "豆包创意标题": "战国七雄历史全景解析",
+          "豆包标签": "历史可视化, 知识图谱, 深度解析",
+          "趣味分": "36",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550823&idx=1&sn=2935a2edb474072c129c862eddf62ce5&chksm=f2cf848bfe5e95239c0c4eeb179470e9af483235391a6d21bd47e0dd56a5d96f1279a1c6860a#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550823&idx=1&sn=2935a2edb474072c129c862eddf62ce5&chksm=f2cf848bfe5e95239c0c4eeb179470e9af483235391a6d21bd47e0dd56a5d96f1279a1c6860a#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "JpoWbSbOCo6KH7xjvsKcDBltnXd",
+              "name": "image.png",
+              "size": 308117,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=JpoWbSbOCo6KH7xjvsKcDBltnXd",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/JpoWbSbOCo6KH7xjvsKcDBltnXd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVXjKG",
+        "record_id": "recv8hWZNVXjKG"
+      },
+      {
+        "fields": {
+          "Demo名称": "项目管理工具专业落地页设计",
+          "Prompt描述": "我要做一个项目管理工具的落地页，目标用户是欧美的中小企业主。\n请帮我设计一个专业、现代、值得信赖的风格。",
+          "实现步骤": "用户说：帮我设计一个面向欧美中小企业的项目管理工具落地页，风格要专业现代\n1.AI分析目标用户审美，确定配色方案（深蓝/白色/灰色）和字体（Inter/Roboto），制定现代简约的设计规范\n2.AI构建Hero区域，编写引人注目的主标题、副标题，设计高转化率的CTA按钮和产品演示图占位\n3.AI开发特性介绍模块，使用CSS Grid布局展示核心功能，搭配SVG图标，强调对中小企业的价值\n4.AI设计社会认同板块，通过Logo Wall和客户评价卡片增强信任感，运用Flexbox实现整齐排列\n5.AI编写定价策略区域，设计清晰的价格对比卡片，高亮显示“最受欢迎”套餐，引导用户决策\n6.AI添加FAQ和页脚部分，完善网站导航、联系信息和版权声明，确保页面结构完整\n7.AI进行响应式适配，使用Media Queries确保页面在桌面、平板和手机端均有完美显示效果",
+          "实用分": "45",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "指令遵循王"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "制作面向欧美市场的专业落地页，需要兼具国际化设计审美和前端开发技能。普通用户从零构建不仅耗时数周，且难以把握现代、信赖的视觉风格，成品往往不尽如人意。",
+          "示例Prompt": "帮我设计一个面向欧美中小企业的项目管理工具落地页，风格要专业现代",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以在保证代码结构完整的同时精准呈现“专业现代”的抽象风格；1.8凭借增强的指令遵循和规范的代码输出能力，可以一次性生成布局严谨、符合欧美审美的落地页代码。",
+          "豆包创意描述": "利用豆包代码生成与UI设计能力，快速构建面向欧美中小企业的项目管理工具落地页。采用现代简约风格，包含Hero区、特性展示、定价表等核心模块，建立专业信赖感。",
+          "豆包创意标题": "欧美SaaS落地页智能构建",
+          "豆包标签": "网页开发, UI设计, 商业落地页",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "RVDLbs8y1ox01ux2Zjec48Bwnfh",
+              "name": "image.png",
+              "size": 58729,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=RVDLbs8y1ox01ux2Zjec48Bwnfh",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/RVDLbs8y1ox01ux2Zjec48Bwnfh/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV7KSI",
+        "record_id": "recv8hWZNV7KSI"
+      },
+      {
+        "fields": {
+          "Demo名称": "AI写作工具落地页",
+          "Prompt描述": "我要做一个AI写作工具的落地页，帮我检查是否包含了所有高转化要素。\n\n产品信息：\n- 名称：WriteFlow\n- 价值主张：10分钟写出SEO友好的博客文章\n- 目标用户：内容创作者、市场营销人员\n- 核心功能：AI大纲生成、SEO关键词优化、多语言支持\n- 定价：免费试用 → $29/月",
+          "实现步骤": "用户说：帮我检查WriteFlow的落地页内容，看是否包含了所有高转化要素，并给出优化建议\n1.AI解析输入的产品信息，提取名称、价值主张、目标用户及核心功能\n2.AI基于高转化落地页框架（如AIDA模型），检查首屏标题与副标题的吸引力\n3.AI分析价值主张的清晰度，验证是否精准直击内容创作者的痛点\n4.AI检测页面结构，确认社会认同（评价/案例）和信任背书模块是否完整\n5.AI评估CTA（行动号召）的文案与位置，检查免费试用引导的逻辑性\n6.AI审查SEO关键词布局，确保功能描述符合搜索引擎抓取规范\n7.AI生成详细诊断报告，列出缺失要素并提供具体的文案优化方案",
+          "实用分": "45",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "指令遵循王"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "制作高转化落地页需要兼备开发技能与营销逻辑，人工梳理文案结构和检查转化要素耗时费力，容易因经验不足遗漏关键模块，导致页面实际转化效果不佳。",
+          "示例Prompt": "帮我检查WriteFlow的落地页内容，看是否包含了所有高转化要素，并给出优化建议",
+          "能力跃迁": "1.6受限于指令遵循的精准度，在对照高转化要素检查时容易忽略“SEO优化”等具体产品约束，且给出的代码建议偶有格式问题；1.8凭借大幅增强的指令遵循和代码生成能力，能精准结合WriteFlow的所有核心卖点进行深度诊断，并输出结构严谨的落地页优化方案。",
+          "豆包创意描述": "利用豆包营销分析与文本理解能力，对产品落地页进行全方位体检。自动检测价值主张、CTA设置、信任背书等关键转化要素，基于AIDA模型提供针对性优化建议，打造高转化率页面。",
+          "豆包创意标题": "落地页高转化智能诊断",
+          "豆包标签": "营销分析, 转化率优化, 落地页诊断",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "QN8cbqshSoN3VexWXFhcKjbbnRb",
+              "name": "image.png",
+              "size": 113169,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=QN8cbqshSoN3VexWXFhcKjbbnRb",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/QN8cbqshSoN3VexWXFhcKjbbnRb/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVAzQ3",
+        "record_id": "recv8hWZNVAzQ3"
+      },
+      {
+        "fields": {
+          "Demo名称": "API 文档编制",
+          "Prompt描述": "做了一个API工具，需要写API文档",
+          "实现步骤": "用户说：帮我扫描这个项目代码，自动生成标准的Swagger格式API文档\n1.AI分析项目目录结构，识别使用的编程语言及Web框架（如FastAPI、Spring Boot等）\n2.AI遍历代码文件，解析路由装饰器、函数定义及类型注解信息\n3.AI提取代码中的Docstring和注释，理解接口功能描述及业务逻辑\n4.AI分析数据模型类（DTO/Model），构建请求体和响应体的Schema定义\n5.AI根据代码逻辑自动构建请求示例（Request Body）和响应示例（Response）\n6.AI将所有提取信息转换为符合OpenAPI 3.0标准的JSON或YAML数据结构\n7.AI生成最终的Swagger文档文件，并提供Markdown格式的阅读版本供导出",
+          "实用分": "46",
+          "所属场景": "写作助手",
+          "是否视频": false,
+          "模型能力": [
+            "指令遵循王"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "编写API文档需要逐一核对接口参数、返回值及示例，工作量巨大且枯燥繁琐。手动维护文档容易出现格式错误或与代码实现不一致，耗费开发人员大量宝贵时间。",
+          "示例Prompt": "帮我扫描这个项目代码，自动生成标准的Swagger格式API文档",
+          "能力跃迁": "1.6受限于长文本指令遵循的稳定性，生成的API文档可能存在格式不规范或细节遗漏的问题；1.8凭借大幅增强的指令遵循能力，能够严格按照技术规范输出结构严谨、参数详尽且示例准确的标准化API文档。",
+          "豆包创意描述": "利用豆包代码理解能力，深入解析项目源码。自动提取接口路由、参数及返回值信息，一键生成标准的Swagger/OpenAPI文档，支持多语言框架，让开发与文档同步更新。",
+          "豆包创意标题": "智能API文档自动生成",
+          "豆包标签": "开发工具, 文档生成, 效率提升",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "DbBhbB0VqosWFhxZVfpca9bJnnh",
+              "name": "image.png",
+              "size": 46552,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=DbBhbB0VqosWFhxZVfpca9bJnnh",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/DbBhbB0VqosWFhxZVfpca9bJnnh/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVTqIC",
+        "record_id": "recv8hWZNVTqIC"
+      },
+      {
+        "fields": {
+          "Demo名称": "认证系统高优先级Bug修复",
+          "Prompt描述": "你正在开发\"用户认证\"功能，但突然有个紧急Bug需要修复",
+          "实现步骤": "用户说：我正在写用户认证代码，突然有个线上登录Bug要修，帮我暂存代码并修复Bug\n1.AI识别当前开发环境状态，使用git stash指令将未提交的“用户认证”代码暂存\n2.AI自动切换至生产环境对应的hotfix分支，准备进行Bug排查\n3.AI分析用户提供的错误日志堆栈，定位到登录模块的空指针异常逻辑\n4.AI生成修复代码，增加空值校验逻辑并优化异常处理流程\n5.AI运行相关的单元测试（Unit Test），确保修复方案不引入新问题\n6.AI执行git commit提交修复代码，并生成规范的Commit Message\n7.AI切回原开发分支，执行git stash pop还原之前的工作区，继续用户认证功能的开发",
+          "实用分": "46",
+          "所属场景": "一句话生成App",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "编写代码时被迫中断去修复紧急Bug，需要频繁切换思维和开发环境，导致原有逻辑思路断层，不仅耗时恢复状态，还容易因注意力分散引入新问题。",
+          "示例Prompt": "我正在写用户认证代码，突然有个线上登录Bug要修，帮我暂存代码并修复Bug",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在处理复杂项目中的突发Bug时，容易出现代码逻辑断层或格式错误；1.8凭借更稳定的代码生成能力和规范的输出格式，可以迅速生成精准的Bug修复代码，同时保持原有代码结构的完整性。",
+          "豆包创意描述": "利用豆包代码理解与任务管理能力，实现开发场景的无缝切换。支持一键暂存当前工作区、快速定位并修复紧急Bug，修复完成后自动还原开发环境，让多线程开发高效有序。",
+          "豆包创意标题": "紧急Bug智能修复助手",
+          "豆包标签": "代码修复, 任务切换, 效率工具",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "LOybbUelSoVRSNxtIzvcHzgonvb",
+              "name": "image.png",
+              "size": 28129,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=LOybbUelSoVRSNxtIzvcHzgonvb",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/LOybbUelSoVRSNxtIzvcHzgonvb/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVLX9Q",
+        "record_id": "recv8hWZNVLX9Q"
+      },
+      {
+        "fields": {
+          "Demo名称": "分支琐碎归类梳理优化",
+          "Prompt描述": "我的feature分支有10个提交,但很多是\"修复拼写错误\"、\"忘记加分号\",怎么整理成几个清晰的提交?",
+          "实现步骤": "用户说：我的feature分支有10个提交,但很多是\"修复拼写错误\"、\"忘记加分号\",怎么整理成几个清晰的提交?\n1.AI执行`git log --oneline -n 10`获取最近10条提交记录的哈希值和描述\n2.AI语义分析提交信息，识别\"fix typo\"、\"missing semicolon\"等琐碎修改与主要功能提交的关联\n3.AI制定变基策略，将主功能提交标记为`pick`，相关的琐碎修复标记为`fixup`或`squash`\n4.AI生成重排后的提交序列，将修复性提交移动到对应的功能实现提交紧后方\n5.AI撰写符合Conventional Commits规范的新Commit Message，概括合并后的功能点\n6.AI输出详细的`git rebase -i`操作步骤或生成自动处理脚本\n7.AI提供冲突处理预案，并展示重构后的预期Git历史图谱以供确认",
+          "实用分": "46",
+          "所属场景": "AI当老师",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "整理杂乱的Git提交记录需要掌握复杂的交互式变基命令，新手��阅文档耗时且难以理解，操作过程容易引发代码冲突或丢失，缺乏专业指导时很难安全高效地完成。",
+          "示例Prompt": "帮我整理feature分支的最近10个提交，合并那些琐碎的拼写修复",
+          "能力跃迁": "1.6受限于代码生成稳定性不足，面对Git变基这类逻辑严谨的操作可能给出模糊或错误的指令；1.8凭借更规范的代码输出能力，可以精准生成合并提交（Squash）的完整命令与操作步骤。",
+          "豆包创意描述": "利用豆包代码理解能力，智能分析Git分支提交记录。自动识别并建议合并琐碎的修复提交（Squash），重写提交信息（Reword），生成交互式变基脚本，让代码历史清晰规范，提升Code Review效率。",
+          "豆包创意标题": "Git提交历史智能重构",
+          "豆包标签": "Git管理, 代码规范, 效率工具",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "ABXObLmhcospkSx4wfHcD8Bfnjc",
+              "name": "image.png",
+              "size": 21499,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=ABXObLmhcospkSx4wfHcD8Bfnjc",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/ABXObLmhcospkSx4wfHcD8Bfnjc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVW5bv",
+        "record_id": "recv8hWZNVW5bv"
+      },
+      {
+        "fields": {
+          "Demo名称": "SaaS工具SEO博客搭建",
+          "Prompt描述": "你的SaaS工具需要一个博客，SEO引流",
+          "实现步骤": "用户说：帮我为我的项目管理SaaS工具生成一个SEO博客，包含5篇关于“团队协作效率”的文章\n1.AI分析SaaS产品定位，利用NLP技术挖掘“团队协作”相关的高流量低竞争长尾关键词\n2.AI规划内容策略，设计包含H1、H2、H3标签的文章结构，确保逻辑清晰且符合SEO规范\n3.AI撰写高质量正文内容，自然植入目标关键词，控制关键词密度在合理范围\n4.AI自动生成Meta Title和Meta Description，优化点击率（CTR）\n5.AI为文章中的图片生成Alt文本，并构建合理的内部链接策略以传递权重\n6.AI生成符合Schema.org标准的结构化数据标记，提升搜索引擎理解能力\n7.AI输出完整的HTML代码或Markdown文档，支持一键部署到CMS系统",
+          "实用分": "48",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "为SaaS产品搭建SEO友好的博客，需要投入数周时间进行设计、开发和CMS配置，且需具备专业的SEO结构优化知识，严重分散团队打磨核心产品的精力。",
+          "示例Prompt": "帮我为我的项目管理SaaS工具生成一个SEO博客，包含5篇关于“团队协作效率”的文章",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以一次性构建包含SEO优化的完整博客架构；1.8凭借增强的代码生成稳定性和规范性，可以快速生成结构规范、SEO友好的完整博客代码，大幅提升开发效率。",
+          "豆包创意描述": "利用豆包强大的内容创作与SEO分析能力，为SaaS产品批量生成高质量博客。支持长尾关键词布局、Meta标签自动优化、HTML结构化输出，助力产品在搜索引擎中快速获取精准流量。",
+          "豆包创意标题": "SaaS全自动SEO博客构建",
+          "豆包标签": "SEO优化, 内容营销, 流量增长",
+          "趣味分": "15",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "FH0ybriNKoVruNx4jNHcHYtunPe",
+              "name": "image.png",
+              "size": 80169,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=FH0ybriNKoVruNx4jNHcHYtunPe",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/FH0ybriNKoVruNx4jNHcHYtunPe/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVGP9a",
+        "record_id": "recv8hWZNVGP9a"
+      },
+      {
+        "fields": {
+          "Demo名称": "AWS三区域部署方案",
+          "Prompt描述": "我要部署一个Next.js应用到AWS，需要在美国、欧洲、亚洲各部署一个节点。",
+          "实现步骤": "用户说：帮我把Next.js应用部署到AWS，要求在美国、欧洲、亚洲各有一个节点\n1.AI分析部署需求，推荐使用Terraform进行基础设施即代码(IaC)管理\n2.AI设计多区域架构，选定us-east-1、eu-central-1和ap-northeast-1作为目标区域\n3.AI编写Next.js容器化配置，生成Dockerfile及ECS集群定义代码\n4.AI配置跨区域VPC网络，设置安全组与子网，确保网络隔离与连通\n5.AI编写Route53配置代码，利用Latency Routing策略实现用户就近访问\n6.AI集成CloudFront全球加速，配置缓存策略以优化静态资源加载\n7.AI生成GitHub Actions工作流文件，实现代码提交后的自动构建与全球同步部署",
+          "实用分": "46",
+          "所属场景": "一句话生成App",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3745",
+          "用户痛点": "跨区域部署应用需要深厚的运维功底，手动配置美欧亚三地的服务器和网络环境极其繁琐，且容易出现配置不一致的问题，耗费大量时间进行调试与维护。",
+          "示例Prompt": "帮我把Next.js应用部署到AWS，要求在美国、欧洲、亚洲各有一个节点",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在处理涉及多区域部署的复杂配置时容易出现格式错误或逻辑断层；1.8凭借更稳定的代码生成能力和规范的长代码输出，可以精准生成包含美、欧、亚三地节点的完整Next.js部署脚本，确保配置无误。",
+          "豆包创意描述": "利用豆包云架构设计能力，自动生成AWS多区域部署方案。支持美、欧、亚三地节点配置、Route53智能路由与CloudFront加速，实现应用的高可用与全球低延迟访问。",
+          "豆包创意标题": "Next.js全球多节点智能部署",
+          "豆包标签": "云计算, 自动化部署, 全球架构",
+          "趣味分": "16",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzA5ODQzOTk1Mg==&mid=2247484436&idx=1&sn=158520f8445ba934eb5e0afc86842b73"
+          },
+          "预览文件": [
+            {
+              "file_token": "IkvbbEnsbovxgYxpWQhcfWR2nUg",
+              "name": "image.png",
+              "size": 59182,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=IkvbbEnsbovxgYxpWQhcfWR2nUg",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/IkvbbEnsbovxgYxpWQhcfWR2nUg/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVh5Ck",
+        "record_id": "recv8hWZNVh5Ck"
+      },
+      {
+        "fields": {
+          "Demo名称": "学术轻解读+AI 配图公众号内容产出",
+          "Prompt描述": "一句话解读论文，AI配图，发公众号",
+          "实现步骤": "用户说：帮我解读这篇关于Transformer的论文，配上封面图，写成一篇公众号文章\n1.AI读取并深度分析论文内容，利用NLP技术提取核心论点、创新点及实验结论\n2.AI根据公众号读者偏好，将学术语言转化为通俗易懂的科普风格文案，并设计吸引人的标题\n3.AI分析文案关键节点，自动生成用于绘图的提示词，描述封面和插图的视觉风格\n4.AI调用图像生成模型，根据提示词绘制符合论文主题的高质量封面图及内文配图\n5.AI进行图文混排，将生成的文字与图片按逻辑插入，应用公众号标准的Markdown排版格式\n6.AI自动添加摘要、关键词及引导关注语，完善文章结构\n7.AI输出最终的图文草稿，支持一键复制到公众号后台进行预览和发布",
+          "实用分": "44",
+          "所属场景": "一句话生成App",
+          "是否视频": false,
+          "模型能力": [
+            "多模态输入",
+            "图像生成",
+            "工具达人"
+          ],
+          "热度数值": "3587",
+          "用户痛点": "传统方式需要大量时间和专业技能，效率低且容易出错。",
+          "示例Prompt": "帮我解读这篇关于Transformer的论文，配上封面图，写成一篇公众号文章",
+          "能力跃迁": "1.6受限于基础工具调用能力和组合式架构，在跨应用操作和多步任务中容易断链，难以完成复杂的发布流程；1.8凭借OS Agent能力和原生多模态架构，不仅能精准理解论文图表，还能自动调度工具完成配图、排版及公众号发布的全流程自动化。",
+          "豆包创意描述": "利用豆包深度文本理解与图像生成能力，将晦涩的学术论文转化为通俗易懂的公众号图文。支持自动提炼核心观点、生成契合配图、完成排版，实现从学术文档到社交媒体的高效转换。",
+          "豆包创意标题": "论文一键转公众号图文",
+          "豆包标签": "内容创作, 图像生成, 效率工具",
+          "趣味分": "26",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzAwODIyOTQ4Mw==&mid=2649446311&idx=1&sn=1d9065bf4bdc95013da46c014e7c8ebd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzAwODIyOTQ4Mw==&mid=2649446311&idx=1&sn=1d9065bf4bdc95013da46c014e7c8ebd"
+          },
+          "预览文件": [
+            {
+              "file_token": "SLOPbnNXqobP1CxIqN4chliFn8u",
+              "name": "image.png",
+              "size": 508241,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=SLOPbnNXqobP1CxIqN4chliFn8u",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/SLOPbnNXqobP1CxIqN4chliFn8u/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV5faC",
+        "record_id": "recv8hWZNV5faC"
+      },
+      {
+        "fields": {
+          "Demo名称": "知识归纳",
+          "Prompt描述": "一句话生成清朝皇帝知识画布",
+          "实现步骤": "用户说：帮我生成一张清朝康熙皇帝的知识画布，包含他的生平大事、家庭关系和重要成就\n1.AI分析用户指令，锁定目标人物为'清圣祖爱新觉罗·玄烨'，确定时间跨度\n2.AI检索历史知识库，提取年号、在位时间、庙号等基础档案信息\n3.AI运用NLP技术梳理历史文献，筛选'三藩之乱'、'收复台湾'等核心历史事件\n4.AI构建人物关系图谱，解析后妃、子女及重要大臣的关联网络\n5.AI设计画布布局，采用时间轴与思维导图结合的形式规划信息区块\n6.AI匹配视觉素材，自动生成皇帝画像及相关历史场景的插图元素\n7.AI渲染最终画布，将结构化文本与视觉元素合成，输出高清知识图谱",
+          "实用分": "40",
+          "所属场景": "一句话做网站",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "指令遵循王"
+          ],
+          "热度数值": "3587",
+          "用户痛点": "制作清朝皇帝知识图谱网页，需耗时整理庞杂的历史资料与世系关系，且实现可视化展示要求掌握专业的前端开发与UI设计技能，普通历史爱好者难以跨越技术门槛。",
+          "示例Prompt": "帮我生成一张清朝康熙皇帝的知识画布，包含他的生平大事、家庭关系和重要成就",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以一次性输出包含复杂布局和完整数据的可视化代码；1.8凭借增强的指令遵循能力和更稳定的代码输出，可以精准生成结构规范、交互流畅的知识画布应用。",
+          "豆包创意描述": "利用豆包历史知识库与可视化布局能力，一键生成清朝帝王深度解析画布。自动梳理在位年号、重大历史事件及人物关系网，以结构化图谱形式呈现，让复杂的历史脉络清晰可见。",
+          "豆包创意标题": "清朝皇帝全景知识画布",
+          "豆包标签": "历史科普, 知识图谱, 可视化",
+          "趣味分": "30",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzAwODIyOTQ4Mw==&mid=2649446311&idx=1&sn=1d9065bf4bdc95013da46c014e7c8ebd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzAwODIyOTQ4Mw==&mid=2649446311&idx=1&sn=1d9065bf4bdc95013da46c014e7c8ebd"
+          },
+          "预览文件": [
+            {
+              "file_token": "BfkHbX8EOo2WL6xyZ4QcvqSnnJe",
+              "name": "image.png",
+              "size": 412078,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=BfkHbX8EOo2WL6xyZ4QcvqSnnJe",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/BfkHbX8EOo2WL6xyZ4QcvqSnnJe/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVTLO1",
+        "record_id": "recv8hWZNVTLO1"
+      },
+      {
+        "fields": {
+          "Demo名称": "小红书文案封面配图生成",
+          "Prompt描述": "一句话生成小红书文案、封面和配图",
+          "实现步骤": "用户说：帮我写一篇关于“夏季防晒霜测评”的小红书笔记，包含文案、封面和配图\n1.AI分析用户输入的主题，提取核心关键词和情感基调，规划内容结构\n2.AI利用NLP模型生成多组“标题党”风格标题，并撰写包含丰富Emoji的种草文案\n3.AI根据文案内容提取视觉关键词，自动构建专业的绘图提示词(Prompt)\n4.AI调用图像生成模型，渲染具有高审美、符合小红书风格的竖屏封面图\n5.AI生成与文案情境相符的补充配图，保持整体色调和风格的一致性\n6.AI利用图像处理库自动将核心标题合成到封面图上，增强视觉冲击力\n7.AI整合文案、标签和图片资源，输出可直接发布的完整内容包",
+          "实用分": "45",
+          "所属场景": "写作助手",
+          "是否视频": false,
+          "模型能力": [
+            "图像生成",
+            "指令遵循王"
+          ],
+          "热度数值": "3587",
+          "用户痛点": "创作优质小红书笔记不仅需要文案灵感，更需具备平面设计技能。普通用户手动排版、制作封面和配图耗时漫长，且难以保证视觉美感，容易陷入创意枯竭。",
+          "示例Prompt": "帮我写一篇关于“夏季防晒霜测评”的小红书笔记，包含文案、封面和配图",
+          "能力跃迁": "1.6受限于组合式架构和基础指令遵循能力，在同时处理文案创作与图像生成的复杂指令时容易出现图文不符或指令遗漏；1.8凭借原生多模态端到端训练和大幅增强的指令遵循能力，能够精准理解图文关联，一次性生成风格匹配的文案与高质量配图。",
+          "豆包创意描述": "利用豆包多模态生成能力，实现从创意到发布的全流程自动化。支持智能撰写种草文案、自动设计吸睛封面及高清配图，风格完美契合平台调性，让内容运营高效轻松。",
+          "豆包创意标题": "小红书爆款内容一键生成",
+          "豆包标签": "内容创作, 多模态生成, 效率工具",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzAwODIyOTQ4Mw==&mid=2649446311&idx=1&sn=1d9065bf4bdc95013da46c014e7c8ebd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzAwODIyOTQ4Mw==&mid=2649446311&idx=1&sn=1d9065bf4bdc95013da46c014e7c8ebd"
+          },
+          "预览文件": [
+            {
+              "file_token": "Woo1bP8P1oVXtrx4kwBcqIdxnQg",
+              "name": "image.png",
+              "size": 319728,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=Woo1bP8P1oVXtrx4kwBcqIdxnQg",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/Woo1bP8P1oVXtrx4kwBcqIdxnQg/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVKfqG",
+        "record_id": "recv8hWZNVKfqG"
+      },
+      {
+        "fields": {
+          "Demo名称": "行文风格内化训练",
+          "Prompt描述": "要阅读范文，学习我的行文风格",
+          "实现步骤": "用户说：阅读我上传的这三篇散文，学习我的行文风格，然后用同样的风格写一篇关于秋天的文章\n1.AI接收用户上传的范文数据，进行文本清洗和分段预处理\n2.AI进行深度词法分析，提取高频词汇、成语使用习惯和专属名词\n3.AI分析句式结构特征，统计长短句比例、倒装句及修辞手法的使用频率\n4.AI识别文本的情感基调和语气特征，捕捉作者独特的表达韵味\n5.AI综合上述特征构建个性化风格模型，确立生成的语言规范\n6.AI基于学习到的风格模型，结合“秋天”主题生成文章初稿\n7.AI对比范文特征对初稿进行微调润色，确保行文风格高度一致",
+          "实用分": "42",
+          "所属场景": "写作助手",
+          "是否视频": false,
+          "模型能力": [
+            "指令遵循王",
+            "多模态输入"
+          ],
+          "热度数值": "3452",
+          "用户痛点": "人工分析和模仿特定行文风格，需要花费大量时间研读范文并拆解其修辞习惯。普通写作者很难捕捉语感精髓，且在长篇写作中极难保持风格的一致性，���易出现模仿走样。",
+          "示例Prompt": "阅读我上传的这三篇散文，学习我的行文风格，然后用同样的风格写一篇关于秋天的文章",
+          "能力跃迁": "1.6受限于组合式架构与基础指令遵循能力，对范文中细微的语感与隐含风格难以精准捕捉；1.8凭借原生端到端训练与大幅增强的指令遵循能力，能够深度拆解范文结构与语气，精准复刻并生成符合用户个人风格的内容。",
+          "豆包创意描述": "利用豆包深度文本分析能力，精准解析用户范文的行文特征。自动提取用词习惯、句式结构与语气韵味，实现写作风格的完美复刻，让AI生成的内容如同亲笔所写。",
+          "豆包创意标题": "个性化行文风格智能模仿",
+          "豆包标签": "风格迁移, 智能写作, 个性化定制",
+          "趣味分": "12",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzkyNTU5MTQxOQ==&mid=2247486901&idx=1&sn=d3ac979a20c8b4db0640fe886c7ea858",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzkyNTU5MTQxOQ==&mid=2247486901&idx=1&sn=d3ac979a20c8b4db0640fe886c7ea858"
+          },
+          "预览文件": [
+            {
+              "file_token": "OP9MbbotjoaulUx3ybzcMXANn9e",
+              "name": "image.png",
+              "size": 271485,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=OP9MbbotjoaulUx3ybzcMXANn9e",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/OP9MbbotjoaulUx3ybzcMXANn9e/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVAzaE",
+        "record_id": "recv8hWZNVAzaE"
+      },
+      {
+        "fields": {
+          "Demo名称": "公众号转小红书图文知识卡片生成",
+          "Prompt描述": "自动读取微信公众号内容，并生成精美的小红书图文知识分享卡片",
+          "实现步骤": "用户说：帮我把这篇公众号文章转换成小红书图文卡片，风格要清新，提取5个核心知识点\n1.AI解析公众号文章链接，利用爬虫技术提取正文内容、图片及元数据\n2.AI运用NLP模型深度阅读文章，提炼出5个核心知识点和关键金句\n3.AI根据小红书爆款逻辑，生成吸睛的封面标题和简练的卡片正文\n4.AI调用设计引擎匹配清新风格模板，自动规划排版布局和配色方案\n5.AI使用绘图库(如Pillow/Canvas)渲染卡片，将文字与背景图合成\n6.AI生成配套的笔记文案，自动添加Emoji表情、互动话术及热门标签\n7.AI输出整套高清图文卡片序列及文案，支持一键保存到本地",
+          "实用分": "42",
+          "所属场景": "一句话生成App",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3190",
+          "用户痛点": "人工将公众号长文转为小红书卡片，需耗时阅读并提炼精华，同时依赖专业设计软件进行排版。对于缺乏设计功底的用户，单篇制作往往耗时数小时，且难以保证美观度。",
+          "示例Prompt": "帮我把这篇公众号文章转换成小红书图文卡片，风格要清新，提取5个核心知识点",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，难以完美处理图文卡片复杂的布局样式代码；1.8凭借更规范的复杂代码输出能力，能够生成结构严谨、审美在线的卡片渲染代码，实现从公众号文章到小红书图片的自动化转换。",
+          "豆包创意描述": "利用豆包强大的文本理解与排版设计能力，将长篇公众号文章自动转化为小红书风格的图文卡片。支持智能提取核心知识点、自动匹配精美模板、生成种草文案，实现内容跨平台高效复用。",
+          "豆包创意标题": "公众号转小红书智能创作",
+          "豆包标签": "内容转化, 自动排版, 效率工具",
+          "趣味分": "24",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzMzQyMzUzNw==&mid=2247512276&idx=1&sn=0030207250a690cb647df714023d75e6",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzMzQyMzUzNw==&mid=2247512276&idx=1&sn=0030207250a690cb647df714023d75e6"
+          },
+          "预览文件": [
+            {
+              "file_token": "S0idbv68poz5d5x00jTc9qTcnZd",
+              "name": "20260113191301_rec_-convert.mp4",
+              "size": 26574709,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=S0idbv68poz5d5x00jTc9qTcnZd",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/S0idbv68poz5d5x00jTc9qTcnZd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVVzJL",
+        "record_id": "recv8hWZNVVzJL"
+      },
+      {
+        "fields": {
+          "Demo名称": "用户登录接口开发",
+          "Prompt描述": "帮我开发一个 Next.js 16 的用户登录接口",
+          "实现步骤": "用户说：用 Next.js 16 的 Server Actions 帮我写一个用户登录接口，包含密码加密和 JWT 验证\n1.AI初始化 Next.js 16 项目，配置 App Router 目录结构和 Prisma 数据库连接\n2.AI定义用户数据模型，设计包含邮箱、加密密码字段的 User 表结构\n3.AI引入 Zod 库编写表单验证 Schema，确保前端提交数据的格式正确性\n4.AI创建 Server Action 文件，编写异步登录处理函数，直接在服务端运行逻辑\n5.AI集成 Bcryptjs 库，比对用户输入的密码与数据库中的哈希密码是否匹配\n6.AI使用 Jose 库生成签名的 JWT Token，包含用户 ID、角色等 Payload 信息\n7.AI设置 HTTP-only Cookie 存储 Token，并返回登录成功状态及重定向路径",
+          "实用分": "45",
+          "所属场景": "一句话生成App",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "3113",
+          "用户痛点": "开发Next.js 16登录接口需要熟练掌握框架新特性及安全认证机制，从零搭建环境、编写后端逻辑到调试耗时数小时，且手动编码容易留下安全隐患。",
+          "示例Prompt": "用 Next.js 16 的 Server Actions 帮我写一个用户登录接口，包含密码加密和 JWT 验证",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在编写复杂接口时容易出现格式错误或逻辑遗漏；1.8凭借增强的代码生成规范性和稳定性，能够一次性输出结构清晰、符合Next.js 16标准的完整登录接口代码。",
+          "豆包创意描述": "利用 Next.js 16 的 Server Actions 和 App Router 特性，构建高性能的用户登录接口。集成 Zod 数据验证、Bcrypt 加密及 JWT 认证，确保数据安全与交互流畅，打造现代化的全栈认证方案。",
+          "豆包创意标题": "Next.js 16 安全登录系统",
+          "豆包标签": "后端开发, 身份认证, Next.js",
+          "趣味分": "15",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=Mzg2ODYyMDY1Ng==&mid=2247486172&idx=1&sn=bab30377cbca0f699dcfb019555aae11",
+            "text": "http://mp.weixin.qq.com/s?__biz=Mzg2ODYyMDY1Ng==&mid=2247486172&idx=1&sn=bab30377cbca0f699dcfb019555aae11"
+          },
+          "预览文件": [
+            {
+              "file_token": "CqRUbRPy0o7il0x5CmBcznEYnmg",
+              "name": "image.png",
+              "size": 177964,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=CqRUbRPy0o7il0x5CmBcznEYnmg",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/CqRUbRPy0o7il0x5CmBcznEYnmg/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVBZzf",
+        "record_id": "recv8hWZNVBZzf"
+      },
+      {
+        "fields": {
+          "Demo名称": "pdf文字提取",
+          "Prompt描述": "帮我从 report.pdf 提取文字",
+          "实现步骤": "用户说：帮我提取这份 report.pdf 里的所有文字内容，并保存为可编辑的文本格式\n1.AI加载PDF文件，分析文档属性，判断是原生文本还是扫描图片\n2.AI针对原生PDF，使用解析库直接提取页面内的文本流数据\n3.AI针对扫描版PDF，调用OCR引擎对页面图像进行高精度文字识别\n4.AI分析文档版面布局，识别多栏排版、表格及图片位置\n5.AI进行文本清洗，自动过滤页眉、页脚、页码等非正文干扰信息\n6.AI根据语义逻辑合并被强制换行的段落，还原自然阅读顺序\n7.AI将提取的文字内容结构化整理，保持原有标题层级\n8.AI输出最终的纯文本内容，提供复制或导出为TXT/Word文件的选项",
+          "实用分": "42",
+          "所属场景": "文档秒读",
+          "是否视频": false,
+          "模型能力": [
+            "多模态输入"
+          ],
+          "热度数值": "2362",
+          "用户痛点": "PDF文档通常难以直接编辑，手动复制粘贴常导致格式错乱或断行，后期排版修复耗时费力；若处理扫描版文件，更需人工逐字录入，工作量大且效率极低。",
+          "示例Prompt": "帮我提取这份 report.pdf 里的所有文字内容，并保存为可编辑的文本格式",
+          "能力跃迁": "1.6受限于组合式多模态架构，在处理图文混排或复杂排版的PDF时容易出现识别偏差或格式错乱；1.8凭借原生多模态端到端训练能力，能够直观理解文档结构与细节，显著提升文字提取的准确率和还原度。",
+          "豆包创意描述": "利用豆包文档解析与OCR识别能力，精准提取PDF文件中的文字内容。支持处理扫描件与电子文档，智能识别段落结构，自动去除页眉页脚干扰，快速还原可编辑文本。",
+          "豆包创意标题": "智能PDF文档内容提取",
+          "豆包标签": "文档处理, OCR识别, 办公效率",
+          "趣味分": "12",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzMzQyMzUzNw==&mid=2247512069&idx=1&sn=97bdd9fd99d8b73c9688c66904433936",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzMzQyMzUzNw==&mid=2247512069&idx=1&sn=97bdd9fd99d8b73c9688c66904433936"
+          },
+          "预览文件": [
+            {
+              "file_token": "AMCGbI0NxoZwHpx3pttcsR8SnOc",
+              "name": "image.png",
+              "size": 9621,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=AMCGbI0NxoZwHpx3pttcsR8SnOc",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/AMCGbI0NxoZwHpx3pttcsR8SnOc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVEfP8",
+        "record_id": "recv8hWZNVEfP8"
+      },
+      {
+        "fields": {
+          "Demo名称": "文章主旨思维导图生成",
+          "Prompt描述": "提取文章内容并创建这篇文章的思维导图",
+          "实现步骤": "用户说：帮我分析这篇文章，提取核心观点并生成一份清晰的思维导图\n1.AI接收文章内容，使用NLP技术进行分词和句法分析，识别文本层级\n2.AI利用摘要算法提取各段落核心观点，过滤冗余信息，保留关键论据\n3.AI构建逻辑树结构，定义根节点为文章标题，子节点为各级章节要点\n4.AI生成标准的Markdown思维导图语法（如Markmap格式），确立节点关系\n5.AI调用渲染引擎（如d3.js或Markmap-view），将文本结构转换为图形数据\n6.AI设计导图样式，自动调整节点布局和连线路径，确保视觉清晰美观\n7.AI输出交互式思维导图，支持节点折叠展开，并提供图片导出功能",
+          "实用分": "40",
+          "所属场景": "一句话生成App",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔",
+            "深度推理"
+          ],
+          "热度数值": "2175",
+          "用户痛点": "开发一款能自动分析文章结构并生成思维导图的应用，涉及复杂的自然语言处理算法和可视化开发技术，普通开发者难以在短时间内独立完成构建。",
+          "示例Prompt": "帮我分析这篇文章，提取核心观点并生成一份清晰的思维导图",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，提取复杂文章逻辑生成导图代码时容易出现层级混乱或语法错误；1.8凭借思考状态保留的深度推理和规范的代码输出能力，能够精准梳理文章结构，一次性生成逻辑严密且可直接运行的思维导图代码。",
+          "豆包创意描述": "利用豆包长文本理解能力，深度分析文章脉络。支持关键论点提取、层级结构梳理，自动转换为可视化思维导图，帮助用户快速掌握核心内容，实现从文本到图形的智能跃迁。",
+          "豆包创意标题": "智能文章思维导图生成",
+          "豆包标签": "文档解析, 思维导图, 知识可视化",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIzMzQyMzUzNw==&mid=2247512534&idx=1&sn=4f5897e26bd605db992cbb8797509edc",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIzMzQyMzUzNw==&mid=2247512534&idx=1&sn=4f5897e26bd605db992cbb8797509edc"
+          },
+          "预览文件": [
+            {
+              "file_token": "J6yqbxDLzoGfhAxr54YclObtnMg",
+              "name": "20260113194421_rec_.mp4",
+              "size": 4685184,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=J6yqbxDLzoGfhAxr54YclObtnMg",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/J6yqbxDLzoGfhAxr54YclObtnMg/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVF6ry",
+        "record_id": "recv8hWZNVF6ry"
+      },
+      {
+        "fields": {
+          "Demo名称": "知识梳理结构图生成器",
+          "Prompt描述": "深度调查《红楼梦》里人物之间的关系，然后做个结构图 PDF",
+          "实现步骤": "用户说：帮我梳理《红楼梦》里贾府的主要人物关系，并生成一张PDF格式的关系结构图\n1.AI加载《红楼梦》文本，利用NLP技术进行命名实体识别，提取主要人物角色\n2.AI分析人物交互上下文，抽取亲属、主仆、联姻等关系三元组数据\n3.AI构建人物关系网络，使用图数据结构存储节点信息与连接权重\n4.AI调用Graphviz布局算法，自动计算节点位置，优化连线路径以减少交叉\n5.AI根据家族归属（荣国府、宁国府等）对节点进行分类着色，增强视觉区分度\n6.AI渲染生成矢量格式的关系结构图，添加必要的图例说明\n7.AI使用PDF生成库将可视化图表整合，输出标准PDF文档供下载",
+          "实用分": "38",
+          "所属场景": "一句话做表格",
+          "是否视频": false,
+          "模型能力": [
+            "深度推理",
+            "代码狂魔"
+          ],
+          "热度数值": "2094",
+          "用户痛点": "人工梳理《红楼梦》中数百位人物的复杂关系极其耗时，需要反复查阅原著确认细节。手动绘制结构图时，排版布局繁琐且容易出错，难以在短时间内清晰呈现庞大的关系网。",
+          "示例Prompt": "帮我梳理《红楼梦》里贾府的主要人物关系，并生成一张PDF格式的关系结构图",
+          "能力跃迁": "1.6受限于推理链完整度和长代码生成稳定性，难以梳理错综复杂的人物关系并生成无误的PDF绘图代码；1.8凭借思考状态保留和更规范的代码输出能力，能精准解析庞大关系网并一次性编写出可运行的结构图生成程序。",
+          "豆包创意描述": "利用豆包长文本理解与知识图谱构建能力，深度梳理《红楼梦》错综复杂的人物关系。自动生成可视化家族谱系与社交网络图，支持一键导出高清PDF，助你轻松理清原著脉络。",
+          "豆包创意标题": "红楼梦人物关系智能图谱",
+          "豆包标签": "知识图谱, 数据可视化, 文档处理",
+          "趣味分": "32",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550754&idx=1&sn=98c6e301869ed4199db57e20c31bfcd7&chksm=f2c2ec9b8b3160a5e93109a3ea193b55bdee9efdd11b62c12834cfba9aab6579a4e7e48247bd#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550754&idx=1&sn=98c6e301869ed4199db57e20c31bfcd7&chksm=f2c2ec9b8b3160a5e93109a3ea193b55bdee9efdd11b62c12834cfba9aab6579a4e7e48247bd#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "WCazbBShqo0FKHxVhl7c5emInJb",
+              "name": "image.png",
+              "size": 197816,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=WCazbBShqo0FKHxVhl7c5emInJb",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/WCazbBShqo0FKHxVhl7c5emInJb/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVxkwi",
+        "record_id": "recv8hWZNVxkwi"
+      },
+      {
+        "fields": {
+          "Demo名称": "知识梳理结构图生成器",
+          "Prompt描述": "调研春秋战国七雄关系",
+          "实现步骤": "用户说：帮我深度调研春秋战国时期七雄之间的外交与军事关系，梳理各国的结盟与对抗历史\n1.AI检索春秋战国历史语料库，利用NER技术精准提取七国及关键人物实体\n2.AI进行关系抽取，识别各国间的战争（如长平之战）、结盟及联姻等关键事件\n3.AI构建时序知识图谱，按时间轴梳理从三家分晋到秦灭六国的演变过程\n4.AI分析地缘政治数据，结合地理位置评估各国地缘战略对外交关系的影响\n5.AI深度解析合纵连横策略，关联苏秦、张仪等谋士的游说路径与成效\n6.AI生成动态关系矩阵，分类展示不同时期各国敌对、同盟状态的变化\n7.AI输出结构化调研报告，包含关系演变图解与核心博弈逻辑总结",
+          "实用分": "38",
+          "所属场景": "写作助手",
+          "是否视频": false,
+          "模型能力": [
+            "深度推理"
+          ],
+          "热度数值": "2094",
+          "用户痛点": "梳理春秋战国七���错综复杂的历史关系，需要翻阅大量史籍资料，人工筛选、交叉验证并整理成文耗时极长，且极易因信息碎片化导致逻辑梳理混乱。",
+          "示例Prompt": "帮我深度调研春秋战国时期七雄之间的外交与军事关系，梳理各国的结盟与对抗历史",
+          "能力跃迁": "1.6受限于推理链长度和深度的局限，面对错综复杂的历史关系网容易出现逻辑断层或仅能进行浅层罗列；1.8凭借思考状态保留和更完整的推理链能力，能够深度剖析七国间的地缘政治与外交博弈，输出逻辑严密、脉络清晰的调研报告。",
+          "豆包创意描述": "利用豆包海量历史知识库，深度梳理战国七雄错综复杂的政治军事关系。支持盟约、战争、联姻等多维度分析，清晰呈现合纵连横的大国博弈脉络，辅助历史研究与学习。",
+          "豆包创意标题": "战国七雄博弈深度解析",
+          "豆包标签": "历史研究, 知识图谱, 关系分析",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550754&idx=1&sn=98c6e301869ed4199db57e20c31bfcd7&chksm=f2c2ec9b8b3160a5e93109a3ea193b55bdee9efdd11b62c12834cfba9aab6579a4e7e48247bd#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550754&idx=1&sn=98c6e301869ed4199db57e20c31bfcd7&chksm=f2c2ec9b8b3160a5e93109a3ea193b55bdee9efdd11b62c12834cfba9aab6579a4e7e48247bd#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "VobabmNKwoM1k6x70A4c2IxGn6c",
+              "name": "image.png",
+              "size": 294154,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=VobabmNKwoM1k6x70A4c2IxGn6c",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/VobabmNKwoM1k6x70A4c2IxGn6c/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVKwwP",
+        "record_id": "recv8hWZNVKwwP"
+      },
+      {
+        "fields": {
+          "Demo名称": "知识梳理结构图生成器",
+          "Prompt描述": "研究 Kubernetes 架构并生成技术架构图",
+          "实现步骤": "用户说：帮我分析Kubernetes的核心架构，并用Mermaid生成一份详细的技术架构图\n1.AI检索Kubernetes技术文档，识别Control Plane和Worker Node的核心组件列表\n2.AI梳理组件间通信协议，确定API Server作为中心枢纽的数据流向关系\n3.AI规划图表布局，使用子图（Subgraph）逻辑区分Master节点与Node节点区域\n4.AI编写Mermaid代码定义组件节点，包括Etcd、Scheduler、Controller Manager等\n5.AI绘制Kubelet、Kube-proxy与容器运行时的交互连线，标注通信端口\n6.AI添加网络（CNI）与存储（CSI）接口层的抽象表示，完善系统边界\n7.AI输出完整的Mermaid脚本代码并渲染为架构图，提供清晰的系统全景视角",
+          "实用分": "42",
+          "所属场景": "一句话出图",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "2094",
+          "用户痛点": "深入理解Kubernetes复杂组件关系门槛高，手动绘制架构图不仅需精通专业绘图工具，还需花费大量时间调整排版，难以兼顾技术准确性与美观度。",
+          "示例Prompt": "帮我分析Kubernetes的核心架构，并用Mermaid生成一份详细的技术架构图",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在构建复杂的Kubernetes架构绘图代码时容易出现格式错误或逻辑遗漏；1.8凭借更稳定的代码输出和规范性，能够一次性生成语法精准、结构完整的架构图代码，准确还原技术细节。",
+          "豆包创意描述": "利用豆包技术知识库与绘图代码生成能力，深度解析Kubernetes集群架构。自动梳理Master与Node组件关系，生成标准Mermaid架构图，直观展示API Server、Etcd等核心组件交互逻辑。",
+          "豆包创意标题": "Kubernetes架构智能可视化",
+          "豆包标签": "架构分析, 可视化, Kubernetes",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550754&idx=1&sn=98c6e301869ed4199db57e20c31bfcd7&chksm=f2c2ec9b8b3160a5e93109a3ea193b55bdee9efdd11b62c12834cfba9aab6579a4e7e48247bd#rd",
+            "text": "http://mp.weixin.qq.com/s?__biz=MzIyODI1MzYyNA==&mid=2653550754&idx=1&sn=98c6e301869ed4199db57e20c31bfcd7&chksm=f2c2ec9b8b3160a5e93109a3ea193b55bdee9efdd11b62c12834cfba9aab6579a4e7e48247bd#rd"
+          },
+          "预览文件": [
+            {
+              "file_token": "CMmMbkak3o3s1mxjuRJcEt7HnFb",
+              "name": "image.png",
+              "size": 554613,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=CMmMbkak3o3s1mxjuRJcEt7HnFb",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/CMmMbkak3o3s1mxjuRJcEt7HnFb/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVJvHR",
+        "record_id": "recv8hWZNVJvHR"
+      },
+      {
+        "fields": {
+          "Demo名称": "文档PPT图片可视化转换",
+          "Prompt描述": "从文档到PPT图片，渐变毛玻璃卡片风格",
+          "实现步骤": "用户说：把这份产品介绍文档转成渐变毛玻璃风格的PPT卡片图片\n1.AI解析文档内容，提取标题、正文及关键列表信息\n2.AI根据内容情感分析，匹配冷暖色调的线性渐变背景\n3.AI构建卡片布局，计算合适的宽高比以适配PPT尺寸\n4.AI应用Glassmorphism设计语言，通过背景模糊和半透明度实现毛玻璃质感\n5.AI进行智能排版，选择现代无衬线字体并优化行间距\n6.AI添加细腻的投影和边框高光，增强卡片的立体感与层级\n7.AI渲染最终画面，输出高分辨率PNG格式图片供PPT使用",
+          "实用分": "44",
+          "所属场景": "一句话做PPT",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "219",
+          "用户痛点": "将长文档手动转化为PPT，需要人工梳理逻辑并提炼关键信息。制作渐变毛玻璃等高级视觉风格门槛较高，需反复调整配色与排版，耗时费力且难保美观。",
+          "示例Prompt": "把这份产品介绍文档转成渐变毛玻璃风格的PPT卡片图片",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在编写复杂的CSS样式或绘图逻辑时容易出现格式错误，难以精准还原渐变毛玻璃等高级视觉效果；1.8凭借更稳定的代码生成能力和增强的指令遵循，能够一次性输出规范、复杂的样式代码，完美呈现高质感的卡片设计。",
+          "豆包创意描述": "利用豆包智能排版与渲染能力，将文档内容一键转化为渐变毛玻璃风格PPT卡片。支持智能配色、磨砂质感调节与自动布局，生成的图片极具设计感，让演示文稿瞬间提升格调。",
+          "豆包创意标题": "文档智能转毛玻璃PPT卡片",
+          "豆包标签": "视觉设计, 文档处理, 效率工具",
+          "趣味分": "38",
+          "链接": {
+            "link": "http://weibo.com/6182606334/Qmuqab6UL",
+            "text": "http://weibo.com/6182606334/Qmuqab6UL"
+          },
+          "预览文件": [
+            {
+              "file_token": "J7txbFz4Loxiozx60cXcDi5dnvc",
+              "name": "20260113202813_rec_.mp4",
+              "size": 6320902,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=J7txbFz4Loxiozx60cXcDi5dnvc",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/J7txbFz4Loxiozx60cXcDi5dnvc/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVVLeW",
+        "record_id": "recv8hWZNVVLeW"
+      },
+      {
+        "fields": {
+          "Demo名称": "字幕转笔记",
+          "Prompt描述": "你是专业的字幕文本处理助手,任务是将SRT字幕完整转换为Markdown笔记,并添加标点、段落格式和必要的截图占位符。",
+          "实现步骤": "用户说：帮我把这个SRT字幕文件转换成Markdown格式的笔记，要分好段落并加上标点\n1.AI读取SRT文件内容，使用正则表达式提取时间轴和纯文本数据\n2.AI利用NLP技术处理文本流，合并碎片化短句并恢复缺失的标点符号\n3.AI分析上下文语义连贯性，识别话题转换点，进行智能分段处理\n4.AI根据时间跨度和内容关键程度，在合适位置插入截图占位符标记\n5.AI应用Markdown语法规范，自动生成层级标题和列表结构\n6.AI进行全文格式校对，优化排版布局，确保阅读体验流畅\n7.AI输出最终的Markdown文档，支持直接复制或导出为.md文件",
+          "实用分": "42",
+          "所属场景": "文档秒读",
+          "是否视频": false,
+          "模型能力": [
+            "指令遵循王"
+          ],
+          "热度数值": "39190",
+          "用户痛点": "SRT字幕包含大量时间轴且缺乏标点，阅读体验差。人工整理笔记需逐行清洗数据、补充标点并重新分段，面对长视频字幕，这种重复性文本处理工作耗时极长且枯燥乏味。",
+          "示例Prompt": "帮我把这个SRT字幕文件转换成Markdown格式的笔记，要分好段落并加上标点",
+          "能力跃迁": "1.6受限于复杂指令遵循的精准度，在处理长字幕转换为Markdown时，容易遗漏标点优化或截图占位符等特定格式要求；1.8凭借大幅增强的指令遵循能力，能够严格执行多重格式化指令，输出结构严谨、细节完美的Markdown笔记。",
+          "豆包创意描述": "利用豆包文本理解能力，将SRT字幕转换为结构化Markdown笔记。自动补全标点符号，智能划分段落，并根据内容插入截图占位符，将碎片化字幕整理为清晰易读的文档。",
+          "豆包创意标题": "SRT字幕智能整理助手",
+          "豆包标签": "文档处理, 智能改写, 效率提升",
+          "趣味分": "16",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115852515018899/",
+            "text": "http://www.bilibili.com/video/av115852515018899/"
+          },
+          "预览文件": [
+            {
+              "file_token": "MCxJb58f6oXgQCx2GpIci6CXnbS",
+              "name": "image.png",
+              "size": 111533,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=MCxJb58f6oXgQCx2GpIci6CXnbS",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/MCxJb58f6oXgQCx2GpIci6CXnbS/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVJQxB",
+        "record_id": "recv8hWZNVJQxB"
+      },
+      {
+        "fields": {
+          "Demo名称": "同风格创作灵感定制",
+          "Prompt描述": "我是视频作者,你是我的\"灵感助理\",以下是我往期的数据较好的往期视频,请提供更多的类似10-15个灵感。",
+          "实现步骤": "用户说：我是科技区UP主，这是我上个月数据最好的5个视频，帮我生成15个新的选题灵感\n1.AI接收用户提供的往期热门视频列表，提取标题、标签及核心内容特征\n2.AI运用NLP技术分析爆款视频的共性，识别受众偏好的主题模式与叙事结构\n3.AI检索当前全网相关领域的实时热点与上升期话题\n4.AI将往期成功元素与当前热点进行交叉融合，构建创意生成模型\n5.AI基于思维链技术进行选题裂变，批量生成15个差异化的视频选题\n6.AI为每个选题生成吸引人的封面文案与简要脚本大纲\n7.AI输出结构化的灵感清单，并附带推荐理由与预期效果分析",
+          "实用分": "45",
+          "所属场景": "写作助手",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "39190",
+          "用户痛点": "视频创作者常面临选题枯竭困境，人工复盘往期数据难以精准提取爆款逻辑，且手动调研市场、构思十余个符合受众喜好的高质量选题耗时耗力，容易陷入思维定势。",
+          "示例Prompt": "我是科技区UP主，这是我上个月数据最好的5个视频，帮我生成15个新的选题灵感",
+          "能力跃迁": "1.8凭借原生多模态和增强的Agent能力，可以更高效地完成此类任务。",
+          "豆包创意描述": "利用豆包强大的内容分析与创意生成能力，深度解析往期热门视频数据。支持风格复刻、热点关联、多维度选题裂变，一键生成10-15个高潜爆款灵感，彻底解决创作枯竭难题。",
+          "豆包创意标题": "爆款视频灵感智能推荐",
+          "豆包标签": "创意生成, 内容运营, 数据分析",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115852515018899/",
+            "text": "http://www.bilibili.com/video/av115852515018899/"
+          },
+          "预览文件": [
+            {
+              "file_token": "AMNebxErpoKQExxo4OSchIySn2b",
+              "name": "image.png",
+              "size": 173089,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=AMNebxErpoKQExxo4OSchIySn2b",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/AMNebxErpoKQExxo4OSchIySn2b/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV0aOc",
+        "record_id": "recv8hWZNV0aOc"
+      },
+      {
+        "fields": {
+          "Demo名称": "报研ppt生成",
+          "Prompt描述": "请你调研AICoding行业现状,结合资料帮我生成一份AICoding行业研究报告PPT",
+          "实现步骤": "用户说：帮我调研AICoding行业现状，生成一份行业研究报告PPT\n1.AI执行联网搜索，聚合GitHub Copilot、Cursor等主流产品的最新动态、融资数据及用户反馈\n2.AI阅读并解析多份行业白皮书与技术博客，提取市场规模、技术路线、核心痛点等关键信息\n3.AI构建研报逻辑框架，规划包含宏观环境、市场现状、竞争格局、未来趋势的PPT大纲\n4.AI撰写各页面详细内容，提炼关键观点，并设计对应的数据可视化图表方案\n5.AI调用python-pptx库初始化演示文稿，配置专业的商务风格母版与配色方案\n6.AI自动生成幻灯片页面，将文本填充至对应区域，并绘制市场份额饼图与增长趋势折线图\n7.AI进行整体排版优化，调整字体大小与元素间距，输出最终的AICoding行业研究报告PPT文件",
+          "实用分": "46",
+          "所属场景": "一句话做PPT",
+          "是否视频": true,
+          "模型能力": [
+            "工具达人",
+            "深度推理",
+            "代码狂魔"
+          ],
+          "热度数值": "21420",
+          "用户痛点": "撰写行业报告需要耗费大量时间搜集整理分散的行业数据，且从内容梳理到PPT排版设计，涉及繁琐的格式调整与图表制作，容易将精力浪费在形式而非深度分析上。",
+          "示例Prompt": "帮我调研AICoding行业现状，生成一份行业研究报告PPT",
+          "能力跃迁": "1.6受限于基础工具调用易断链和推理状态难以保持，在跨平台调研并整合信息生成PPT的复杂多步任务中容易失败；1.8凭借思考与工具一体化的新能力，能深度整合调研信息并保持推理连贯性，精准生成高质量的行业报告PPT代码。",
+          "豆包创意描述": "利用豆包联网搜索与智能分析能力，全方位调研AICoding行业现状。支持多源数据聚合、市场趋势洞察、竞争格局梳理，一键生成结构化专业PPT报告，极大提升行研效率。",
+          "豆包创意标题": "AICoding行业深度研报生成",
+          "豆包标签": "行业研究, PPT生成, 智能调研",
+          "趣味分": "22",
+          "链接": {
+            "link": "http://www.bilibili.com/video/BV1jdm9BhEPN/",
+            "text": "http://www.bilibili.com/video/BV1jdm9BhEPN/"
+          },
+          "预览文件": [
+            {
+              "file_token": "HImHbL4LwoyhH9x6IQ9cewl9nPb",
+              "name": "20260113210715_rec_.mp4",
+              "size": 3945601,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=HImHbL4LwoyhH9x6IQ9cewl9nPb",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/HImHbL4LwoyhH9x6IQ9cewl9nPb/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV3h3H",
+        "record_id": "recv8hWZNV3h3H"
+      },
+      {
+        "fields": {
+          "Demo名称": "报研ppt生成",
+          "Prompt描述": "请你调研AICoding行业现状,结合资料帮我\n生成一份AICoding行业研究报告PPT",
+          "实现步骤": "用户说：请你调研AICoding行业现状,结合资料帮我生成一份AICoding行业研究报告PPT\n1.AI拆解研究目标，通过联网搜索获取AICoding行业的市场规模、投融资动态及主要玩家信息\n2.AI清洗和整理多源数据，提取关键指标，构建行业发展时间轴和产业链图谱\n3.AI规划PPT大纲结构，包含行业背景、市场现状、技术趋势、竞争格局及未来展望等章节\n4.AI撰写各页面详细文案，自动生成SWOT分析内容和市场增长预测数据\n5.AI选择商务科技风格模板，利用Python-pptx库构建PPT页面布局和层级\n6.AI根据数据内容自动生成对应的柱状图、饼图等可视化图表配置\n7.AI整合所有页面与图表，输出完整的PPT文件供用户下载和演示",
+          "实用分": "46",
+          "所属场景": "一句话做PPT",
+          "是否视频": true,
+          "模型能力": [
+            "深度推理",
+            "指令遵循王"
+          ],
+          "热度数值": "21420",
+          "用户痛点": "搜集行业资料并提炼观点耗时费力，制作PPT时需兼顾大纲梳理、排版设计和美化，从零完成一份专业行研报告往往需要数天，且容易陷入繁琐的格式调整中。",
+          "示例Prompt": "帮我调研AICoding行业现状，并生成一份包含市场规模、竞争格局的行业研究报告PPT",
+          "能力跃迁": "1.6受限于有限的推理深度和上下文管理能力，在处理复杂的行业调研数据时难以提炼核心洞察，且容易在生成长篇PPT大纲时遗漏格式要求；1.8凭借保留思考状态的深度推理能力和大幅增强的指令遵循能力，能够精准分析行业趋势，并生成逻辑严密、格式规范的PPT报告。",
+          "豆包创意描述": "利用豆包联网搜索与智能分析能力，自动调研AICoding行业现状。支持多源数据整合、市场格局梳理、趋势预测分析，一键生成结构清晰、内容专业的行业研究报告PPT，大幅提升研报制作效率。",
+          "豆包创意标题": "AICoding行业研报智能生成",
+          "豆包标签": "行业调研, PPT生成, 效率工具",
+          "趣味分": "33",
+          "链接": {
+            "link": "http://www.bilibili.com/video/BV1jdm9BhEPN/",
+            "text": "http://www.bilibili.com/video/BV1jdm9BhEPN/"
+          },
+          "预览文件": [
+            {
+              "file_token": "RdhAb8mE8ogUofxL4RBcXhtTnOh",
+              "name": "20260113211424_rec_.mp4",
+              "size": 1791248,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=RdhAb8mE8ogUofxL4RBcXhtTnOh",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/RdhAb8mE8ogUofxL4RBcXhtTnOh/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVO9ij",
+        "record_id": "recv8hWZNVO9ij"
+      },
+      {
+        "fields": {
+          "Demo名称": "特定格式文件定制生成",
+          "Prompt描述": "请使用json-canvas根据以下内容创建Canvas文件,使用中文,文件保存在DEMO目录下,名称为:official_maps.canvas",
+          "实现步骤": "用户说：帮我根据这些内容创建一个Canvas文件，用中文，保存在DEMO目录下，名为official_maps.canvas\n1.AI解析用户输入的内容文本，提取核心概念实体及它们之间的逻辑关系\n2.AI依据json-canvas协议规范，设计节点(Nodes)与连线(Edges)的数据结构\n3.AI创建节点对象，填充中文文本内容，并设置节点的类型（如文本、文件、链接）\n4.AI应用智能布局算法，计算每个节点的x、y坐标及宽高，确保画布布局美观\n5.AI建立节点间的连接关系，生成带方向的Edge数据，清晰展示逻辑流向\n6.AI将生成的对象序列化为标准的JSON格式字符串，进行语法校验\n7.AI调用文件写入接口，在DEMO目录下生成名为official_maps.canvas的文件",
+          "实用分": "46",
+          "所属场景": "一句话生成App",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔",
+            "指令遵循王"
+          ],
+          "热度数值": "12382",
+          "用户痛点": "手动编写符合json-canvas规范的代码文件，需要掌握编程语言和复杂的数据结构。构建节点逻辑与调试格式不仅技术门槛高，且极易因细微语法错误导致文件无法读取，费时费力。",
+          "示例Prompt": "帮我根据这些内容创建一个Canvas文件，用中文，保存在DEMO目录下，名为official_maps.canvas",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在生成复杂的JSON-Canvas数据结构时容易出现格式错误，或在多重约束下遗漏文件命名等指令；1.8凭借增强的指令遵循能力和更稳定的代码输出，可以一次性生成语法精准的JSON文件，并严格遵守中文、目录及文件名等所有要求。",
+          "豆包创意描述": "利用豆包结构化数据处理能力，自动生成符合json-canvas规范的可视化文件。支持节点自动布局、中文内容填充、自定义文件路径与名称，一键构建清晰直观的知识图谱。",
+          "豆包创意标题": "智能Canvas可视化图谱生成",
+          "豆包标签": "可视化, 知识管理, 结构化数据",
+          "趣味分": "34",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115874342181582",
+            "text": "http://www.bilibili.com/video/av115874342181582"
+          },
+          "预览文件": [
+            {
+              "file_token": "VI2cbZSmHoMHBwxGFNscRPCInSf",
+              "name": "image.png",
+              "size": 92254,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=VI2cbZSmHoMHBwxGFNscRPCInSf",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/VI2cbZSmHoMHBwxGFNscRPCInSf/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNV31Jk",
+        "record_id": "recv8hWZNV31Jk"
+      },
+      {
+        "fields": {
+          "Demo名称": "特定格式文件定制生成",
+          "Prompt描述": "Excalidraw格式的布局结构图",
+          "实现步骤": "用户说：帮我画一个电商系统的架构图，用Excalidraw手绘风格，包含前端、后端和数据库\n1.AI分析用户描述，提取系统架构组件（前端、后端、数据库）及其依赖关系\n2.AI规划布局算法，计算各组件在画布上的坐标位置，采用分层或网格布局\n3.AI构建Excalidraw元素对象，定义矩形容器代表各系统模块，设置strokeSharpness为round\n4.AI生成文本元素，将组件名称居中放置在矩形容器内，配置手绘字体样式\n5.AI创建连接线元素，计算起点与终点坐标，设置箭头样式以表示数据流向\n6.AI应用随机化参数（roughness），为所有线条添加独特的手绘抖动效果\n7.AI组装完整的Excalidraw JSON数据结构，包含elements数组和appState配置，供用户直接导入",
+          "实用分": "46",
+          "所属场景": "一句话出图",
+          "是否视频": false,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "12382",
+          "用户痛点": "手动绘制复杂的布局结构图，需要逐一拖拽组件、调整连线和对齐元素，构思排版耗费大量精力。对于非专业设计者，很难快速画出逻辑清晰且美观的手绘风格图表。",
+          "示例Prompt": "帮我画一个电商系统的架构图，用Excalidraw手绘风格，包含前端、后端和数据库",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在构建Excalidraw复杂的JSON数据结构时容易出现语法错误或内容截断；1.8凭借更强的代码输出规范性和稳定性，可以精准生成结构严谨、无语法错误的复杂布局文件，确保文件能被软件直接识别打开。",
+          "豆包创意描述": "利用豆包结构化数据生成能力，自动构建Excalidraw格式布局图。支持节点自动排版、连线逻辑处理和手绘风格渲染，一键导出.excalidraw文件，让架构设计图更具艺术感与亲和力。",
+          "豆包创意标题": "Excalidraw手绘风架构图",
+          "豆包标签": "可视化, 架构设计, 绘图工具",
+          "趣味分": "38",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115874342181582",
+            "text": "http://www.bilibili.com/video/av115874342181582"
+          },
+          "预览文件": [
+            {
+              "file_token": "Vn5BbC3k0oSiL7xXOjycNZ6KnKd",
+              "name": "image.png",
+              "size": 56668,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=Vn5BbC3k0oSiL7xXOjycNZ6KnKd",
+              "type": "image/png",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/Vn5BbC3k0oSiL7xXOjycNZ6KnKd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVoUbJ",
+        "record_id": "recv8hWZNVoUbJ"
+      },
+      {
+        "fields": {
+          "Demo名称": "特定格式文件定制生成",
+          "Prompt描述": "Mermaid格式的思维框架图",
+          "实现步骤": "用户说：帮我梳理这份项目计划，生成Mermaid格式的思维框架图\n1.AI运用NLP技术分析用户输入的文本内容，提取核心概念与层级关系\n2.AI构建逻辑树结构，确定节点间的父子或关联关系\n3.AI选择最适合的Mermaid图表类型（如Mindmap或Flowchart）\n4.AI生成符合语法的Mermaid代码，定义节点ID、标签及连接线方向\n5.AI处理特殊字符转义与布局优化，确保代码语法的正确性\n6.AI调用Mermaid.js库对生成的代码字符串进行解析\n7.AI将解析结果实时渲染为SVG矢量图形，直观展示思维框架",
+          "实用分": "45",
+          "所属场景": "一句话生成App",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "12382",
+          "用户痛点": "开发一个能够解析并展示Mermaid思维导图的应用程序，需要掌握前端代码及专业图表库集成技术，从零构建到调试运行耗时漫长，非技术人员难以独立实现。",
+          "示例Prompt": "帮我梳理这份项目计划，生成Mermaid格式的思维框架图",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在构建复杂思维导图时容易出现Mermaid语法格式错误，导致图表无法渲染；1.8凭借更规范的代码输出能力，能够精准处理复杂的节点嵌套与连接关系，一次性生成可直接使用的Mermaid思维框架图代码。",
+          "豆包创意描述": "利用豆包逻辑推理与代码生成能力，将复杂文本转化为Mermaid可视化图表。支持思维导图、流程图自动构建，实时渲染预览，让抽象逻辑结构化呈现，提升沟通效率。",
+          "豆包创意标题": "智能思维框架图生成器",
+          "豆包标签": "可视化工具, 逻辑梳理, 代码生成",
+          "趣味分": "30",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115874342181582",
+            "text": "http://www.bilibili.com/video/av115874342181582"
+          },
+          "预览文件": [
+            {
+              "file_token": "NDnKb6lBGokSLtxKUsncBzv2nPd",
+              "name": "20260113213034_rec_.mp4",
+              "size": 920543,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=NDnKb6lBGokSLtxKUsncBzv2nPd",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/NDnKb6lBGokSLtxKUsncBzv2nPd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVWfHW",
+        "record_id": "recv8hWZNVWfHW"
+      },
+      {
+        "fields": {
+          "Demo名称": "爆款标题生成器",
+          "Prompt描述": "你是一位资深的新媒体运营专家,拥有10年微信公众号运营经验,擅长编排标题,深谙用户心理和平台算法",
+          "实现步骤": "用户说：我写了一篇关于“职场新人如何向上管理”的文章，帮我起5个吸引点击的爆款标题\n1.AI分析用户输入的主题，提取“职场”、“向上管理”、“新人”等核心关键词\n2.AI调用新媒体心理学模型，分析目标受众的焦虑点和渴望点\n3.AI结合平台推荐算法逻辑，运用悬念、反差、数字等高点击率句式\n4.AI生成首批候选标题，涵盖痛点直击、干货分享、情绪共鸣等不同风格\n5.AI对标题进行拟人化润色，确保语气符合资深运营专家的专业感\n6.AI解析每个标题背后的用户心理机制（如损失厌恶、好奇心驱动）\n7.AI输出5个精选爆款标题，并附带针对性的封面图设计建议",
+          "实用分": "46",
+          "所属场景": "写作助手",
+          "是否视频": true,
+          "模型能力": [
+            "指令遵循王"
+          ],
+          "热度数值": "10147",
+          "用户痛点": "撰写高点击率标题需要深谙用户心理和平台推荐机制，普通运营者缺乏经验积累，常陷入灵感枯竭，反复打磨标题耗时费力，且难以预判最终的传播效果。",
+          "示例Prompt": "我写了一篇关于“职场新人如何向上管理”的文章，帮我起5个吸引点击的爆款标题",
+          "能力跃迁": "1.6受限于基础指令遵循能力，在维持“资深专家”复杂人设时容易出现风格漂移，对抽象的用户心理把握不够精准；1.8凭借大幅增强的指令遵循能力，能够深度还原专家思维模式，始终基于平台算法逻辑产出高转化率的标题与策略。",
+          "豆包创意描述": "利用豆包深度角色扮演能力，化身10年经验新媒体专家。深入分析选题痛点，结合用户心理与算法机制，批量生成高点击率爆款标题，助你轻松打造10W+爆文。",
+          "豆包创意标题": "公众号爆款标题生成专家",
+          "豆包标签": "新媒体运营, 标题优化, 爆文助手",
+          "趣味分": "15",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115774584914249/",
+            "text": "http://www.bilibili.com/video/av115774584914249/"
+          },
+          "预览文件": [
+            {
+              "file_token": "OLjBbAHJeoqJRTxwupQcuLYPn5c",
+              "name": "20260113214609_rec_.mp4",
+              "size": 1087537,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=OLjBbAHJeoqJRTxwupQcuLYPn5c",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/OLjBbAHJeoqJRTxwupQcuLYPn5c/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVVE0P",
+        "record_id": "recv8hWZNVVE0P"
+      },
+      {
+        "fields": {
+          "Demo名称": "数据表结构速览",
+          "Prompt描述": "帮我连接数据库查看系统用户表结构",
+          "实现步骤": "用户说：帮我连接测试环境的MySQL数据库，查看user_accounts表的字段定义和索引结构\n1.AI分析用户意图，提取数据库类型(MySQL)、表名(user_accounts)及连接需求\n2.AI生成Python代码，使用PyMySQL或SQLAlchemy库建立数据库连接\n3.AI查询information_schema系统库，获取目标表的列定义和数据类型\n4.AI执行SHOW INDEX语句，提取主键、唯一索引和普通索引信息\n5.AI分析外键约束，识别与其他表的关联关系\n6.AI将获取的元数据整理为清晰的结构化对象\n7.AI输出Markdown格式的表结构文档，包含字段列表和建表语句",
+          "实用分": "42",
+          "所属场景": "一句话生成App",
+          "是否视频": true,
+          "模型能力": [
+            "工具达人",
+            "代码狂魔"
+          ],
+          "热度数值": "9776",
+          "用户痛点": "开发一个连接数据库并展示表结构的工具，需要掌握全栈开发技能，手动编写后端连接代码与前端界面不仅耗时，还需复杂的环境配置，普通用户难以独立完成。",
+          "示例Prompt": "帮我连接测试环境的MySQL数据库，查看user_accounts表的字段定义和索引结构",
+          "能力跃迁": "1.6受限于基础工具调用能力，多步操作容易断链，且难以保持数据库连接状态；1.8凭借思考+工具一体化及状态保留能力，可以稳定编写连接代码、维持会话并准确查询表结构，实现全流程自动化。",
+          "豆包创意描述": "利用豆包代码生成与数据库交互能力，快速连接数据库并解析表结构。支持字段类型识别、主外键关系展示、DDL语句反向生成，帮助开发者高效理解和管理数据模型。",
+          "豆包创意标题": "智能数据库结构解析助手",
+          "豆包标签": "数据库管理, 结构分析, 开发工具",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115768662426001/",
+            "text": "http://www.bilibili.com/video/av115768662426001/"
+          },
+          "预览文件": [
+            {
+              "file_token": "IbZWbnL3moPvy2xzBL8cNlnjnYE",
+              "name": "20260113214829_rec_.mp4",
+              "size": 5142237,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=IbZWbnL3moPvy2xzBL8cNlnjnYE",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/IbZWbnL3moPvy2xzBL8cNlnjnYE/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVDzNC",
+        "record_id": "recv8hWZNVDzNC"
+      },
+      {
+        "fields": {
+          "Demo名称": "构建交互式交友平台",
+          "Prompt描述": "帮我头脑风暴下设计一个陌生交友平台",
+          "实现步骤": "用户说：帮我策划一个针对年轻人的陌生人交友APP，要有独特的破冰机制和匹配算法\n1.AI分析社交市场趋势，确定目标用户为Z世代，定位为“兴趣+灵魂”深度社交\n2.AI设计多维度用户画像体系，包含MBTI性格测试、兴趣标签和生活方式数据\n3.AI构建智能匹配算法逻辑，采用协同过滤与内容推荐结合，提升匹配精准度\n4.AI策划“限时破冰”互动机制，设计真心话大冒险、你画我猜等内置小游戏\n5.AI规划社区动态功能，引入话题标签引导用户分享生活，增加被发现机会\n6.AI设计隐私安全体系，包含实名认证、防骚扰机制及阅后即焚功能\n7.AI输出完整产品策划案，包含功能架构图、核心页面原型及商业变现模式",
+          "实用分": "36",
+          "所属场景": "写作助手",
+          "是否视频": true,
+          "模型能力": [
+            "深度推理"
+          ],
+          "热度数值": "9776",
+          "用户痛点": "策划陌生交友平台涉及匹配机制与玩法创新，个人构思容易陷入思维定势，难以突破现有产品模式，且收集竞品案例和寻找差异化创意切入点需要耗费大量时间与精力。",
+          "示例Prompt": "帮我策划一个针对年轻人的陌生人交友APP，要有独特的破冰机制和匹配算法",
+          "能力跃迁": "1.6受限于有限的思考深度，难以对复杂商业逻辑和用户心理进行系统性分析；1.8凭借更完整的推理链和思考状态保留能力，能够深度挖掘市场痛点，提供逻辑严密、创意独特的平台设计方案。",
+          "豆包创意描述": "利用豆包产品设计与创意构思能力，策划一款智能陌生交友平台。支持多维度用户画像分析、AI灵魂匹配算法设计、趣味破冰互动机制，打造安全高效且充满乐趣的社交体验。",
+          "豆包创意标题": "智能匹配交友平台策划",
+          "豆包标签": "产品设计, 创意策划, 社交应用",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115768662426001/",
+            "text": "http://www.bilibili.com/video/av115768662426001/"
+          },
+          "预览文件": [
+            {
+              "file_token": "WCRebVQPOoATpGx9yTEc0yO9nBd",
+              "name": "20260113214935_rec_.mp4",
+              "size": 3733329,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=WCRebVQPOoATpGx9yTEc0yO9nBd",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/WCRebVQPOoATpGx9yTEc0yO9nBd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVYTcE",
+        "record_id": "recv8hWZNVYTcE"
+      },
+      {
+        "fields": {
+          "Demo名称": "Kimi infra 面试助手",
+          "Prompt描述": "帮我准备一下面试 kimi的infra工程师",
+          "实现步骤": "用户说：帮我模拟Kimi Infra工程师的面试，重点考察分布式系统和Kubernetes，并给出反馈\n1.AI分析Infra工程师岗位JD，提取K8s、Go语言、分布式存储等核心技能点\n2.AI梳理技术知识图谱，覆盖操作系统内核、网络协议栈及容器化技术\n3.AI启动模拟面试模式，提出关于Raft一致性协议与Etcd原理的深度问题\n4.AI根据用户回答进行追问，考察在海量并发场景下的系统稳定性设计\n5.AI出具System Design题目，要求设计一个高可用的大模型训练集群调度系统\n6.AI提供实时代码考核，要求使用Go语言实现一个高性能的并发限流器\n7.AI评估回答质量，指出技术盲点，并生成包含针对性建议的面试总结报告",
+          "实用分": "45",
+          "所属场景": "AI当老师",
+          "是否视频": true,
+          "模型能力": [
+            "深度推理",
+            "指令遵循王"
+          ],
+          "热度数值": "7685",
+          "用户痛点": "备考特定公司的基础设施岗位需要翻阅大量零散的面经资料，难以系统梳理底层技术考点。缺乏专业导师进行模拟对练和即时反馈，容易抓不住重点，备考效率低下。",
+          "示例Prompt": "帮我模拟Kimi Infra工程师的面试，重点考察分布式系统和Kubernetes，并给出反馈",
+          "能力跃迁": "1.6受限于基础推理模式，难以进行深度的技术追问，且在多轮模拟面试中容易遗忘角色设定或偏离考察重点；1.8凭借思考状态保留和大幅增强的指令遵循能力，能够深度拆解Infra岗位技术栈，进行连续且有逻辑的深度追问，提供精准的备考策略。",
+          "豆包创意描述": "利用豆包专业技术知识库与角色扮演能力，针对Kimi Infra岗位进行全方位面试准备。支持模拟技术面、分布式架构解析、系统设计实战，提供深度反馈与查漏补缺，助你从容应对高难度技术考核。",
+          "豆包创意标题": "Infra工程师面试智能特训",
+          "豆包标签": "模拟面试, 技术进阶, 职业发展",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115723582112893",
+            "text": "http://www.bilibili.com/video/av115723582112893"
+          },
+          "预览文件": [
+            {
+              "file_token": "WUwGbemuAoLX3Lx7uDlci6kcnUh",
+              "name": "20260113215642_rec_.mp4",
+              "size": 1589717,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=WUwGbemuAoLX3Lx7uDlci6kcnUh",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/WUwGbemuAoLX3Lx7uDlci6kcnUh/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVYfob",
+        "record_id": "recv8hWZNVYfob"
+      },
+      {
+        "fields": {
+          "Demo名称": "字幕转文章",
+          "Prompt描述": "把这个字幕文件转成文章:@Al Obsidian Mind Map.srt",
+          "实现步骤": "用户说：把这个字幕文件转成文章:@Al Obsidian Mind Map.srt\n1.AI读取SRT文件内容，使用正则解析分离时间戳、序号与文本内容\n2.AI清洗文本数据，去除时间轴信息、重复语句及无意义的语气词\n3.AI将碎片化的字幕行合并为完整的文本流，解决断句问题\n4.AI运用NLP技术识别上下文语义，修正语音识别错误和口语化表达\n5.AI根据内容逻辑进行智能分段，自动生成合适的小标题\n6.AI对文章进行润色处理，优化段落结构，提升可读性\n7.AI输出排版整洁的Markdown格式文章，方便后续编辑和归档",
+          "实用分": "45",
+          "所属场景": "文档秒读",
+          "是否视频": true,
+          "模型能力": [
+            "多模态输入",
+            "指令遵循王"
+          ],
+          "热度数值": "7408",
+          "用户痛点": "SRT字幕文件包含大量时间轴和序号干扰阅读，人工转换需要逐行删除冗余信息，并将碎片化的口语文本重新拼接润色成通顺段落，重复性劳动极其枯燥且耗时。",
+          "示例Prompt": "帮我把这个SRT字���文件整理成一篇逻辑通顺的文章，去掉时间轴并优化口语",
+          "能力跃迁": "1.6受限于基础指令遵循能力，面对碎片化的字幕文件难以精准去除时间轴并重组逻辑；1.8凭借大幅增强的指令遵循能力，能够完美执行“转文章”的复杂重写指令，将口语文本转化为结构严谨、通顺连贯的书面文章。",
+          "豆包创意描述": "利用豆包强大的文本理解与重组能力，将碎片化的SRT字幕文件转换为逻辑通顺的文章。支持自动去除时间轴、修正口语表达、智能分段重组，快速将视频内容转化为高质量的阅读文档。",
+          "豆包创意标题": "视频字幕智能改写文章",
+          "豆包标签": "文档处理, 内容转换, 效率工具",
+          "趣味分": "15",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115642179064265/",
+            "text": "http://www.bilibili.com/video/av115642179064265/"
+          },
+          "预览文件": [
+            {
+              "file_token": "IO8Ob8I9qoT6ZZxzZcKcSMtMnrd",
+              "name": "20260113220236_rec_.mp4",
+              "size": 5327815,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=IO8Ob8I9qoT6ZZxzZcKcSMtMnrd",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/IO8Ob8I9qoT6ZZxzZcKcSMtMnrd/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVUViG",
+        "record_id": "recv8hWZNVUViG"
+      },
+      {
+        "fields": {
+          "Demo名称": "视频字幕生成器",
+          "Prompt描述": "生成视频字幕",
+          "实现步骤": "用户说：帮我把这个视频里的语音转成字幕，并导出为SRT文件\n1.AI利用FFmpeg工具从上传的视频中提取音频流，转换为适合处理的格式\n2.AI调用高精度ASR语音识别模型，将音频内容转录为原始文本\n3.AI进行NLP语义分析，自动添加标点符号并修正上下文错别字\n4.AI分析音频波形与文本的对应关系，生成精确到毫秒的时间戳\n5.AI根据语义完整性和阅读速度进行智能断句，优化字幕展示效果\n6.AI按照SRT标准格式规范，组合序号、时间码和字幕文本\n7.AI生成最终字幕文件，提供下载链接支持直接导入剪辑软件",
+          "实用分": "46",
+          "所属场景": "视频秒懂",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔"
+          ],
+          "热度数值": "2818",
+          "用户痛点": "人工为视频制作字幕需要反复回放听写，并逐帧调整时间轴以对齐声音，工作量通常是视频时长的数倍，过程枯燥繁琐，且极易因疲劳导致听写错误或时间轴偏差。",
+          "示例Prompt": "帮我把这个视频里的语音转成字幕，并导出为SRT文件",
+          "能力跃迁": "1.8凭借原生多模态和增强的Agent能力，可以更高效地完成此类任务。",
+          "豆包创意描述": "利用豆包语音识别与自然语言处理能力，自动将视频语音转换为精准字幕。支持多语言识别、智能断句与毫秒级时间轴对齐，一键导出SRT/VTT文件，极大提升视频制作效率。",
+          "豆包创意标题": "智能视频字幕自动生成",
+          "豆包标签": "语音识别, 视频工具, 效率提升",
+          "趣味分": "18",
+          "链接": {
+            "link": "http://www.bilibili.com/video/av115805941405940/",
+            "text": "http://www.bilibili.com/video/av115805941405940/"
+          },
+          "预览文件": [
+            {
+              "file_token": "Ixntbt5R7olkwvx1YScc2IuCnCf",
+              "name": "20260113221642_rec_.mp4",
+              "size": 2547602,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=Ixntbt5R7olkwvx1YScc2IuCnCf",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/Ixntbt5R7olkwvx1YScc2IuCnCf/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVx7AN",
+        "record_id": "recv8hWZNVx7AN"
+      },
+      {
+        "fields": {
+          "Demo名称": "群聊要点集合HTML生成器",
+          "Prompt描述": "从多个AI群聊提取洞察并聚合为单个HTML报告",
+          "实现步骤": "用户说：帮我分析这几个AI技术群的聊天记录，提取核心观点并生成一份HTML报告\n1.AI读取并解析多个群聊记录文件，进行去重、去噪和格式标准化处理\n2.AI运用NLP技术对文本进行分词和语义分析，识别高频关键词和实体\n3.AI通过聚类算法将碎片化对话归纳为若干核心议题，梳理讨论脉络\n4.AI针对每个议题提取关键观点和代表性发言，生成摘要性总结\n5.AI分析发言者的情感倾向和活跃度，生成社群氛围分析数据\n6.AI构建HTML页面结构，设计可视化布局展示话题分布和统计图表\n7.AI将所有分析结果填充至HTML模板，生成可交互的完整洞察报告",
+          "实用分": "44",
+          "所属场景": "一句话做网站",
+          "是否视频": true,
+          "模型能力": [
+            "代码狂魔",
+            "深度推理"
+          ],
+          "热度数值": "21224",
+          "用户痛点": "人工翻阅海量群聊记录提取关键信息，耗时巨大且易遗漏。将整理后的内容手动编写为HTML报告，不仅涉及繁琐的排版工作，还要求具备前端编程技能，制作门槛较高。",
+          "示例Prompt": "帮我分析这几个AI技术群的聊天记录，提取核心观点并生成一份HTML报告",
+          "能力跃迁": "1.6受限于长代码生成稳定性不足，在聚合多源信息时容易出现逻辑遗漏或HTML格式错误；1.8凭借思考状态保留和更规范的代码输出能力，可以深度分析群聊内容，一次性生成结构完整、逻辑清晰的HTML报告。",
+          "豆包创意描述": "利用豆包长文本理解与NLP分析能力，深度解析海量群聊数据。自动提取关键话题、汇总核心观点、识别讨论趋势，将碎片化信息聚合成结构化HTML报告，高效挖掘社群价值。",
+          "豆包创意标题": "多群聊智能洞察聚合报告",
+          "豆包标签": "数据分析, 社群运营, 自动化报告",
+          "趣味分": "20",
+          "链接": {
+            "link": "http://www.iesdouyin.com/share/video/7587797069230787878",
+            "text": "http://www.iesdouyin.com/share/video/7587797069230787878"
+          },
+          "预览文件": [
+            {
+              "file_token": "NKbJbyno4oC0rDxsLN8cViz8nEn",
+              "name": "20260113221949_rec_.mp4",
+              "size": 4239966,
+              "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=NKbJbyno4oC0rDxsLN8cViz8nEn",
+              "type": "video/mp4",
+              "url": "https://open.feishu.cn/open-apis/drive/v1/medias/NKbJbyno4oC0rDxsLN8cViz8nEn/download"
+            }
+          ]
+        },
+        "id": "recv8hWZNVKURU",
+        "record_id": "recv8hWZNVKURU"
+      }
+    ],
+    "total": 51
+  }
+}
